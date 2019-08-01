@@ -1,0 +1,646 @@
+/*%FSM<COMPILE "G:\ArmA\ArmA3\Tools\FSMEditor\scriptedFSM.cfg, TCL_Initialize">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Initialize",0,250,-25.000000,75.000000,75.000000,125.000000,0.000000,"Initialize"};
+item1[] = {"Delay",4,218,-25.000000,175.000000,75.000000,225.000000,0.000000,"Delay"};
+item2[] = {"E_H_",2,250,-25.000000,275.000000,75.000000,325.000000,0.000000,"E.H."};
+item3[] = {"Server",4,218,125.000000,275.000000,225.000000,325.000000,2.000000,"Server"};
+item4[] = {"A_I_",2,4346,125.000000,375.000000,225.000000,425.000000,0.000000,"A.I."};
+item5[] = {"Always",8,218,125.000000,475.000000,225.000000,525.000000,0.000000,"Always"};
+item6[] = {"_",2,250,125.000000,575.000000,225.000000,625.000000,0.000000,""};
+item7[] = {"Always",8,218,125.000000,675.000000,225.000000,725.000000,0.000000,"Always"};
+item8[] = {"F_X_",2,250,-25.000000,675.000000,75.000000,725.000000,0.000000,"F.X."};
+item9[] = {"Always",8,218,-25.000000,775.000000,75.000000,825.000000,0.000000,"Always"};
+item10[] = {"End",1,250,-25.000000,875.000000,75.000000,925.000000,0.000000,"End"};
+item11[] = {"Client",4,218,-175.000000,275.000000,-75.000000,325.000000,1.000000,"Client"};
+item12[] = {"Player",2,250,-175.000000,375.000000,-75.000000,425.000000,0.000000,"Player"};
+item13[] = {"Always",8,218,-175.000000,475.000000,-75.000000,525.000000,0.000000,"Always"};
+item14[] = {"__1",2,250,-175.000000,575.000000,-75.000000,625.000000,0.000000,""};
+item15[] = {"Always",8,218,-175.000000,675.000000,-75.000000,725.000000,0.000000,"Always"};
+item16[] = {"Disabled",4,218,-25.000000,375.000000,75.000000,425.000000,0.000000,"Disabled"};
+item17[] = {"End_1",1,250,-25.000000,475.000000,75.000000,525.000000,0.000000,"End"};
+link0[] = {0,1};
+link1[] = {1,2};
+link2[] = {2,3};
+link3[] = {2,11};
+link4[] = {2,16};
+link5[] = {3,4};
+link6[] = {4,5};
+link7[] = {5,6};
+link8[] = {6,7};
+link9[] = {7,8};
+link10[] = {8,9};
+link11[] = {9,10};
+link12[] = {11,12};
+link13[] = {12,13};
+link14[] = {13,14};
+link15[] = {14,15};
+link16[] = {15,8};
+link17[] = {16,17};
+globals[] = {0.000000,0,0,0,0,640,480,1,23,6316128,1,-286.323914,359.888031,938.887573,65.232391,662,895,1};
+window[] = {2,-1,-1,-1,-1,819,100,1060,100,3,680};
+*//*%FSM</HEAD>*/
+class FSM
+{
+        fsmName = "TCL_Initialize";
+        class States
+        {
+                /*%FSM<STATE "Initialize">*/
+                class Initialize
+                {
+                        name = "Initialize";
+                        itemno = 0;
+                        init = /*%FSM<STATEINIT""">*/"/*  ////////////////////////////////////////////////////////////////////////////////" \n
+                         "\   \ Tactical Combat Link ( F.S.M. ) Initialize" \n
+                         " \   \------------------------------------------------------------------------------" \n
+                         "  \   \ By =\SNKMAN/=" \n
+                         "  /   /-----------------------------------------------------------------------------" \n
+                         "*/   ///////////////////////////////////////////////////////////////////////////////" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Extension_F.sqf"");" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_FX.sqf"");" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_Debug.sqf"");" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_System.sqf"");" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_Resource.sqf"");" \n
+                         "" \n
+                         "private _delay = (TCL_System select 0);" \n
+                         "" \n
+                         "if (TCL_Multiplayer) then" \n
+                         "{" \n
+                         "	if (_delay == 0) then" \n
+                         "	{" \n
+                         "		_delay = 0.1;" \n
+                         "	};" \n
+                         "};"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Delay">*/
+                                class Delay
+                                {
+                                        itemno = 1;
+                                        priority = 0.000000;
+                                        to="E_H_";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"( (time >= _delay) || (TCL_Initialize) )"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "E_H_">*/
+                class E_H_
+                {
+                        name = "E_H_";
+                        itemno = 2;
+                        init = /*%FSM<STATEINIT""">*/"TCL_Zeus = [ [], [] ];" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_EH_F\TCL_EH_Zeus_F.sqf"");" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_EH_F\TCL_EH_Fired_F.sqf"");" \n
+                         "" \n
+                         "call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_EH_F\TCL_EH_Killed_F.sqf"");" \n
+                         "" \n
+                         "if (TCL_Dedicated) exitWith {};" \n
+                         "" \n
+                         "TCL_EH_Fired = [ [] ];" \n
+                         "" \n
+                         "execVM (TCL_Path+""TCL\TCL_ExecVM\TCL_EH_Fired.sqf"");"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Server">*/
+                                class Server
+                                {
+                                        itemno = 3;
+                                        priority = 2.000000;
+                                        to="A_I_";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"( (TCL_Preprocess) && ( (TCL_Server) || (TCL_Headless) ) )"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Client">*/
+                                class Client
+                                {
+                                        itemno = 11;
+                                        priority = 1.000000;
+                                        to="Player";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"(TCL_Preprocess)"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Disabled">*/
+                                class Disabled
+                                {
+                                        itemno = 16;
+                                        priority = 0.000000;
+                                        to="End_1";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "A_I_">*/
+                class A_I_
+                {
+                        name = "A_I_";
+                        itemno = 4;
+                        init = /*%FSM<STATEINIT""">*/"if (TCL_System select 1) then" \n
+                         "{" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_System_F\TCL_Debug_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_System_F\TCL_Header_F.sqf"");" \n
+                         "	" \n
+                         "	if (TCL_Debug select 0) then" \n
+                         "	{" \n
+                         "		[""TypeX"", ""Initialize""] spawn (TCL_Debug_F select 0);" \n
+                         "	};" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_AI.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_IQ.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_Radio.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_Tweak.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Database\TCL_Feature.sqf"");" \n
+                         "	" \n
+                         "	TCL_Database = True;" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_System_F\TCL_Skill_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_System_F\TCL_Marker_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_System_F\TCL_Get_In_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Tank_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Heal_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Watch_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Smoke_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Rearm_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Flare_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Mortar_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Follow_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Feature_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Regroup_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Garrison_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Flanking_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Surrender_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Artillery_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Advancing_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Suppressed_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Take_Cover_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_House_Search_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Feature_F\TCL_Static_Weapon_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Ship_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Move_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Radio_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Stuck_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Enemy_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Logic_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Assign_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Rating_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Reveal_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Remount_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Waiting_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Vehicle_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Unassign_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Sneaking_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Behaviour_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Helicopter_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_KnowsAbout_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Reinforcement_F\TCL_Reinforcement_F.sqf"");" \n
+                         "	" \n
+                         "	TCL_Players = [ [], [], [] ];" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Initialize_F\TCL_Players_F.sqf"");" \n
+                         "	" \n
+                         "	[ (playableUnits + switchableUnits) ] call (TCL_Players_F select 0);" \n
+                         "	" \n
+                         "	TCL_Idle = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Hold = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Groups = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Defend = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Custom = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Freeze = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Default = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Location = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Disabled = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Enhanced = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Artillery = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Initialized = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Static_Weapon = [ [], [], [] ];" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Initialize_F\TCL_Units_F.sqf"");" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Initialize_F\TCL_Groups_F.sqf"");" \n
+                         "	" \n
+                         "	[allGroups] call (TCL_Groups_F select 0);" \n
+                         "	" \n
+                         "	TCL_Vehicles = [ [], [] ];" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_Initialize_F\TCL_Vehicles_F.sqf"");" \n
+                         "	" \n
+                         "	[vehicles] call (TCL_Vehicles_F select 0);" \n
+                         "	" \n
+                         "	if (TCL_System select 7) then" \n
+                         "	{" \n
+                         "		execVM (TCL_Path+""TCL\TCL_ExecVM\TCL_Spawn.sqf"");" \n
+                         "	};" \n
+                         "	" \n
+                         "	TCL_Logic = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Request = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Reinforcement = [ [], [], [] ];" \n
+                         "	" \n
+                         "	TCL_Red = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Join = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Speed = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Flare = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Stuck = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Assign = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Retreat = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Regroup = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Vehicle = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Remount = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Waiting = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Sneaking = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Behaviour = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Helicopter = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Heal = [ [], [], [] ];" \n
+                         "	" \n
+                         "	TCL_Watch = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Rearm = [ [], [], [] ];" \n
+                         "	" \n
+                         "	TCL_Garrison = [ [], [], [], [] ];" \n
+                         "	" \n
+                         "	TCL_Flanking = [ [], [], [], [] ];" \n
+                         "	" \n
+                         "	TCL_Surrender = [ [] ];" \n
+                         "	" \n
+                         "	TCL_Advancing = [ [], [] ];" \n
+                         "	" \n
+                         "	TCL_Suppressed = [ [], [] ];" \n
+                         "	" \n
+                         "	TCL_Take_Cover = [ [], [] ];" \n
+                         "	" \n
+                         "	TCL_House_Search = [ [], [] ];" \n
+                         "	" \n
+                         "	execVM (TCL_Path+""TCL\TCL_ExecVM\TCL_KnowsAbout.sqf"");" \n
+                         "	" \n
+                         "	if (TCL_Debug select 4) then" \n
+                         "	{" \n
+                         "		[""TypeX"", ""Cursor""] spawn (TCL_Debug_F select 1);" \n
+                         "	};" \n
+                         "	" \n
+                         "	if (TCL_Debug select 5) then" \n
+                         "	{" \n
+                         "		[""TypeX"", ""Mission""] spawn (TCL_Debug_F select 2);" \n
+                         "	};" \n
+                         "	" \n
+                         "	execVM (TCL_Path+""TCL\TCL_ExecVM\TCL_Monitor.sqf"");" \n
+                         "};"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 5;
+                                        priority = 0.000000;
+                                        to="_";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "_">*/
+                class _
+                {
+                        name = "_";
+                        itemno = 6;
+                        init = /*%FSM<STATEINIT""">*/"call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_System_F\TCL_Public_F.sqf"");" \n
+                         "" \n
+                         """TCL_Host"" addPublicVariableEventHandler { (_this select 1) call (TCL_Public_F select 1) };"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 7;
+                                        priority = 0.000000;
+                                        to="F_X_";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "F_X_">*/
+                class F_X_
+                {
+                        name = "F_X_";
+                        itemno = 8;
+                        init = /*%FSM<STATEINIT""">*/"if (TCL_System select 9) then" \n
+                         "{" \n
+                         "	if (TCL_Server) then" \n
+                         "	{" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Crew_FX_F.sqf"");" \n
+                         "	};" \n
+                         "	" \n
+                         "	if (TCL_Dedicated) exitWith {};" \n
+                         "	" \n
+                         "	TCL_Sound = False;" \n
+                         "	" \n
+                         "	if (isClass (configFile >> ""CfgPatches"" >> ""TCL_Sound"") ) then" \n
+                         "	{" \n
+                         "		TCL_Sound = True;" \n
+                         "		" \n
+                         "		if (TCL_FX select 0) then" \n
+                         "		{" \n
+                         "			TCL_Whiz_FX =" \n
+                         "			[" \n
+                         "				[]," \n
+                         "				" \n
+                         "				call {private ""_detector"";" \n
+                         "				" \n
+                         "				private _object = ""EmptyDetector"";" \n
+                         "				" \n
+                         "				if (TCL_Debug select 6) then" \n
+                         "				{" \n
+                         "					_object = ""Sign_Arrow_Direction_F"";" \n
+                         "				};" \n
+                         "				" \n
+                         "				private _array = [];" \n
+                         "				" \n
+                         "				private _count = 0;" \n
+                         "				" \n
+                         "				for ""_count"" from _count to 15 do" \n
+                         "				{" \n
+                         "					_detector = _object createVehicleLocal [0,0,0];" \n
+                         "					" \n
+                         "					_array pushBack _detector;" \n
+                         "				};" \n
+                         "				" \n
+                         "				_array" \n
+                         "				" \n
+                         "				}" \n
+                         "			];" \n
+                         "		};" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Whiz_FX_F.sqf"");" \n
+                         "		" \n
+                         "		if (TCL_FX select 4) then" \n
+                         "		{" \n
+                         "			execVM (TCL_Path+""TCL\TCL_AddOns\TCL_Ambient\TCL_Church.sqf"");" \n
+                         "		};" \n
+                         "		" \n
+                         "		if (TCL_FX select 5) then" \n
+                         "		{" \n
+                         "			execVM (TCL_Path+""TCL\TCL_AddOns\TCL_Ambient\TCL_Lighthouse.sqf"");" \n
+                         "		};" \n
+                         "	}" \n
+                         "	else" \n
+                         "	{" \n
+                         "		{TCL_FX set [_x, False] } count [0,2,4,5];" \n
+                         "	};" \n
+                         "	" \n
+                         "	if (isClass (configFile >> ""CfgPatches"" >> ""TCL_Radio"") ) then" \n
+                         "	{" \n
+                         "		if (TCL_FX select 6) then" \n
+                         "		{" \n
+                         "			// call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Chatter\TCL_Chatter_F.sqf"");" \n
+                         "			" \n
+                         "			// execVM (TCL_Path+""TCL\TCL_AddOns\TCL_Chatter\TCL_Chatter.sqf"");" \n
+                         "		};" \n
+                         "	};" \n
+                         "	" \n
+                         "	if (TCL_FX select 13) then" \n
+                         "	{" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Fire_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX\TCL_Mud_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX\TCL_Dust_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX\TCL_Dirt_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX\TCL_Flash_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX\TCL_Shard_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX\TCL_Stone_FX_F.sqf"");" \n
+                         "		" \n
+                         "		call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Explosion_FX\TCL_Smoke_FX_F.sqf"");" \n
+                         "	};" \n
+                         "	" \n
+                         "	TCL_Impact_FX = [0, [] ];" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_AddOns\TCL_Impact_FX_F.sqf"");" \n
+                         "}" \n
+                         "else" \n
+                         "{" \n
+                         "	_count = 0;" \n
+                         "	" \n
+                         "	{if (_x isEqualType True) then {TCL_FX set [_count, False] }; _count = _count + 1} count TCL_FX;" \n
+                         "};"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 9;
+                                        priority = 0.000000;
+                                        to="End";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "End">*/
+                class End
+                {
+                        name = "End";
+                        itemno = 10;
+                        init = /*%FSM<STATEINIT""">*/"TCL_Preprocess = False;" \n
+                         "" \n
+                         "if (TCL_Dedicated) exitWith {};" \n
+                         "" \n
+                         "if (TCL_System select 10) then" \n
+                         "{" \n
+                         "	TCL_Respawn = [0, name player, rank player];" \n
+                         "	" \n
+                         "	call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_EH_F\TCL_EH_Respawn_F.sqf"");" \n
+                         "	" \n
+                         "	player addEventHandler [""Killed"", {_this spawn (TCL_EH_Respawn_F select 0) } ];" \n
+                         "};" \n
+                         "" \n
+                         "private _curators = allCurators;" \n
+                         "" \n
+                         "if (_curators isEqualTo [] ) exitWith {};" \n
+                         "" \n
+                         "TCL_Curator = [ [] ];" \n
+                         "" \n
+                         "[_curators] execVM (TCL_Path+""TCL\TCL_ExecVM\TCL_Zeus.sqf"");"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Player">*/
+                class Player
+                {
+                        name = "Player";
+                        itemno = 12;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 13;
+                                        priority = 0.000000;
+                                        to="__1";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"(alive player)"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "__1">*/
+                class __1
+                {
+                        name = "__1";
+                        itemno = 14;
+                        init = /*%FSM<STATEINIT""">*/"call compile preprocessFileLineNumbers (TCL_Path+""TCL\TCL_System_F\TCL_Public_F.sqf"");" \n
+                         "" \n
+                         """TCL_Public"" addPublicVariableEventHandler { (_this select 1) call (TCL_Public_F select 0) };"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Always">*/
+                                class Always
+                                {
+                                        itemno = 15;
+                                        priority = 0.000000;
+                                        to="F_X_";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "End_1">*/
+                class End_1
+                {
+                        name = "End_1";
+                        itemno = 17;
+                        init = /*%FSM<STATEINIT""">*/"// player sideChat format [""TCL_Initialize.fsm > Disabled > %1"", TCL_Preprocess];"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                        };
+                };
+                /*%FSM</STATE>*/
+        };
+        initState="Initialize";
+        finalStates[] =
+        {
+                "End",
+                "End_1",
+        };
+};
+/*%FSM</COMPILE>*/

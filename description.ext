@@ -1,0 +1,172 @@
+tmf_version[] = {1,0,1}; // DO NOT CHANGE THIS. This is the core version of the template that your mission was started with.
+enableDebugConsole = 1; // Allows the logged in admin to use the debug console from the escape page.
+
+// Use a randomized loading image from TMF. Set your own loading image with e.g. overviewPicture = "image.jpg";
+overviewPicture = __EVAL(selectRandom ['\x\tmf\addons\common\ui\loadscreens\1.jpg','\x\tmf\addons\common\ui\loadscreens\2.jpg','\x\tmf\addons\common\ui\loadscreens\3.jpg','\x\tmf\addons\common\ui\loadscreens\4.jpg','\x\tmf\addons\common\ui\loadscreens\5.jpg','\x\tmf\addons\common\ui\loadscreens\6.jpg','\x\tmf\addons\common\ui\loadscreens\7.jpg','\x\tmf\addons\common\ui\loadscreens\8.jpg','\x\tmf\addons\common\ui\loadscreens\9.jpg','\x\tmf\addons\common\ui\loadscreens\10.jpg']);
+
+class CfgDebriefingSections {
+    class acex_killTracker {
+        title = "ACEX Kill Tracker";
+        variable = "acex_killTracker_outputText";
+    };
+};
+
+class CfgDebriefing
+{
+	class END1
+	{
+		title = "Mission Completed";
+		subtitle = "ALL AI ELIMINATED";
+		description = "Good job!";
+	};
+	class Failed
+	{
+		title = "Mission Failed";
+		subtitle = "";
+		description = "";
+	};
+	class CustomEnding1
+	{
+		title = "Custom Ending #1";
+		subtitle = "";
+		description = "*** Explanation for the debriefing page ***";
+	};
+};
+
+class Extended_PreInit_EventHandlers {
+    class dsm {
+        init = "call compile preprocessFileLineNumbers 'XEH_preInit.sqf';";
+    };
+};
+
+class CfgFunctions
+{
+	class dsm /*dynamic squad mission*/
+	{
+		class myCategory
+		{
+			file = "functions";
+			class gear {};
+			class createPatrol {};
+			class createRoadBlock {};
+			class createGarrison {};
+			class missionSettingsDialog {};
+			class setup {};
+		};
+	};
+};
+
+class Params {
+};
+
+#include "ui_macros.hpp"
+class missionSetuipDialog: RscControlsGroup
+{
+	idd = 2300;
+	x = 0.293679 * safezoneW + safezoneX;
+	y = 0.246907 * safezoneH + safezoneY;
+	w = 0.412642 * safezoneW;
+	h = 0.374138 * safezoneH;
+	onLoad="['onLoad', _this] call dsm_fnc_missionSettingsDialog;";
+	class Controls
+	{
+		class dialogBackground: IGUIBack
+		{
+			idc = 2200;
+			x = 0 * safezoneW;
+			y = 0 * safezoneH;
+			w = 0.412642 * safezoneW;
+			h = 0.374138 * safezoneH;
+			colorBackground[] = {0.212,0.212,0.212,1};
+		};
+		class dialogHeader: IGUIBack
+		{
+			idc = 2220;
+			x = 0 * safezoneW;
+			y = 0 * safezoneH;
+			w = 0.412642 * safezoneW;
+			h = 0.015 * safezoneH;
+			colorBackground[] = {0.169,0.89,0.494,1};
+		};
+		class dialogFrame: RscFrame
+		{
+			idc = 1800;
+			x = 0 * safezoneW;
+			y = 0 * safezoneH;
+			w = 0.412642 * safezoneW;
+			h = 0.374138 * safezoneH;
+			color[] = {1,1,1,0.3};
+		};
+		class playerFactionLabel: RscText
+		{
+			idc = 1000;
+			text = "Player faction"; //--- ToDo: Localize;
+			x = 0.005158 * safezoneW;
+			y = 0.022008 * safezoneH;
+			w = 0.159899 * safezoneW;
+			h = 0.0220081 * safezoneH;
+		};
+		class playerFactionCombo: RscCombo
+		{
+			idc = 2100;
+			x = 0.010316 * safezoneW;
+			y = 0.046219 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.0220081 * safezoneH;
+		};
+		class enemyFactionLabel: RscText
+		{
+			idc = 1001;
+			text = "Enemy faction"; //--- ToDo: Localize;
+			x = 0.005158 * safezoneW;
+			y = 0.068225 * safezoneH;
+			w = 0.159899 * safezoneW;
+			h = 0.0220081 * safezoneH;
+		};
+		class enemyFactionCombo: RscCombo
+		{
+			idc = 2101;
+			x = 0.010316 * safezoneW;
+			y = 0.092434 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.0220081 * safezoneH;
+		};
+		class ratioSlider: RscCombo
+		{
+			idc = 1900;
+			x = 0.010316 * safezoneW;
+			y = 0.154057 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.0220081 * safezoneH;
+		};
+		class ratioLabel: RscText
+		{
+			idc = 1002;
+			text = "AI Ratio"; //--- ToDo: Localize;
+			x = 0.00619 * safezoneW;
+			y = 0.121044 * safezoneH;
+			w = 0.159899 * safezoneW;
+			h = 0.0220081 * safezoneH;
+		};
+		class aoMAP: RscMapControl
+		{
+			idc = 1801;
+			x = 0.225 * safezoneW;
+			y = 0.046219 * safezoneH;
+			w = 0.185 * safezoneW;
+			h = 0.27 * safezoneH;
+			showMarkers = 1;
+			widthRailWay = 4;
+		};
+		class goButton: RscButton
+		{
+			idc = 1600;
+			text = "Go"; //--- ToDo: Localize;
+			x = 0.34043 * safezoneW;
+			y = 0.330121 * safezoneH;
+			w = 0.0618964 * safezoneW;
+			h = 0.035 * safezoneH;
+			onButtonClick="['done', _this] call dsm_fnc_missionSettingsDialog;";
+		};
+	};
+};
