@@ -312,183 +312,60 @@ class RscEdit
 };
 class RscCombo
 {
-	deletable = 0;
-	fade = 0;
-	access = 0;
-	type = 4;
-	colorSelect[] = 
-	{
-		0,
-		0,
-		0,
-		1
-	};
-	colorText[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorBackground[] = 
-	{
-		0,
-		0,
-		0,
-		1
-	};
-	colorScrollbar[] = 
-	{
-		1,
-		0,
-		0,
-		1
-	};
-	colorDisabled[] = 
-	{
-		1,
-		1,
-		1,
-		0.25
-	};
-	colorPicture[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorPictureSelected[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorPictureDisabled[] = 
-	{
-		1,
-		1,
-		1,
-		0.25
-	};
-	colorPictureRight[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorPictureRightSelected[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorPictureRightDisabled[] = 
-	{
-		1,
-		1,
-		1,
-		0.25
-	};
-	colorTextRight[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	colorSelectRight[] = 
-	{
-		0,
-		0,
-		0,
-		1
-	};
-	colorSelect2Right[] = 
-	{
-		0,
-		0,
-		0,
-		1
-	};
-	tooltipColorText[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	tooltipColorBox[] = 
-	{
-		1,
-		1,
-		1,
-		1
-	};
-	tooltipColorShade[] = 
-	{
-		0,
-		0,
-		0,
-		0.65
-	};
-	soundSelect[] = 
-	{
-		"\A3\ui_f\data\sound\RscCombo\soundSelect",
-		0.1,
-		1
-	};
-	soundExpand[] = 
-	{
-		"\A3\ui_f\data\sound\RscCombo\soundExpand",
-		0.1,
-		1
-	};
-	soundCollapse[] = 
-	{
-		"\A3\ui_f\data\sound\RscCombo\soundCollapse",
-		0.1,
-		1
-	};
-	maxHistoryDelay = 1;
-	class ComboScrollBar
-	{
-		color[] = 
-		{
-			1,
-			1,
-			1,
-			1
-		};
-	};
-	style = "0x10 + 0x200";
-	font = "RobotoCondensed";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	shadow = 0;
-	x = 0;
-	y = 0;
-	w = 0.12;
-	h = 0.035;
-	colorSelectBackground[] = 
-	{
-		1,
-		1,
-		1,
-		0.7
-	};
 	arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_ca.paa";
 	arrowFull = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_active_ca.paa";
+	colorActive[] = {1,0,0,1};
+	colorBackground[] = {0,0,0,1};
+	colorDisabled[] = {1,1,1,0.25};
+	colorPicture[] = {1,1,1,1};
+	colorPictureDisabled[] = {1,1,1,0.25};
+	colorPictureRight[] = {1,1,1,1};
+	colorPictureRightDisabled[] = {1,1,1,0.25};
+	colorPictureRightSelected[] = {1,1,1,1};
+	colorPictureSelected[] = {1,1,1,1};
+	colorScrollbar[] = {1,0,0,1};
+	colorSelect[] = {0,0,0,1};
+	colorSelect2Right[] = {0,0,0,1};
+	colorSelectBackground[] = {1,1,1,0.7};
+	colorSelectRight[] = {0,0,0,1};
+	colorText[] = {1,1,1,1};
+	colorTextRight[] = {1,1,1,1};
+	deletable = 0;
+	fade = 0;
+	font = "RobotoCondensed";
+	h = 0.035;
+	maxHistoryDelay = 1;
+	shadow = 0;
+	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	soundCollapse[] = {"\A3\ui_f\data\sound\RscCombo\soundCollapse",0.1,1};
+	soundExpand[] = {"\A3\ui_f\data\sound\RscCombo\soundExpand",0.1,1};
+	soundSelect[] = {"\A3\ui_f\data\sound\RscCombo\soundSelect",0.1,1};
+	style = "0x10 + 0x200";
+	tooltipColorBox[] = {1,1,1,1};
+	tooltipColorShade[] = {0,0,0,0.65};
+	tooltipColorText[] = {1,1,1,1};
+	type = 4;
+	w = 0.12;
 	wholeHeight = 0.45;
-	colorActive[] = 
-	{
-		1,
-		0,
-		0,
-		1
-	};
+	x = 0;
+	y = 0;
+	class ComboScrollBar {
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa";
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa";
+		autoScrollDelay = 5;
+		autoScrollEnabled = 0;
+		autoScrollRewind = 0;
+		autoScrollSpeed = -1;
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
+		color[] = {1,1,1,1};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		height = 0;
+		scrollSpeed = 0.06;
+		shadow = 0;
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa";
+		width = 0;
+	}
 };
 class RscListBox
 {
@@ -1583,71 +1460,80 @@ class RscControlsGroup
 	style = 16;
 };
 class RscMapControl {
-	type = 100;
-	style = 48;
+	alphaFadeEndScale = 2;
+	alphaFadeStartScale = 2;
+	colorBackground[] = {0.929412,0.929412,0.929412,1};
+	colorCountlines[] = {0.647059,0.533333,0.286275,1};
+	colorCountlinesWater[] = {0.491,0.577,0.702,0.3};
+	colorForest[] = {0.6,0.8,0.2,0.25};
+	colorForestBorder[] = {0,0,0,0};
+	colorGrid[] = {0.05,0.1,0,0.6};
+	colorGridMap[] = {0.05,0.1,0,0.4};
+	colorInactive[] = {1,1,1,0.5};
+	colorLevels[] = {0,0,0,1};
+	colorMainCountlines[] = {0.858824,0,0,1};
+	colorMainCountlinesWater[] = {0.491,0.577,0.702,0.6};
+	colorMainRoads[] = {0,0,0,1};
+	colorMainRoadsFill[] = {0.94,0.69,0.2,1};
+	colorNames[] = {0.1,0.1,0.1,0.9};
+	colorOutside[] = {0.929412,0.929412,0.929412,1};
+	colorPowerLines[] = {0.1,0.1,0.1,1};
+	colorRailWay[] = {0.8,0.2,0,1};
+	colorRoads[] = {0.2,0.13,0,1};
+	colorRoadsFill[] = {1,0.88,0.65,1};
+	colorRocks[] = {0.5,0.5,0.5,0.5};
+	colorRocksBorder[] = {0,0,0,0};
+	colorSea[] = {0.467,0.631,0.851,0.5};
+	colorText[] = {0,0,0,1};
+	colorTracks[] = {0.2,0.13,0,1};
+	colorTracksFill[] = {1,0.88,0.65,0.3};
+	colorTrails[] = {0.84,0.76,0.65,0.15};
+	colorTrailsFill[] = {0.84,0.76,0.65,0.65};
+	deletable = 0;
+	drawShaded = 0.25;
+	fade = 0;
+	font = "TahomaB";
+	fontGrid = "TahomaB";
+	fontInfo = "RobotoCondensed";
+	fontLabel = "RobotoCondensed";
+	fontLevel = "TahomaB";
+	fontNames = "RobotoCondensed";
+	fontUnits = "TahomaB";
+	idc = 51;
+	idcMarkerColor = -1;
+	idcMarkerIcon = -1;
+	maxSatelliteAlpha = 0.7;
 	moveOnEdges = 1;
-	x = "SafeZoneXAbs";
-	y = "SafeZoneY + 1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-	w = "SafeZoneWAbs";
-	h = "SafeZoneH - 1.5 * 					(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-	shadow = 0;
-	ptsPerSquareSea = 5;
-	ptsPerSquareTxt = 20;
 	ptsPerSquareCLn = 10;
-	ptsPerSquareExp = 10;
 	ptsPerSquareCost = 10;
+	ptsPerSquareExp = 10;
 	ptsPerSquareFor = 9;
 	ptsPerSquareForEdge = 9;
-	ptsPerSquareRoad = 6;
 	ptsPerSquareObj = 9;
-	showCountourInterval = 0;
-	showMarkers = 1;
-	scaleMin = 0.001;
-	scaleMax = 1.0;
+	ptsPerSquareRoad = 6;
+	ptsPerSquareSea = 5;
+	ptsPerSquareTxt = 20;
 	scaleDefault = 0.16;
-	maxSatelliteAlpha = 0.85;
-	alphaFadeStartScale = 2;
-	alphaFadeEndScale = 2;
-	sizeEx = "(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-	font = "PuristaMedium";
-	colorText[] = {0,0,0,1};
-	colorBackground[] = {0.969,0.957,0.949,1.0};
-	colorSea[] = {0.467,0.631,0.851,0.5};
-	colorForest[] = {0.624,0.78,0.388,0.5};
-	colorForestBorder[] = {0.0,0.0,0.0,0.0};
-	colorRocks[] = {0.0,0.0,0.0,0.3};
-	colorRocksBorder[] = {0.0,0.0,0.0,0.0};
-	colorLevels[] = {0.286,0.177,0.094,0.5};
-	colorMainCountlines[] = {0.572,0.354,0.188,0.5};
-	colorCountlines[] = {0.572,0.354,0.188,0.25};
-	colorMainCountlinesWater[] = {0.491,0.577,0.702,0.6};
-	colorCountlinesWater[] = {0.491,0.577,0.702,0.3};
-	colorPowerLines[] = {0.1,0.1,0.1,1.0};
-	colorRailWay[] = {0.8,0.2,0.0,1.0};
-	colorNames[] = {0.1,0.1,0.1,0.9};
-	colorInactive[] = {1.0,1.0,1.0,0.5};
-	colorOutside[] = {0.0,0.0,0.0,1.0};
-	colorTracks[] = {0.84,0.76,0.65,0.15};
-	colorTracksFill[] = {0.84,0.76,0.65,1.0};
-	colorRoads[] = {0.7,0.7,0.7,1.0};
-	colorRoadsFill[] = {1.0,1.0,1.0,1.0};
-	colorMainRoads[] = {0.9,0.5,0.3,1.0};
-	colorMainRoadsFill[] = {1.0,0.6,0.4,1.0};
-	colorGrid[] = {0.1,0.1,0.1,0.6};
-	colorGridMap[] = {0.1,0.1,0.1,0.6};
-	fontLabel = "PuristaMedium";
-	sizeExLabel = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	fontGrid = "TahomaB";
-	sizeExGrid = 0.02;
-	fontUnits = "TahomaB";
-	sizeExUnits = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	fontNames = "EtelkaNarrowMediumPro";
-	sizeExNames = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8) * 2";
-	fontInfo = "PuristaMedium";
+	scaleMax = 1;
+	scaleMin = 0.001;
+	shadow = 0;
+	showCountourInterval = 1;
+	showMarkers = 1;
+	sizeEx = 0.04;
+	sizeExGrid = 0.032;
 	sizeExInfo = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	fontLevel = "TahomaB";
-	sizeExLevel = 0.02;
+	sizeExLabel = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeExLevel = 0.03;
+	sizeExNames = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8) * 2";
+	sizeExUnits = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	stickX[] = {0.2,["Gamma",1,1.5]};
+	stickY[] = {0.2,["Gamma",1,1.5]};
+	style = 48;
 	text = "#(argb,8,8,3)color(1,1,1,1)";
+	textureComboBoxColor = "#(argb,8,8,3)color(1,1,1,1)";
+	type = 101;
+	w = "SafeZoneWAbs";
+	widthRailWay = 4;
 	class LineMarker
 	{
 		lineWidthThin = 0.008;
@@ -1657,8 +1543,8 @@ class RscMapControl {
 	};
 	class ActiveMarker
 	{
-		color[] = {0,0,0,1};
-		size = 2;
+		color[] = {0.3,0.1,0.9,1};
+		size = 50;
 	};
 	class Legend
 	{
@@ -1709,11 +1595,11 @@ class RscMapControl {
 	class CustomMark
 	{
 		icon = "\A3\ui_f\data\map\mapcontrol\custommark_ca.paa";
-		size = 24;
+		size = 18;
 		importance = 1;
 		coefMin = 1;
 		coefMax = 1;
-		color[] = {0,0,0,1};
+		color[] = {1,1,1,1};
 	};
 	class Command
 	{

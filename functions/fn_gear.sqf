@@ -7,7 +7,7 @@ if (side _unit == east) then { _faction = dsm_opforFaction;};
 if (_faction != "") then {
 	_unit setVariable ["tmf_assignGear_faction",_faction];
 };
-if (_role != "r") then {
+if (!isNil "_role" && _role != "r") then {
 	_unit setVariable ["tmf_assignGear_role",_role];
 };
 // Workaround for EDEN.

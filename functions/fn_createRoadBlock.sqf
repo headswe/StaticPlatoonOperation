@@ -63,7 +63,7 @@ dsm_spawnBuilding = {
 _onPathFinished = {
 	params ['_agent', '_path'];
 	path = _path apply {[_x # 0, _x  # 1, 0]};
-	private _inside = (path inAreaArray "assaultObjectivePerimeter") select {isOnRoad _x} apply {[_x distance dsm_centerPos, _x]};
+	private _inside = (_path inAreaArray "assaultObjectivePerimeter") select {isOnRoad _x} apply {[_x distance dsm_centerPos, _x]};
 	_inside sort false;
 	/*
 	{
@@ -88,9 +88,9 @@ _onPathFinished = {
 		private _grp = createGroup east;
 		private _spawnPos = _this # 1;
 		for "_i" from 1 to 4 do {
-			private _init = "[this,selectRandom ['r','r','r','ftl','aar','ar','rat']] call dsm_fnc_gear; this disableAI 'AUTOCOMBAT'; this allowFleeing 0;";
-			_spawnPos = _spawnPos vectorAdd [1,0,0];
-			"O_Soldier_F" createUnit [_spawnPos, _grp, _init, 0.5, "PRIVATE"];
+			private _role = selectRandom ['r','r','r','ftl','aar','ar','rat'];
+			private _solider = _grp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];
+			[_solider, _role] call dsm_fnc_gear;
 		};
 	//	[_grp, _spawnPos, 25, "GUARD", "AWARE", "YELLOW", "FULL", "STAG COLUMN"] call CBA_fnc_addWaypoint;
 		[_grp, _spawnPos,15] call CBA_fnc_taskDefend;

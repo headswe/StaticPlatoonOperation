@@ -52,6 +52,7 @@ class CfgFunctions
 			class createGarrison {};
 			class missionSettingsDialog {};
 			class setup {};
+			class createFlare{};
 		};
 	};
 };
@@ -101,52 +102,52 @@ class missionSetuipDialog: RscControlsGroup
 		{
 			idc = 1000;
 			text = "Player faction"; //--- ToDo: Localize;
-			x = 0.005158 * safezoneW;
-			y = 0.022008 * safezoneH;
-			w = 0.159899 * safezoneW;
-			h = 0.0220081 * safezoneH;
+			x = 0.005 * safezoneW;
+			y = 0.022 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.02 * safezoneH;
 		};
 		class playerFactionCombo: RscCombo
 		{
 			idc = 2100;
-			x = 0.010316 * safezoneW;
-			y = 0.046219 * safezoneH;
+			x = 0.01 * safezoneW;
+			y = 0.044 * safezoneH;
 			w = 0.2 * safezoneW;
-			h = 0.0220081 * safezoneH;
+			h = 0.02 * safezoneH;
 		};
 		class enemyFactionLabel: RscText
 		{
 			idc = 1001;
 			text = "Enemy faction"; //--- ToDo: Localize;
-			x = 0.005158 * safezoneW;
-			y = 0.068225 * safezoneH;
-			w = 0.159899 * safezoneW;
-			h = 0.0220081 * safezoneH;
+			x = 0.005 * safezoneW;
+			y = 0.066 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.02 * safezoneH;
 		};
 		class enemyFactionCombo: RscCombo
 		{
 			idc = 2101;
-			x = 0.010316 * safezoneW;
-			y = 0.092434 * safezoneH;
+			x = 0.01 * safezoneW;
+			y = 0.088 * safezoneH;
 			w = 0.2 * safezoneW;
-			h = 0.0220081 * safezoneH;
+			h = 0.02 * safezoneH;
 		};
 		class ratioSlider: RscCombo
 		{
 			idc = 1900;
-			x = 0.010316 * safezoneW;
-			y = 0.154057 * safezoneH;
+			x = 0.01 * safezoneW;
+			y = 0.132 * safezoneH;
 			w = 0.2 * safezoneW;
-			h = 0.0220081 * safezoneH;
+			h = 0.02 * safezoneH;
 		};
 		class ratioLabel: RscText
 		{
 			idc = 1002;
 			text = "AI Ratio"; //--- ToDo: Localize;
-			x = 0.00619 * safezoneW;
-			y = 0.121044 * safezoneH;
-			w = 0.159899 * safezoneW;
-			h = 0.0220081 * safezoneH;
+			x = 0.005 * safezoneW;
+			y = 0.11 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.02 * safezoneH;
 		};
 		class aoMAP: RscMapControl
 		{
@@ -155,8 +156,6 @@ class missionSetuipDialog: RscControlsGroup
 			y = 0.046219 * safezoneH;
 			w = 0.185 * safezoneW;
 			h = 0.27 * safezoneH;
-			showMarkers = 1;
-			widthRailWay = 4;
 		};
 		class goButton: RscButton
 		{
@@ -166,6 +165,8 @@ class missionSetuipDialog: RscControlsGroup
 			y = 0.330121 * safezoneH;
 			w = 0.0618964 * safezoneW;
 			h = 0.035 * safezoneH;
+			colorBackground[] = {0.169,0.89,0.494,1};
+			color[] = {1,1,1,1};
 			onButtonClick="['done', _this] call dsm_fnc_missionSettingsDialog;";
 		};
 	};

@@ -27,6 +27,7 @@ dsm_guard_groups = [];
 	"Campfire_burning_F" createVehicle _spawnPos;
 	private _grp = createGroup east;
 	_grp setBehaviour "SAFE";
+	_grp allowFleeing 0;
 	dsm_guard_groups pushBack _grp;
 	_grp setVariable ["TCL_Enhanced", True];
 	for "_i" from 1 to 2 do {
@@ -45,6 +46,7 @@ while {dsm_aiRatioCount > 0} do {
 
 	private _grp = createGroup [east,false];
 	_grp setCombatMode "RED";
+	_grp allowFleeing 0;
 	_grp setVariable ["TCL_AI",[1, 0.15, 3, False, 3, 700, True, False, False, True, 170, False]]; 
 	_grp setVariable ["TCL_Enhanced", True];
 	_patrolDir = _patrolDir + random 180;
@@ -79,7 +81,6 @@ while {dsm_aiRatioCount > 0} do {
 	dsm_aiRatioCount = dsm_aiRatioCount - _thisPatrolNumbers;
 };
 
-call dsm_fnc_createRoadBlock;
 
 AI_SPAWNED = true;
 TCL_Path = "TCL_System\"; 
@@ -92,18 +93,64 @@ TCL_RADIO set [1, 10];
 
 dsm_alert_triggerd = 0;
 [{
-	private _playersKnown =  ((playableUnits + switchableUnits)) select {dsm_garrison_group knowsAbout _x >= 1};
-	 if((count _playersKnown > 0 && (time - dsm_alert_triggerd) >= 30)) then {
+	// garrison spotting
+	private _playersKnown =  ((playableUnits + switchableUnits)) select {dsm_garrison_group knowsAbout _x >= 2};
+	if((count _playersKnown > 0 && (time - dsm_alert_triggerd) >= 30)) then {
 		 dsm_alert_triggerd = time;
 		 {
 			[_x] call CBA_fnc_clearWaypoints;
-			private _wp = _x addWaypoint [getpos leader _x, 100];
+			private _wp = _x addWaypoint [getpos leader _x, -1];
+			_wp = _x addWaypoint [getpos leader _x, -1];
 			_wp setWaypointBehaviour "AWARE";
 			_wp setWaypointSpeed "FULL";
 			_wp setWaypointPosition (getpos leader _x);
-			_wp = _x addWaypoint [getpos ([_playersKnown] call TMF_spectator_fnc_getGroupClusters select 0), 100];
+			_wp setWaypointType "MOVE";
+			_wp setWaypointCompletionRadius 100;
+			_wp = _x addWaypoint [getpos ([_playersKnown] call TMF_spectator_fnc_getGroupClusters select 0), -1];
 			_wp setWaypointType "SAD";
 			_wp setWaypointCompletionRadius 100;
 		 } foreach dsm_patrol_groups;
-	 };
+	};
+
+	private _reinforcement_groups = dsm_patrol_groups + dsm_guard_groups;
+	{
+		_patrolGrp = _x;
+		_targets = (leader _patrolGrp nearTargets 400) select {_x # 2 == west};
+		_reinforceing = _patrolGrp getVariable ["dsm_reinforceing",grpNull];
+		if(isNull _reinforceing && {count _targets > 0} && {behaviour (leader _patrolGrp) == 'COMBAT'} &&
+		 {time - (_patrolGrp getVariable ["dsm_reinforcement_called", 0]) >= 10}) then {
+			private _squads = _reinforcement_groups select {_x != _patrolGrp} apply {[leader _x distance leader _patrolGrp, _x]};
+			private _squad = grpNull;
+			while {count _squads > 0 && isNull _squad} do {
+				private _s = (_squads deleteAt 0) # 1;
+				private _sTargets = (leader _s nearTargets 400) select {_x # 2 == west};
+				if(count _sTargets <= 0 && isNull (_s getVariable ["dsm_reinforceing",grpNull])) then {
+					_squad = _s;
+				}
+			};
+			if(!isNull _squad) then {
+				[getpos leader _x] call dsm_fnc_createFlare;
+				_patrolGrp setVariable ["dsm_reinforcement_called", time];
+				{_squad reveal [_x # 4, (_patrolGrp knowsAbout _x # 4)]} forEach _targets;
+				[_squad] call CBA_fnc_clearWaypoints;
+				private _wp = _squad addWaypoint [getpos leader _squad, -1];
+				private _wp = _squad addWaypoint [getpos leader _squad, -1];
+				_wp setWaypointBehaviour "AWARE";
+				_wp setWaypointSpeed "FULL";
+				_wp setWaypointCompletionRadius 100;
+				_wp setWaypointPosition (getpos leader _squad);
+				_wp setWaypointType "MOVE";
+				_squad setCurrentWaypoint _wp;
+				_wp = _squad addWaypoint [getpos leader _patrolGrp, -1];
+				_wp setWaypointType "SAD";
+				_wp setWaypointCompletionRadius 100;
+				systemChat "reinforcement sent";
+				_squad setVariable ["dsm_reinforceing", _patrolGrp];
+				
+			}
+		}
+
+	} foreach _reinforcement_groups
+
+
 }, 10] call CBA_fnc_addPerFrameHandler

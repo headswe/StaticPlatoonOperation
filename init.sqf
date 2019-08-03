@@ -49,7 +49,8 @@ _mkr setMarkerColor "ColorRed";
 //_mkr setMarkerText "Assault";
 
 // Perimeter.
-_mkr = createMarker ["assaultObjectivePerimeter",_centerPos];
+dsm_perimeter_mkrName = "assaultObjectivePerimeter";
+_mkr = createMarker [dsm_perimeter_mkrName,_centerPos];
 _mkr setMarkerShape "ELLIPSE";
 _mkr setMarkerBrush "Border";
 _mkr setMarkerSize [dsm_objective_radius,dsm_objective_radius];
