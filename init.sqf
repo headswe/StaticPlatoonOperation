@@ -71,7 +71,10 @@ private _playerCount = (count (playableUnits + switchableUnits)) max 1;
 if (!isMultiplayer) then { _playerCount = 10;};
 dsm_opforFaction = "OPF_F";
 dsm_bluFaction = "BLU_F";
+dsm_vehicleFaction = "";
 dsm_aiRatio = 6;
 dsm_aiRatioCount =  round ((5 + (_playerCount * dsm_aiRatio) ) min 120);
+[dsm_centerPos, 1000, [0,90,180,270]] call dsm_fnc_getReinforcementLocations;
+[] call dsm_fnc_getViableFactions;
 
 

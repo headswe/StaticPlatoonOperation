@@ -14,7 +14,7 @@ _garrisonUnits = round (dsm_aiRatioCount*selectRandom [0.3,0.35,0.4]);
 ([dsm_centerPos, _garrisonUnits, dsm_objective_radius] call dsm_fnc_createGarrison) params ['_unitsCreated', '_garrisonGrp'];
 dsm_garrison_group = _garrisonGrp;
 dsm_aiRatioCount = dsm_aiRatioCount - _unitsCreated;
-
+// configfile >> "CfgGroups" >> "Empty" >> "Guerrilla" >> "Camps"
 
 // Spawn guards
 _directions = [random 90, random 90 + 90, random 90 + 180, random 90 + 270];
@@ -25,16 +25,11 @@ dsm_guard_groups = [];
 	_spawnPos = dsm_centerPos getPos [(random dsm_perimeter_radius max dsm_objective_radius), _x];
 	_spawnPos = _spawnPos findEmptyPosition [0, 30, "B_Quadbike_01_F"];
 	"Campfire_burning_F" createVehicle _spawnPos;
-	private _grp = createGroup east;
+	private _grp = [_spawnPos, 2] call dsm_fnc_createSquad;
 	_grp setBehaviour "SAFE";
 	_grp allowFleeing 0;
 	dsm_guard_groups pushBack _grp;
 	_grp setVariable ["TCL_Enhanced", True];
-	for "_i" from 1 to 2 do {
-		private _role = selectRandom ['r','r','r','ftl','aar','ar','rat'];
-		private _solider = _grp createUnit ['O_Soldier_F',_spawnPos,[],0,'NONE'];
-		[_solider, _role] call dsm_fnc_gear;
-	};
 } foreach _directions;
 
 dsm_patrol_groups = [];
@@ -43,19 +38,15 @@ while {dsm_aiRatioCount > 0} do {
 	private _thisPatrolNumbers = dsm_aiRatioCount;
 	if (dsm_aiRatioCount > 6) then { _thisPatrolNumbers = round(2 + random 4);};
 
-
-	private _grp = createGroup [east,false];
+	private _spawnPos = dsm_centerPos getpos [(dsm_objective_radius+(random dsm_perimeter_radius)) min dsm_perimeter_radius , _patrolDir];
+	private _grp = [_spawnPos, _thisPatrolNumbers] call dsm_fnc_createSquad;
 	_grp setCombatMode "RED";
 	_grp allowFleeing 0;
 	_grp setVariable ["TCL_AI",[1, 0.15, 3, False, 3, 700, True, False, False, True, 170, False]]; 
 	_grp setVariable ["TCL_Enhanced", True];
 	_patrolDir = _patrolDir + random 180;
-	private _spawnPos = dsm_centerPos getpos [(dsm_objective_radius+(random dsm_perimeter_radius)) min dsm_perimeter_radius , _patrolDir];
-	for "_i" from 1 to (_thisPatrolNumbers) do {
-		private _role = selectRandom ['r','r','r','ftl','aar','ar','rat'];
-		private _solider = _grp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];
-		[_solider, _role] call dsm_fnc_gear;
-	};
+
+
 	_wp = _grp addWaypoint [_spawnPos, 0];
 	_wp = _grp addWaypoint [_spawnPos, 0];
 	_wp setWaypointType "MOVE";

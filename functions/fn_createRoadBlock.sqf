@@ -65,14 +65,6 @@ _onPathFinished = {
 	path = _path apply {[_x # 0, _x  # 1, 0]};
 	private _inside = (_path inAreaArray "assaultObjectivePerimeter") select {isOnRoad _x} apply {[_x distance dsm_centerPos, _x]};
 	_inside sort false;
-	/*
-	{
-		deleteMarker ("marker" + str _forEachIndex);
-		_mkr = createMarker ["marker" + str _forEachIndex,_x];
-		_mkr setMarkerSize [1,1];
-		_mkr setMarkerType "mil_dot";
-		_mkr setMarkerColor "ColorYellow";
-	} foreach _inside;*/
 	private _pos = (_inside # (count _inside - 1)) # 1;
 	private _road = roadAt _pos;
 	_roadBlockClass = selectRandom [

@@ -1467,8 +1467,8 @@ class RscMapControl {
 	colorCountlinesWater[] = {0.491,0.577,0.702,0.3};
 	colorForest[] = {0.6,0.8,0.2,0.25};
 	colorForestBorder[] = {0,0,0,0};
-	colorGrid[] = {0.05,0.1,0,0.6};
-	colorGridMap[] = {0.05,0.1,0,0.4};
+	colorGrid[] = {0.05,0.1,0,0};
+	colorGridMap[] = {0.05,0.1,0,0};
 	colorInactive[] = {1,1,1,0.5};
 	colorLevels[] = {0,0,0,1};
 	colorMainCountlines[] = {0.858824,0,0,1};

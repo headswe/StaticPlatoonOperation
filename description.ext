@@ -47,12 +47,14 @@ class CfgFunctions
 		{
 			file = "functions";
 			class gear {};
-			class createPatrol {};
 			class createRoadBlock {};
 			class createGarrison {};
 			class missionSettingsDialog {};
 			class setup {};
 			class createFlare{};
+			class getReinforcementLocations {};
+			class getViableFactions {};
+			class createSquad {};
 		};
 	};
 };
@@ -146,6 +148,23 @@ class missionSetuipDialog: RscControlsGroup
 			text = "AI Ratio"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW;
 			y = 0.11 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.02 * safezoneH;
+		};
+		class vehicleFactionLabel: RscText
+		{
+			idc = 1003;
+			text = "Use vehicles from faction"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW;
+			y = 0.154 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.02 * safezoneH;
+		}
+		class vehicleFactionCombo: RscCombo
+		{
+			idc = 2003;
+			x = 0.01 * safezoneW;
+			y = 0.176 * safezoneH;
 			w = 0.2 * safezoneW;
 			h = 0.02 * safezoneH;
 		};
