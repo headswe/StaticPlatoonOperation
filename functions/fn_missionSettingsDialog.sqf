@@ -57,6 +57,7 @@ switch (_type) do {
 		publicVariable 'dsm_opforFaction';
 		dsm_aiRatio = parseNumber(_aiRatioControl lbData (lbCurSel _aiRatioControl));
 		dsm_vehicleFaction = _enemyFactionVehiclesControl lbData (lbCurSel _enemyFactionVehiclesControl);
+		publicVariable 'dsm_vehicleFaction';
 		remoteExecCall ['dsm_fnc_setup', 2, false];
 		closeDialog 1;
 	 };

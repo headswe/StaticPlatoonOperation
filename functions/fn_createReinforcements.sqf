@@ -34,6 +34,7 @@ if(dsm_vehicleFaction != '') then {
 	} foreach units _grp;
 		private _wp = _grp addWaypoint [getpos leader _grp, -1];
 		_wp setWaypointCompletionRadius 100;
+		_wp setWaypointTimeout  [3,6,9];
 		_wp = _grp addWaypoint [getpos leader _grp, -1];
 		_wp setWaypointCompletionRadius 100;
 		_wp setWaypointBehaviour "AWARE";
