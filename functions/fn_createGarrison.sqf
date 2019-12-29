@@ -10,8 +10,6 @@ private _buildingTangos = _amountOfUnits min (count _buildingPoses);
 
 private _garrisonGrp = createGroup east;
 _garrisonGrp setBehaviour "SAFE";
-_garrisonGrp setVariable ["TCL_Enhanced", True];
-
 
  for "_i" from 1 to _buildingTangos do {
 	private _buildingPos = _buildingPoses deleteAt 0;

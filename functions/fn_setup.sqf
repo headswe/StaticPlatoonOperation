@@ -29,7 +29,7 @@ dsm_guard_groups = [];
 	_grp setBehaviour "SAFE";
 	_grp allowFleeing 0;
 	dsm_guard_groups pushBack _grp;
-	_grp setVariable ["TCL_Enhanced", True];
+
 } foreach _directions;
 
 dsm_patrol_groups = [];
@@ -42,8 +42,6 @@ while {dsm_aiRatioCount > 0} do {
 	private _grp = [_spawnPos, _thisPatrolNumbers] call dsm_fnc_createSquad;
 	_grp setCombatMode "RED";
 	_grp allowFleeing 0;
-	_grp setVariable ["TCL_AI",[1, 0.15, 3, False, 3, 700, True, False, False, True, 170, False]]; 
-	_grp setVariable ["TCL_Enhanced", True];
 	_patrolDir = _patrolDir + random 180;
 
 
@@ -71,16 +69,26 @@ while {dsm_aiRatioCount > 0} do {
 	dsm_patrol_groups pushBack _grp;
 	dsm_aiRatioCount = dsm_aiRatioCount - _thisPatrolNumbers;
 };
-
+if(dsm_vehicleFaction != '') then {
+	private _vehicles = ((dsm_factions getVariable [dsm_vehicleFaction, []]) # 2) apply {[getArray ((_x) >> "threat")#0, _x]};
+	_vehicles = _vehicles select {
+		_x#0 >= 0.31 && !((_x#1 >> "isUav") call BIS_fnc_getCfgDataBool) 
+		&& ((configName (_x#1)) isKindOf "LandVehicle") 
+		&& !((configName (_x#1)) isKindOf "man");
+		};
+	_vehicleConfig = (selectRandom _vehicles #1);
+	_pos = [dsm_centerPos, 0, 200, 2, 0, 20, 0, [], [dsm_centerPos,dsm_centerPos]] call BIS_fnc_findSafePos;
+	private _grp = createGroup east;
+	private _veh = createVehicle [configName _vehicleConfig, _pos, [], 0,'FLY'];
+	private _crewCount = {round getNumber (_x >> "dontCreateAI") < 1 && 
+                      ((_x == _vehicleConfig && {round getNumber (_x >> "hasDriver") > 0}) ||
+                       (_x != _vehicleConfig && {round getNumber (_x >> "hasGunner") > 0}))} count ([configName _vehicleConfig, configNull] call BIS_fnc_getTurrets);
+	private _grp = [[0,0,0], _crewCount] call dsm_fnc_createSquad;
+	{_x moveInAny _veh} forEach units _grp;
+};
 
 AI_SPAWNED = true;
-TCL_Path = "TCL_System\"; 
-call compile preprocessFileLineNumbers (TCL_Path+"TCL_Preprocess.sqf"); 
 
-TCL_Initialize = True;
-TCL_Debug = [false, false, false, false, false, false, false]; 
-TCL_IQ = [0,300,3];
-TCL_RADIO set [1, 10];
 
 dsm_alert_triggerd = 0;
 [{
@@ -97,13 +105,13 @@ dsm_alert_triggerd = 0;
 			_wp setWaypointPosition (getpos leader _x);
 			_wp setWaypointType "MOVE";
 			_wp setWaypointCompletionRadius 100;
-			_wp = _x addWaypoint [getpos ([_playersKnown] call TMF_spectator_fnc_getGroupClusters select 0), -1];
+			_wp = _x addWaypoint [getpos (selectRandom _playersKnown), -1];
 			_wp setWaypointType "SAD";
 			_wp setWaypointCompletionRadius 100;
 		 } foreach dsm_patrol_groups;
 	};
 
-	private _reinforcement_groups = dsm_patrol_groups + dsm_guard_groups;
+	private _reinforcement_groups = (dsm_patrol_groups + dsm_guard_groups) select {({alive _x} count (units _x)) > 0};
 	{
 		_patrolGrp = _x;
 		_targets = (leader _patrolGrp nearTargets 400) select {_x # 2 == west};

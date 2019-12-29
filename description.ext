@@ -55,7 +55,8 @@ class CfgFunctions
 			class getReinforcementLocations {};
 			class getViableFactions {};
 			class createSquad {};
-			class fn_createReinforcements {};
+			class createReinforcements {};
+			class setObjective{};
 		};
 	};
 };
