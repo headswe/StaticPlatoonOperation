@@ -9,11 +9,10 @@ dsm_aiRatioCount =  round ((5 + (_playerCount * dsm_aiRatio) ) min 120);
 dsm_objective_radius = 150;
 dsm_perimeter_radius = 850;
 if(serverCommandAvailable "#kick") then {
-	onMapSingleClick {
-		params ['_pos'];
+	dsm_click_action = addMissionEventHandler ["MapSingleClick", {
+		params ["_units", "_pos", "_alt", "_shift"];
 		[[_pos#0, _pos#1, 0]] remoteExecCall ['dsm_fnc_setObjective',2]; 
-		onMapSingleClick ''
-	}
+	}];
 };
 if (!isServer) exitWith {}; // only run on server.
 	// AI Spawner... (Assault Objective)

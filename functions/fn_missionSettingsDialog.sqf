@@ -46,6 +46,7 @@ switch (_type) do {
 		_aiRatioControl lbSetCurSel 0;
 	 };
 	 case "done": {
+		removeMissionEventHandler ["MapSingleClick", dsm_click_action];
 		_dialog = uiNamespace getVariable ["dsm_dialog_setup", displayNull];
 		private _pFactionControl = _dialog displayCtrl 2100;
 		private _eFactionControl = _dialog displayCtrl 2101;

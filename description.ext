@@ -60,6 +60,7 @@ class CfgFunctions
 			class createGuardPoint{};
 			class createPatrol{};
 			class createVehicle{};
+			class onGarrisonTrigger{};
 		};
 	};
 };
@@ -159,7 +160,7 @@ class missionSetuipDialog: RscControlsGroup
 		class vehicleFactionLabel: RscText
 		{
 			idc = 1003;
-			text = "Use vehicles from faction"; //--- ToDo: Localize;
+			text = "Enemies use vehicles from faction"; //--- ToDo: Localize;
 			x = 0.005 * safezoneW;
 			y = 0.154 * safezoneH;
 			w = 0.2 * safezoneW;

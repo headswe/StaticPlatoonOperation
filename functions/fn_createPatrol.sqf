@@ -1,4 +1,4 @@
-	["_numberOfMen", "_spawnPos" , "_patrolDir"];
+	this params ["_numberOfMen", "_spawnPos" , "_patrolDir"];
 	private _grp = [_spawnPos, _numberOfMen] call dsm_fnc_createSquad;
 	_grp setCombatMode "RED";
 	_grp allowFleeing 0;

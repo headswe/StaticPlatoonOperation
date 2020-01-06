@@ -81,7 +81,7 @@ _onPathFinished = {
 		private _spawnPos = _this # 1;
 		for "_i" from 1 to 4 do {
 			private _role = selectRandom ['r','r','r','ftl','aar','ar','rat'];
-			private _solider = _grp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];
+			private _solider = _grp createUnit ['O_Soldier_F',[0,0,0],[],1,'NONE'];
 			[_solider, _role] call dsm_fnc_gear;
 		};
 	//	[_grp, _spawnPos, 25, "GUARD", "AWARE", "YELLOW", "FULL", "STAG COLUMN"] call CBA_fnc_addWaypoint;

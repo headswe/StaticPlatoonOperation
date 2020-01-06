@@ -1,5 +1,5 @@
 	params ["_spawnPos"];
-	private _overwatchPos = [dsm_centerPos, 500, 0,50, _spawnPos] call BIS_fnc_findOverwatch;
+	private _overwatchPos = [dsm_centerPos, dsm_perimeter_radius, dsm_objective_radius*3,5, _spawnPos] call BIS_fnc_findOverwatch;
 	if(_overwatchPos isEqualTo _spawnPos) then {
 		_spawnPos = _spawnPos findEmptyPosition [0, 30, "B_Quadbike_01_F"];
 	} else {

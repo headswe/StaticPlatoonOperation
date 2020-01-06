@@ -2,7 +2,7 @@ private _playerCount = (count (playableUnits + switchableUnits)) max 1;
 if(!isMultiplayer) then {
 	_playerCount = 6;
 };
-dsm_aiRatioCount =  round ((5 + (_playerCount * dsm_aiRatio) ) min 120);
+dsm_aiRatioCount = (_playerCount * dsm_aiRatio) min 180;
 
 {
 	[_x] remoteExec ["dsm_fnc_gear", _x];
@@ -11,13 +11,14 @@ dsm_aiRatioCount =  round ((5 + (_playerCount * dsm_aiRatio) ) min 120);
 
 // Spawn garrison
 _garrisonUnits = round (dsm_aiRatioCount*selectRandom [0.3,0.35,0.4]);
-([dsm_centerPos, _garrisonUnits, dsm_objective_radius] call dsm_fnc_createGarrison) params ['_unitsCreated', '_garrisonGrp'];
-dsm_garrison_group = _garrisonGrp;
-dsm_aiRatioCount = dsm_aiRatioCount - _unitsCreated;
+([dsm_centerPos, _garrisonUnits, dsm_objective_radius] call dsm_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
+dsm_garrison_groups = _garrisonGrps;
+dsm_garrison_units = _spawnedUnits;
+dsm_aiRatioCount = dsm_aiRatioCount - count _spawnedUnits;
 dsm_guard_groups = [];
 dsm_patrol_groups = [];
 
-// Spawn guards
+// Spawn guards	
 _directions = [random 90, random 90 + 90, random 90 + 180, random 90 + 270];
 [_directions, true] call CBA_fnc_shuffle;
 
@@ -53,24 +54,31 @@ AI_SPAWNED = true;
 
 dsm_alert_triggerd = 0;
 [{
+	_blueforUnits = allUnits select {side _x == blufor};
 	// garrison spotting
-	private _playersKnown =  ((playableUnits + switchableUnits)) select {dsm_garrison_group knowsAbout _x >= 2};
-	if((count _playersKnown > 0 && (time - dsm_alert_triggerd) >= 30)) then {
-		 dsm_alert_triggerd = time;
-		 {
-			[_x] call CBA_fnc_clearWaypoints;
-			private _wp = _x addWaypoint [getpos leader _x, -1];
-			_wp = _x addWaypoint [getpos leader _x, -1];
-			_wp setWaypointBehaviour "SAFE";
-			_wp setWaypointSpeed "FULL";
-			_wp setWaypointPosition (getpos leader _x);
-			_wp setWaypointType "MOVE";
-			_wp setWaypointCompletionRadius 100;
-			_wp = _x addWaypoint [getpos (selectRandom _playersKnown), -1];
-			_wp setWaypointType "SAD";
-			_wp setWaypointCompletionRadius 200;
-		 } foreach dsm_patrol_groups;
-	};
+	{
+		private _grp = _x;
+		private _playersKnown =  _blueforUnits select { _grp knowsAbout _x >= 2};
+		if((count _playersKnown > 0 && (time - dsm_alert_triggerd) >= 30)) then {
+			dsm_alert_triggerd = time;
+			{
+				[_x] call CBA_fnc_clearWaypoints;
+				private _wp = _x addWaypoint [getpos leader _x, -1];
+				_wp = _x addWaypoint [getpos leader _x, -1];
+				_wp setWaypointBehaviour "AWARE";
+				_wp setWaypointSpeed "FULL";
+				_wp setWaypointPosition (getpos leader _x);
+				_wp setWaypointType "MOVE";
+				_wp setWaypointCompletionRadius 100;
+				_wp = _x addWaypoint [getpos (selectRandom _playersKnown), -1];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointCompletionRadius 200;
+				_wp = _x addWaypoint [getpos (selectRandom _playersKnown), -1];
+				_wp setWaypointType "SAD";
+				_wp setWaypointCompletionRadius 200;
+			} foreach dsm_patrol_groups;
+		}; 
+	} foreach dsm_garrison_groups;
 
 	private _reinforcement_groups = (dsm_patrol_groups + dsm_guard_groups) select {({alive _x} count (units _x)) > 0};
 	{
@@ -102,6 +110,9 @@ dsm_alert_triggerd = 0;
 				_wp setWaypointType "MOVE";
 				_squad setCurrentWaypoint _wp;
 				_wp = _squad addWaypoint [getpos leader _patrolGrp, -1];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointCompletionRadius 200;
+				_wp = _squad addWaypoint [getpos leader _patrolGrp, -1];
 				_wp setWaypointType "SAD";
 				_wp setWaypointCompletionRadius 200;
 				systemChat "reinforcement sent";
@@ -109,5 +120,25 @@ dsm_alert_triggerd = 0;
 				
 			}
 		}
-	} foreach _reinforcement_groups
-}, 10] call CBA_fnc_addPerFrameHandler
+	} foreach dsm_patrol_groups;
+
+	{
+		private _data = _x getVariable ["dsm_garrisonData", []];
+		if(count _data >= 1) then {
+			private _num = {(getPos _x) inArea _data} count _blueforUnits;
+			if(_num > 0) then {
+				{
+					_x enableAI "PATH";
+					_x setUnitPos "AUTO";
+				} forEach units _x;
+
+				private _wp = _x addWaypoint [getPos (leader _x), -1];
+				_wp setWaypointType "MOVE";
+				_wp setWaypointCompletionRadius 300;
+				_wp setWaypointType "SAD";
+				_wp setWaypointCompletionRadius 300;
+				_x setVariable ["dsm_triggered", true];
+			}
+		};
+	} foreach (dsm_garrison_groups select {!(_x getVariable ["dsm_triggered", false])});
+}, 5] call CBA_fnc_addPerFrameHandler

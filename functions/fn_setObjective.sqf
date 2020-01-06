@@ -1,5 +1,6 @@
 params ['_centerPos'];
 // Assault Marker
+deleteMarker "assaultObjective";
 _mkr = createMarker ["assaultObjective",_centerPos];
 _mkr setMarkerSize [0.5,0.5];
 _mkr setMarkerType "mil_dot";
@@ -7,6 +8,7 @@ _mkr setMarkerColor "ColorRed";
 
 // Perimeter.
 dsm_perimeter_mkrName = "assaultObjectivePerimeter";
+deleteMarker dsm_perimeter_mkrName;
 _mkr = createMarker [dsm_perimeter_mkrName,_centerPos];
 _mkr setMarkerShape "ELLIPSE";
 _mkr setMarkerBrush "Border";
@@ -14,6 +16,7 @@ _mkr setMarkerSize [dsm_objective_radius,dsm_objective_radius];
 _mkr setMarkerColor "ColorRed";
 
 // Teleport permiter
+deleteMarker "assaultObjectiveTP";
 _mkr = createMarker ["assaultObjectiveTP",_centerPos];
 _mkr setMarkerShape "ELLIPSE";
 _mkr setMarkerBrush "Border";
