@@ -14,26 +14,6 @@ if(serverCommandAvailable "#kick") then {
 		[[_pos#0, _pos#1, 0]] remoteExecCall ['dsm_fnc_setObjective',2]; 
 	}];
 };
-if (!isServer) exitWith {}; // only run on server.
-	// AI Spawner... (Assault Objective)
-
-	
-private _locationMarkers = [];
-for "_i" from 1 to 200 do {
-	private _location = getMarkerPos format ["assault_%1",_i];
-	if (_location isEqualTo [0,0,0]) exitWith {};
-	_locationMarkers pushBack _location;
-};
-[_locationMarkers,true] call CBA_fnc_shuffle; 
-
-
-
-
-
-
-/////// AI SPAWN
-
+if (!isServer) exitWith {};
 // Number of players
-[] call dsm_fnc_getViableFactions;
-
 

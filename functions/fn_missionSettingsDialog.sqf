@@ -42,7 +42,7 @@ switch (_type) do {
 			_i = _i + 2; 
 			_index = _aiRatioControl lbAdd (str _i);
 			_aiRatioControl lbSetData [_index,str _i];
-		} forEach [1,2,3,4,5,6,7,9,10];
+		} forEach [1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 		_aiRatioControl lbSetCurSel 0;
 	 };
 	 case "done": {
@@ -57,6 +57,7 @@ switch (_type) do {
 		dsm_opforFaction = _eFactionControl lbData (lbCurSel _eFactionControl);
 		publicVariable 'dsm_opforFaction';
 		dsm_aiRatio = parseNumber(_aiRatioControl lbData (lbCurSel _aiRatioControl));
+		publicVariable 'dsm_aiRatio';
 		dsm_vehicleFaction = _enemyFactionVehiclesControl lbData (lbCurSel _enemyFactionVehiclesControl);
 		publicVariable 'dsm_vehicleFaction';
 		remoteExecCall ['dsm_fnc_setup', 2, false];

@@ -59,6 +59,7 @@ class CfgFunctions
 			class setObjective{};
 			class createGuardPoint{};
 			class createPatrol{};
+			class patrol{};
 			class createVehicle{};
 			class onGarrisonTrigger{};
 		};

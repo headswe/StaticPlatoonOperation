@@ -1,17 +1,15 @@
 private _playerCount = (count (playableUnits + switchableUnits)) max 1;
-if(!isMultiplayer) then {
-	_playerCount = 6;
-};
-dsm_aiRatioCount = (_playerCount * dsm_aiRatio) min 180;
+dsm_aiRatioCount =  round ((5 + (_playerCount * dsm_aiRatio) ) min 180);
 
 {
 	[_x] remoteExec ["dsm_fnc_gear", _x];
+	[] remoteExec ["TMF_acre2_fnc_clientInit", _x];
 } foreach (allUnits select {side _x == blufor});
 
 
 // Spawn garrison
 _garrisonUnits = round (dsm_aiRatioCount*selectRandom [0.3,0.35,0.4]);
-([dsm_centerPos, _garrisonUnits, dsm_objective_radius] call dsm_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
+([dsm_centerPos, _garrisonUnits, dsm_objective_radius*(selectRandom [1,1.1,1.2,1.3])] call dsm_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
 dsm_garrison_groups = _garrisonGrps;
 dsm_garrison_units = _spawnedUnits;
 dsm_aiRatioCount = dsm_aiRatioCount - count _spawnedUnits;
@@ -30,7 +28,7 @@ _directions = [random 90, random 90 + 90, random 90 + 180, random 90 + 270];
 // patrol time
 while {dsm_aiRatioCount > 0} do {
 	private _numberOfMen = dsm_aiRatioCount;
-	if (dsm_aiRatioCount > 6) then { _numberOfMen = round(2 + random 4);};
+	if (dsm_aiRatioCount > 6) then { _numberOfMen = round(2 + random 6);};
 	_patrolDir = random 360;
 	private _spawnPos = dsm_centerPos getpos [(dsm_objective_radius+(random dsm_perimeter_radius)) min dsm_perimeter_radius , _patrolDir];
 	[_numberOfMen, _spawnPos, _patrolDir] call dsm_fnc_createPatrol;
@@ -44,7 +42,8 @@ if(dsm_vehicleFaction != '') then {
 	};
 	for "_i" from 1 to _numberOfVehicles do { 
 		if(_i == 1) then {
-			[dsm_centerPos, 'combat'] call dsm_fnc_createVehicle;
+			private _createdVeh = [dsm_centerPos, 'combat'] call dsm_fnc_createVehicle;
+			[group (effectiveCommander _createdVeh),dsm_centerPos, 1, 4, dsm_objective_radius, true] call dsm_fnc_patrol;
 		}
 	};
 };
@@ -97,7 +96,7 @@ dsm_alert_triggerd = 0;
 				}
 			};
 			if(!isNull _squad) then {
-				[getpos leader _x] call dsm_fnc_createFlare;
+			//	[getpos leader _x] call dsm_fnc_createFlare;
 				_patrolGrp setVariable ["dsm_reinforcement_called", time];
 				{_squad reveal [_x # 4, (_patrolGrp knowsAbout _x # 4)]} forEach _targets;
 				[_squad] call CBA_fnc_clearWaypoints;

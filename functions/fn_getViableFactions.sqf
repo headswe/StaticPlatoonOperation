@@ -1,4 +1,4 @@
-private _allVehs = "(configName _x) isKindOf 'AllVehicles' && !((configName _x) isKindOf 'Man')" configClasses (configFile >> "CfgVehicles");
+private _allVehs = ("true" configClasses (configFile >> "CfgVehicles")) select {{(configName _x) isKindOf 'AllVehicles' && !((configName _x) isKindOf 'Man')}};
 
 dsm_factions = [true] call CBA_fnc_createNamespace;
 publicVariable "dsm_factions";

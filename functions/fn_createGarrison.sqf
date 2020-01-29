@@ -31,13 +31,6 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 		private _buildingSize = (boundingBox _building) # 2;
 
 		_grp setVariable ["dsm_garrisonData", [_buildingCenter, _buildingSize * 1.3, _buildingSize * 1.3, 0, false]];
-		/*
-		private _trg = createTrigger ["EmptyDetector", _buildingCenter];
-		_trg setTriggerArea [_buildingSize, _buildingSize, 0, false];
-		_trg setVariable ["grp", _grp];
-		_trg setTriggerActivation ["WEST", "EAST D", false];
-		_trg setTriggerStatements ["this", "[thisTrigger] call dsm_fnc_onGarrisonTrigger;", ""];
-		*/
 	};
 
 	private _posIndex = _poses call BIS_fnc_randomIndex;
@@ -58,5 +51,4 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 		_buildings deleteAt _index;
 	}
 };
-
 [_spawnedUnits, _groups]
