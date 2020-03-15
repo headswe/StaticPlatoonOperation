@@ -6,9 +6,10 @@
 		_spawnPos = _overwatchPos;
 	};
 	"Campfire_burning_F" createVehicle _spawnPos;
-	private _grp = [_spawnPos, 2] call dsm_fnc_createSquad;
+	private _grp = [_spawnPos, random [2,3,4]] call dsm_fnc_createSquad;
 	_grp setBehaviour "SAFE";
 	_grp allowFleeing 0;
 	_grp setVariable ["dsm_grp_type", 'guard'];
-	[_grp, _spawnPos, 0, 4, random 50, true] call dsm_fnc_patrol;
-	dsm_guard_groups pushBack _grp;
+	[_grp, _spawnPos, 0, 4, random [25,40,50], true] call dsm_fnc_patrol;
+	dsm_patrol_groups pushBack _grp;
+	

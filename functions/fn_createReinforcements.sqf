@@ -4,6 +4,9 @@ if(dsm_vehicleFaction == '') exitWith {
 };
 private _createdVeh = objNull;
 _createdVeh = [dsm_centerPos, 'combat', true] call dsm_fnc_createVehicle;
+if(isNull _createdVeh) then {
+	_createdVeh = [dsm_centerPos, 'transport', true] call dsm_fnc_createVehicle;
+};
 private _grp = group effectiveCommander _createdVeh;
 // waypoint
 private _wp = _grp addWaypoint [getpos leader _grp, -1];

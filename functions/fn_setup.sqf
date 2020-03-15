@@ -8,12 +8,11 @@ dsm_aiRatioCount =  round ((5 + (_playerCount * dsm_aiRatio) ) min 180);
 
 
 // Spawn garrison
-_garrisonUnits = round (dsm_aiRatioCount*selectRandom [0.3,0.35,0.4]);
-([dsm_centerPos, _garrisonUnits, dsm_objective_radius*(selectRandom [1,1.1,1.2,1.3])] call dsm_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
+_garrisonUnits = round (dsm_aiRatioCount* random [0.3,0.35,0.4]);
+([dsm_centerPos, _garrisonUnits, dsm_objective_radius*(random [1,1.2,1.3])] call dsm_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
 dsm_garrison_groups = _garrisonGrps;
 dsm_garrison_units = _spawnedUnits;
 dsm_aiRatioCount = dsm_aiRatioCount - count _spawnedUnits;
-dsm_guard_groups = [];
 dsm_patrol_groups = [];
 
 // Spawn guards	
@@ -27,8 +26,7 @@ _directions = [random 90, random 90 + 90, random 90 + 180, random 90 + 270];
 
 // patrol time
 while {dsm_aiRatioCount > 0} do {
-	private _numberOfMen = dsm_aiRatioCount;
-	if (dsm_aiRatioCount > 6) then { _numberOfMen = round(2 + random 6);};
+	private _numberOfMen = (random [3,5,6]) min (dsm_aiRatioCount);
 	_patrolDir = random 360;
 	private _spawnPos = dsm_centerPos getpos [(dsm_objective_radius+(random dsm_perimeter_radius)) min dsm_perimeter_radius , _patrolDir];
 	[_numberOfMen, _spawnPos, _patrolDir] call dsm_fnc_createPatrol;
@@ -52,6 +50,7 @@ AI_SPAWNED = true;
 
 
 dsm_alert_triggerd = 0;
+/*
 [{
 	_blueforUnits = allUnits select {side _x == blufor};
 	// garrison spotting
@@ -141,3 +140,6 @@ dsm_alert_triggerd = 0;
 		};
 	} foreach (dsm_garrison_groups select {!(_x getVariable ["dsm_triggered", false])});
 }, 5] call CBA_fnc_addPerFrameHandler
+*/ 
+dsm_patrol_statemachine = [(missionconfigfile >> "SPO_PatrolStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
+dsm_garrison_statemachine = [(missionconfigfile >> "SPO_GarrisonStateMachine")] call CBA_statemachine_fnc_createFromConfig; 

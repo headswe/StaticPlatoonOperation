@@ -1,7 +1,7 @@
 params [["_spawnPos",dsm_centerPos], ["_type", "transport", ["transport", "combat"]] , ["_flying", false], ["_static", false], ["_boat", false] ];
 
 private _pos = [_spawnPos, 0, dsm_objective_radius, 2, 0, 20, 0, [], [_spawnPos,_spawnPos]] call BIS_fnc_findSafePos;
-private _vehicles = ((dsm_factions getVariable [dsm_vehicleFaction, []]) # 2) select {!((_x >> "isUav") call BIS_fnc_getCfgDataBool)};
+private _vehicles = ((dsm_factionsVehicles getVariable [dsm_vehicleFaction, []]) # 2) select {!((_x >> "isUav") call BIS_fnc_getCfgDataBool)};
 if(!_boat) then {
 	_vehicles = _vehicles select {!((configName _x) isKindOf "Ship")};
 };

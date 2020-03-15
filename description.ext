@@ -61,7 +61,11 @@ class CfgFunctions
 			class createPatrol{};
 			class patrol{};
 			class createVehicle{};
-			class onGarrisonTrigger{};
+			class inContact{};
+			class onReinforceing{};
+			class requestReinforcement{};
+			class nearGarrison{};
+			class onGarrisonActivated{};
 		};
 	};
 };
@@ -197,3 +201,78 @@ class missionSetuipDialog: RscControlsGroup
 		};
 	};
 };
+
+class SPO_PatrolStateMachine {
+	list = "dsm_patrol_groups select {({alive _x} count (units _x)) > 0}";
+	skipNull = 1;
+	class Initial {
+        onState = "";
+        onStateEntered = "";
+        onStateLeaving = "";
+
+		class OnContact {
+			targetState = "Combat";
+			condition = "dsm_fnc_inContact";
+		}
+		class ReinforcementRequestRecived {
+			targetState = "Reinforceing";
+			condition = "!isNull (_this getVariable ['dsm_reinforceing', grpNull])";
+		}
+	};
+
+	class Reinforceing {
+		onStateEntered = "dsm_fnc_onReinforceing";
+		class SearchCompletedNoTargets {
+			targetState = "Initial";
+			// if finished searching and no contacts, go back to normal
+			condition = "isNull (_this getVariable ['dsm_reinforceing', grpNull]) && !(_this call dsm_fnc_inContact)";
+		}
+		class SearchCompleted {
+			targetState = "Initial"; // add SearchAndDestory
+			// if finished SAD waypoint and have targets.
+			condition = "isNull (_this getVariable ['dsm_reinforceing', grpNull]) && (_this call dsm_fnc_inContact)";
+		}
+	}
+
+	class SearchAndDestory {
+        onStateEntered = "";
+	}
+
+	class Combat {
+        onStateEntered = "systemChat 'Entered Combat'";
+		
+		class RequestReinforcement  {
+			targetState = "RequestReinforcement";
+			// can call reinforcement every 60 seconds
+			condition = "time - (_this getVariable ['dsm_reinforcement_called', 0]) > 60";
+		}
+		class NoContacs {
+			targetState = "Initial";
+			condition = "!(_this call dsm_fnc_inContact)";
+		}
+	}
+
+	class RequestReinforcement {
+		onStateEntered = "dsm_fnc_requestReinforcement"
+		class Done {
+			targetState = "Combat"
+			condition = "true"
+		}
+	}
+};
+
+class SPO_GarrisonStateMachine {
+	list = "dsm_garrison_groups";
+	skipNull = 1;
+
+	class Garrisoned {
+		class Activate {
+			targetState = "Activated";
+			condition = "dsm_fnc_nearGarrison";
+		};
+	};
+
+	class Activated {
+		onStateEntered = "dsm_fnc_onGarrisonActivated"
+	}
+}

@@ -25,10 +25,10 @@ switch (_type) do {
 		_enemyFactionVehiclesControl lbSetCurSel _index;
 		// add factions
 		{
-			(dsm_factions getVariable _x) params ['_faction', '_displayName'];
+			_x params ['_faction', '_displayName'];
 			_index = _enemyFactionVehiclesControl lbAdd _displayName;
-			_enemyFactionVehiclesControl lbSetData [_index, _x];
-		} forEach (allVariables dsm_factions);
+			_enemyFactionVehiclesControl lbSetData [_index, _faction];
+		} forEach dsm_factions;
 
 		// sort
 		lbSort [_pFactionControl, "ASC"];
