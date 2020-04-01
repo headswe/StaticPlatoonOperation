@@ -17,7 +17,7 @@ switch (_type) do {
 			_vehicles = _vehicles select {[_x , 'transportSoldier'] call BIS_fnc_getCfg > 3};
 		};
 		case "combat": {
-			_vehicles = _vehicles select {(((_x >> "threat") call BIS_fnc_getCfgDataArray)#0) > 0.3};
+			_vehicles = _vehicles select {(((_x >> "threat") call BIS_fnc_getCfgDataArray)#0) > 0.45};
 		};
 	default { };
 };

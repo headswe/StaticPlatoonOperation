@@ -19,7 +19,7 @@ if(_type == 0) then {
 		};
 		private _type = "Move";
 		if(_index == _numberOfWaypoints+1) then {_type = "CYCLE"};
-		private _wp = [_grp, _point, -1, _type] call CBA_fnc_addWaypoint;
+		private _wp = [_grp, _point, 0, _type] call CBA_fnc_addWaypoint;
 		if(_index == 1) then {
 			_wp setWaypointBehaviour "SAFE";
 			_wp setWaypointFormation "STAG COLUMN";
@@ -45,15 +45,15 @@ if(_type == 1) then {
 	private _bottomright = (_pos vectorAdd [(_radius/2),(_radius/2),0]) call _quickFunc;
 
 	private _type = "MOVE";
-	private _wp = [_grp, _topleft, -1, _type] call CBA_fnc_addWaypoint;
+	private _wp = [_grp, _topleft, 0, _type] call CBA_fnc_addWaypoint;
 	_wp setWaypointBehaviour "SAFE";
 	_wp setWaypointFormation "STAG COLUMN";
 	_wp setWaypointSpeed "LIMITED";
 
-	private _wp = [_grp, _topright, -1, _type] call CBA_fnc_addWaypoint;
-	private _wp = [_grp, _bottomright, -1, _type] call CBA_fnc_addWaypoint;
-	private _wp = [_grp, _bottomleft, -1, _type] call CBA_fnc_addWaypoint;
-	private _wp = [_grp, _bottomleft, -1, "CYCLE"] call CBA_fnc_addWaypoint;
+	private _wp = [_grp, _topright, 0, _type] call CBA_fnc_addWaypoint;
+	private _wp = [_grp, _bottomright, 0, _type] call CBA_fnc_addWaypoint;
+	private _wp = [_grp, _bottomleft, 0, _type] call CBA_fnc_addWaypoint;
+	private _wp = [_grp, _bottomleft, 0, "CYCLE"] call CBA_fnc_addWaypoint;
 };
 if(_type == 2) then {
 	private _roads = [];
@@ -71,7 +71,7 @@ if(_type == 2) then {
 		};
 		private _type = "Move";
 		if(_index == _numberOfWaypoints+1) then {_type = "CYCLE"};
-		private _wp = [_grp, _point, -1, _type] call CBA_fnc_addWaypoint;
+		private _wp = [_grp, _point, 0, _type] call CBA_fnc_addWaypoint;
 		if(_index == 1) then {
 			_wp setWaypointBehaviour "SAFE";
 			_wp setWaypointFormation "STAG COLUMN";

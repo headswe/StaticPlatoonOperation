@@ -2,7 +2,7 @@ tmf_version[] = {1,0,1}; // DO NOT CHANGE THIS. This is the core version of the 
 enableDebugConsole = 1; // Allows the logged in admin to use the debug console from the escape page.
 
 // Use a randomized loading image from TMF. Set your own loading image with e.g. overviewPicture = "image.jpg";
-overviewPicture = __EVAL(selectRandom ['\x\tmf\addons\common\ui\loadscreens\1.jpg','\x\tmf\addons\common\ui\loadscreens\2.jpg','\x\tmf\addons\common\ui\loadscreens\3.jpg','\x\tmf\addons\common\ui\loadscreens\4.jpg','\x\tmf\addons\common\ui\loadscreens\5.jpg','\x\tmf\addons\common\ui\loadscreens\6.jpg','\x\tmf\addons\common\ui\loadscreens\7.jpg','\x\tmf\addons\common\ui\loadscreens\8.jpg','\x\tmf\addons\common\ui\loadscreens\9.jpg','\x\tmf\addons\common\ui\loadscreens\10.jpg']);
+overviewPicture = "";
 
 class CfgDebriefingSections {
     class acex_killTracker {
@@ -38,6 +38,7 @@ class Extended_PreInit_EventHandlers {
         init = "call compile preprocessFileLineNumbers 'XEH_preInit.sqf';";
     };
 };
+#include "ui_macros.hpp"
 
 class CfgFunctions
 {
@@ -64,16 +65,20 @@ class CfgFunctions
 			class inContact{};
 			class onReinforceing{};
 			class requestReinforcement{};
+			class reveal{};
 			class nearGarrison{};
 			class onGarrisonActivated{};
 		};
+		class mission {
+			file = "functions\mission";
+			class onSadStart{};
+			class onSadEnd{};
+		}
 	};
 };
 
 class Params {
 };
-
-#include "ui_macros.hpp"
 class missionSetuipDialog: RscControlsGroup
 {
 	idd = 2300;
@@ -170,7 +175,7 @@ class missionSetuipDialog: RscControlsGroup
 			y = 0.154 * safezoneH;
 			w = 0.2 * safezoneW;
 			h = 0.02 * safezoneH;
-		}
+		};
 		class vehicleFactionCombo: RscCombo
 		{
 			idc = 2003;
@@ -213,30 +218,39 @@ class SPO_PatrolStateMachine {
 		class OnContact {
 			targetState = "Combat";
 			condition = "dsm_fnc_inContact";
-		}
+		};
 		class ReinforcementRequestRecived {
-			targetState = "Reinforceing";
+			targetState = "MovingToReinforcementLocation";
 			condition = "!isNull (_this getVariable ['dsm_reinforceing', grpNull])";
-		}
+		};
+	};
+
+	class MovingToReinforcementLocation {
+		onStateEntered = "dsm_fnc_onReinforceing";
+		onStateLeaving = "systemChat 'Group arrived at location'";
+		class Arrived {
+			targetState = "Reinforceing";
+			condition = "_this getVariable ['dsm_reinforcement_location',getpos (leader _this)] distance (leader _this) <= 10";
+		};
 	};
 
 	class Reinforceing {
-		onStateEntered = "dsm_fnc_onReinforceing";
+		onStateEntered="[_this, _this getVariable ['dsm_reinforceing', this]] call dsm_fnc_reveal";
 		class SearchCompletedNoTargets {
 			targetState = "Initial";
 			// if finished searching and no contacts, go back to normal
 			condition = "isNull (_this getVariable ['dsm_reinforceing', grpNull]) && !(_this call dsm_fnc_inContact)";
-		}
+		};
 		class SearchCompleted {
 			targetState = "Initial"; // add SearchAndDestory
 			// if finished SAD waypoint and have targets.
 			condition = "isNull (_this getVariable ['dsm_reinforceing', grpNull]) && (_this call dsm_fnc_inContact)";
-		}
-	}
+		};
+	};
 
 	class SearchAndDestory {
         onStateEntered = "";
-	}
+	};
 
 	class Combat {
         onStateEntered = "systemChat 'Entered Combat'";
@@ -245,20 +259,20 @@ class SPO_PatrolStateMachine {
 			targetState = "RequestReinforcement";
 			// can call reinforcement every 60 seconds
 			condition = "time - (_this getVariable ['dsm_reinforcement_called', 0]) > 60";
-		}
+		};
 		class NoContacs {
 			targetState = "Initial";
 			condition = "!(_this call dsm_fnc_inContact)";
-		}
-	}
+		};
+	};
 
 	class RequestReinforcement {
-		onStateEntered = "dsm_fnc_requestReinforcement"
+		onStateEntered = "dsm_fnc_requestReinforcement";
 		class Done {
-			targetState = "Combat"
-			condition = "true"
-		}
-	}
+			targetState = "Combat";
+			condition = "true";
+		};
+	};
 };
 
 class SPO_GarrisonStateMachine {
@@ -274,5 +288,25 @@ class SPO_GarrisonStateMachine {
 
 	class Activated {
 		onStateEntered = "dsm_fnc_onGarrisonActivated"
+	};
+};
+
+
+class SPO_SAD_MissionStateMachine {
+	list = "[dsm_mission_object]";
+	class Startup {
+		onStateEntered = "dsm_fnc_onSadStart";
+
+		class Victory {
+			condition="(_this getVariable ['dsm_enemyCount',0]) >= (count (allUnits select {side _x == EAST}))";
+			targetState = "Win";
+		}
 	}
+	class Win {
+		onStateEntered="dsm_fnc_onSadEnd"
+	}
+
+}
+class SPO_HVT_MissionStateMachine {
+	list = "[dsm_mission_object]";
 }

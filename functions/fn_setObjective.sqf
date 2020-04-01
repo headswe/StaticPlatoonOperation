@@ -1,4 +1,5 @@
 params ['_centerPos'];
+_centerPos set [2,0];
 // Assault Marker
 deleteMarker "assaultObjective";
 _mkr = createMarker ["assaultObjective",_centerPos];
