@@ -69,3 +69,7 @@ dsm_alert_triggerd = 0;
 dsm_patrol_statemachine = [(missionconfigfile >> "SPO_PatrolStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
 dsm_garrison_statemachine = [(missionconfigfile >> "SPO_GarrisonStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
 dsm_mission_statemachine = [(missionconfigfile >> "SPO_SAD_MissionStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
+
+
+private _enemyFactionMsg = format ["Enemy Faction: %1", getText (configFile >> "CfgLoadouts" >> dsm_opforFaction >> "displayName")];
+_enemyFactionMsg remoteExec ["systemChat"];
