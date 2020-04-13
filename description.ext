@@ -257,8 +257,8 @@ class SPO_PatrolStateMachine {
 		
 		class RequestReinforcement  {
 			targetState = "RequestReinforcement";
-			// can call reinforcement every 60 seconds
-			condition = "time - (_this getVariable ['dsm_reinforcement_called', 0]) > 60";
+			// can call reinforcement every 15 seconds
+			condition = "time - (_this getVariable ['dsm_reinforcement_called', 0]) > 15";
 		};
 		class NoContacs {
 			targetState = "Initial";
