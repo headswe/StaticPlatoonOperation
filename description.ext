@@ -74,6 +74,10 @@ class CfgFunctions
 			class onSadStart{};
 			class onSadEnd{};
 		}
+		class vehicles {
+			file = "functions\vehicles";
+			class getCombatVehicle{};
+		}
 	};
 };
 

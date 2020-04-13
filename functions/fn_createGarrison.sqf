@@ -35,7 +35,7 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 
 	private _posIndex = _poses call BIS_fnc_randomIndex;
 	private _buildingPos = _poses # _posIndex;
-	private _role = selectRandom ['r','r','r','ftl','aar','ar','rat'];
+	private _role = selectRandom spo_allowedRoles;
 	private _solider = _grp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];
 
 	_solider setPos _buildingPos;

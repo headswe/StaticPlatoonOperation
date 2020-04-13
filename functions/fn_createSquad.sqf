@@ -1,4 +1,4 @@
-params ['_spawnPos', '_numberOfMen', ['_roles', ['r','ftl','g','aar','ar','rat','m','mmgg', 'dm' , 'sn', 'matg']], ['_random', true]];
+params ['_spawnPos', '_numberOfMen', ['_roles', spo_allowedRoles], ['_random', true]];
 private _grp = createGroup east;
 private _usedRoles = +_roles;
 while {_numberOfMen > 0} do {
