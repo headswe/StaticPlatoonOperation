@@ -3,13 +3,13 @@ disableSerialization;
 switch (_type) do {
 	case "onLoad": {
 		_args params ['_dialog'];
-		uiNamespace setVariable ["dsm_dialog_setup", _dialog];
+		uiNamespace setVariable ["spo_dialog_setup", _dialog];
 		private _pFactionControl = _dialog displayCtrl 2100;
 		private _eFactionControl = _dialog displayCtrl 2101;
 		private _enemyFactionVehiclesControl = _dialog displayCtrl 2003;
 		private _aiRatioControl = _dialog displayCtrl 1900;
 		private _map = _dialog displayCtrl 1801;
-		_map ctrlMapAnimAdd [0, 0.2, dsm_centerPos];
+		_map ctrlMapAnimAdd [0, 0.2, spo_centerPos];
 		_loadouts = ("true" configClasses (configFile >> "CfgLoadouts"));
 		ctrlMapAnimCommit _map;
 		{
@@ -28,7 +28,7 @@ switch (_type) do {
 			_x params ['_faction', '_displayName'];
 			_index = _enemyFactionVehiclesControl lbAdd _displayName;
 			_enemyFactionVehiclesControl lbSetData [_index, _faction];
-		} forEach dsm_factions;
+		} forEach spo_factions;
 
 		// sort
 		lbSort [_pFactionControl, "ASC"];
@@ -46,21 +46,21 @@ switch (_type) do {
 		_aiRatioControl lbSetCurSel 0;
 	 };
 	 case "done": {
-		removeMissionEventHandler ["MapSingleClick", dsm_click_action];
-		_dialog = uiNamespace getVariable ["dsm_dialog_setup", displayNull];
+		removeMissionEventHandler ["MapSingleClick", spo_click_action];
+		_dialog = uiNamespace getVariable ["spo_dialog_setup", displayNull];
 		private _pFactionControl = _dialog displayCtrl 2100;
 		private _eFactionControl = _dialog displayCtrl 2101;
 		private _aiRatioControl = _dialog displayCtrl 1900;
 		private _enemyFactionVehiclesControl = _dialog displayCtrl 2003;
-		dsm_bluFaction = _pFactionControl lbData (lbCurSel _pFactionControl);
-		publicVariable 'dsm_bluFaction';
-		dsm_opforFaction = _eFactionControl lbData (lbCurSel _eFactionControl);
-		publicVariable 'dsm_opforFaction';
-		dsm_aiRatio = parseNumber(_aiRatioControl lbData (lbCurSel _aiRatioControl));
-		publicVariable 'dsm_aiRatio';
-		dsm_vehicleFaction = _enemyFactionVehiclesControl lbData (lbCurSel _enemyFactionVehiclesControl);
-		publicVariable 'dsm_vehicleFaction';
-		remoteExecCall ['dsm_fnc_setup', 2, false];
+		spo_bluFaction = _pFactionControl lbData (lbCurSel _pFactionControl);
+		publicVariable 'spo_bluFaction';
+		spo_opforFaction = _eFactionControl lbData (lbCurSel _eFactionControl);
+		publicVariable 'spo_opforFaction';
+		spo_aiRatio = parseNumber(_aiRatioControl lbData (lbCurSel _aiRatioControl));
+		publicVariable 'spo_aiRatio';
+		spo_vehicleFaction = _enemyFactionVehiclesControl lbData (lbCurSel _enemyFactionVehiclesControl);
+		publicVariable 'spo_vehicleFaction';
+		remoteExecCall ['spo_fnc_setup', 2, false];
 		closeDialog 1;
 	 };
 	default { };

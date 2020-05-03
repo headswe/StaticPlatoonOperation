@@ -1,11 +1,11 @@
-private _spawnPos = selectRandom dsm_reinforcement_locations;
-if(dsm_vehicleFaction == '') exitWith {
+private _spawnPos = selectRandom spo_reinforcement_locations;
+if(spo_vehicleFaction == '') exitWith {
  objNull
 };
 private _createdVeh = objNull;
-_createdVeh = [dsm_centerPos, 'combat', true] call dsm_fnc_createVehicle;
+_createdVeh = [spo_centerPos, 'combat', true] call spo_fnc_createVehicle;
 if(isNull _createdVeh) then {
-	_createdVeh = [dsm_centerPos, 'transport', true] call dsm_fnc_createVehicle;
+	_createdVeh = [spo_centerPos, 'transport', true] call spo_fnc_createVehicle;
 };
 private _grp = group effectiveCommander _createdVeh;
 // waypoint
@@ -19,6 +19,6 @@ _wp setWaypointSpeed "FULL";
 _wp setWaypointPosition (getpos leader _grp);
 _wp setWaypointType "MOVE";
 _wp setWaypointCompletionRadius 100;
-_wp = _grp addWaypoint [dsm_centerPos, 0];
+_wp = _grp addWaypoint [spo_centerPos, 0];
 _wp setWaypointType "SAD";
 _wp setWaypointCompletionRadius 100;

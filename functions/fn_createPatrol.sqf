@@ -1,5 +1,5 @@
 	this params ["_numberOfMen", "_spawnPos" , "_patrolDir"];
-	private _grp = [_spawnPos, _numberOfMen] call dsm_fnc_createSquad;
+	private _grp = [_spawnPos, _numberOfMen] call spo_fnc_createSquad;
 	_grp setCombatMode "RED";
 	_grp allowFleeing 0;
 
@@ -21,7 +21,8 @@
 	_wp setWaypointCompletionRadius 100;
 
 	{
-		_wp = _grp addWaypoint [_x, 0];
+		private _pos = [_x, random 100] call CBA_fnc_randPos;
+		_wp = _grp addWaypoint [_pos , 0];
 		_wp setWaypointTimeout [3,6,9];
 		_wp setWaypointType "MOVE";
 		_wp setWaypointCompletionRadius 100;
@@ -33,5 +34,5 @@
 
 	{_x setPos _spawnPos} forEach units _grp;
 	// Create waypoint patrol
-	dsm_patrol_groups pushBack _grp;
+	spo_patrol_groups pushBack _grp;
 	spo_ai_initialManpower = spo_ai_initialManpower - _numberOfMen;

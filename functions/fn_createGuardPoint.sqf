@@ -6,12 +6,12 @@
 		_spawnPos = _overwatchPos;
 	};
 	"Campfire_burning_F" createVehicle _spawnPos;
-	private _grp = [_spawnPos, random [2,3,4]] call dsm_fnc_createSquad;
+	private _grp = [_spawnPos, random [2,3,4]] call spo_fnc_createSquad;
 	_grp setBehaviour "SAFE";
 	_grp allowFleeing 0;
-	_grp setVariable ["dsm_grp_type", 'guard'];
-	[_grp, _spawnPos, 0, 4, random [25,40,50], true] call dsm_fnc_patrol;
-	dsm_patrol_groups pushBack _grp;
+	_grp setVariable ["spo_grp_type", 'guard'];
+	[_grp, _spawnPos, 0, 4, random [25,40,50], true] call spo_fnc_patrol;
+	spo_patrol_groups pushBack _grp;
 	spo_overwatch_locations pushBack _spawnPos;
 	private _mkrName = format["gp_%1", random 3000];
 	[_mkrName, _spawnPos, "ICON", [1,1], "TYPE:", "o_installation" ] call CBA_fnc_createMarker

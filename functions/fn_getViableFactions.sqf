@@ -1,6 +1,6 @@
 private _allVehs = ("true" configClasses (configFile >> "CfgVehicles"));
-dsm_factionsVehicles = [true] call CBA_fnc_createNamespace;
-dsm_factions = [];
+spo_factionsVehicles = [true] call CBA_fnc_createNamespace;
+spo_factions = [];
 {
 	private _configName = configName _x;
 	private _isVehicle = _configName isKindOf 'AllVehicles';
@@ -8,15 +8,15 @@ dsm_factions = [];
 	if(_isVehicle && _isNotMan) then {
 		private _factionStr = (getText (_x >> 'faction'));
 		if(_factionStr != '') then {
-			private _faction = dsm_factionsVehicles getVariable [_factionStr, []];
+			private _faction = spo_factionsVehicles getVariable [_factionStr, []];
 			if(count _faction <= 0) then {
 				_faction = [(configfile >> "CfgFactionClasses" >> _factionStr),getText (configfile >> "CfgFactionClasses" >> _factionStr >> "displayName"), [_x]];
-				dsm_factions pushBack [_factionStr, _faction # 1];
+				spo_factions pushBack [_factionStr, _faction # 1];
 			} else {
 				(_faction#2) pushBackUnique _x;
 			};
-			dsm_factionsVehicles setVariable [_factionStr, _faction];
+			spo_factionsVehicles setVariable [_factionStr, _faction];
 		};
 	};
 } forEach _allVehs;
-publicVariable "dsm_factions";
+publicVariable "spo_factions";

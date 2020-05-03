@@ -1,6 +1,6 @@
 private _debug = false;
-private _pos = dsm_centerPos;
-private _radius = dsm_perimeter_radius;
+private _pos = spo_centerPos;
+private _radius = spo_perimeter_radius;
 private _roads = (_pos nearRoads _radius);
 _roads = _roads apply { [_x distance _pos, _x] };;
 // get the farthers away road piece
@@ -19,7 +19,7 @@ _mkr setMarkerSize [1,1];
 _mkr setMarkerType "mil_dot";
 _mkr setMarkerColor "ColorRed";
 */
-dsm_spawnBuilding = {
+spo_spawnBuilding = {
 	params["_path","_pos","_dir"];
 	_createdObjects = [];
 	_objects = "isArray (_x >> 'position')" configClasses _path;
@@ -63,7 +63,7 @@ dsm_spawnBuilding = {
 _onPathFinished = {
 	params ['_agent', '_path'];
 	path = _path apply {[_x # 0, _x  # 1, 0]};
-	private _inside = (_path inAreaArray "assaultObjectivePerimeter") select {isOnRoad _x} apply {[_x distance dsm_centerPos, _x]};
+	private _inside = (_path inAreaArray "assaultObjectivePerimeter") select {isOnRoad _x} apply {[_x distance spo_centerPos, _x]};
 	_inside sort false;
 	private _pos = (_inside # (count _inside - 1)) # 1;
 	private _road = roadAt _pos;
@@ -75,14 +75,14 @@ _onPathFinished = {
 	if(isNil "_dir" || _dir isEqualType 0) then {
 		_dir = getDir _road;
 	};
-	_script = [_roadBlockClass, getpos _road,_dir] spawn dsm_spawnBuilding;
+	_script = [_roadBlockClass, getpos _road,_dir] spawn spo_spawnBuilding;
 	_onFinished = {
 		private _grp = createGroup east;
 		private _spawnPos = _this # 1;
 		for "_i" from 1 to 4 do {
 			private _role = selectRandom ['r','r','r','ftl','aar','ar','rat'];
 			private _solider = _grp createUnit ['O_Soldier_F',[0,0,0],[],1,'NONE'];
-			[_solider, _role] call dsm_fnc_gear;
+			[_solider, _role] call spo_fnc_gear;
 		};
 	//	[_grp, _spawnPos, 25, "GUARD", "AWARE", "YELLOW", "FULL", "STAG COLUMN"] call CBA_fnc_addWaypoint;
 		[_grp, _spawnPos,15] call CBA_fnc_taskDefend;

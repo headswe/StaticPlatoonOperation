@@ -20,7 +20,7 @@ _checkThreat = {
 };
 
 
-private _vehicles = ((dsm_factionsVehicles getVariable [dsm_vehicleFaction, []]) # 2) select {
+private _vehicles = ((spo_factionsVehicles getVariable [spo_vehicleFaction, []]) # 2) select {
     ((configName _x) isKindOf "LandVehicle") && 
     {!((configName _x) isKindOf "StaticWeapon") } && 
     {(_x call _checkWeapons) > 0} &&

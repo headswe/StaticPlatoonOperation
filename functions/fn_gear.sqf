@@ -1,8 +1,8 @@
 params ["_unit","_role"];
 
 
-private _faction = dsm_bluFaction;
-if (side _unit == east) then { _faction = dsm_opforFaction;};
+private _faction = spo_bluFaction;
+if (side _unit == east) then { _faction = spo_opforFaction;};
 
 if (_faction != "") then {
 	_unit setVariable ["tmf_assignGear_faction",_faction];
