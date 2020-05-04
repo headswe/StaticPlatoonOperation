@@ -1,5 +1,7 @@
 private _playerCount = (count (playableUnits + switchableUnits)) max 1;
-
+if(count spo_reinforcement_locations <= 0) then {
+	spo_reinforcement_locations pushBack ([spo_perimeter_mkrName, true] call CBA_fnc_randPosArea);
+};
 // total manpower of the enemy faction
 spo_ai_manpower = round (5 + (_playerCount * spo_aiRatio));
 // we only allow 180 to be spawned as garrison + patrols
@@ -88,7 +90,7 @@ spo_mission_object = call CBA_fnc_createNamespace;
 spo_alert_triggerd = 0;
 spo_patrol_statemachine = [(missionconfigfile >> "SPO_PatrolStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
 spo_garrison_statemachine = [(missionconfigfile >> "SPO_GarrisonStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
-spo_mission_statemachine = [(missionconfigfile >> "SPO_SAD_MissionStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
+spo_mission_statemachine = [(missionconfigfile >> "SPO_Missions" >> "SPO_Secure_MissionStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
 
 
 private _enemyFactionMsg = format ["Enemy Faction: %1", getText (configFile >> "CfgLoadouts" >> spo_opforFaction >> "displayName")];

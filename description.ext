@@ -69,10 +69,23 @@ class CfgFunctions
 			class nearGarrison{};
 			class onGarrisonActivated{};
 		};
+		class AI {
+			file = "functions\ai";
+			class hunt{};
+		}
+		class helpers {
+			file = "functions\helpers";
+			class nearBuildings{};
+		}
 		class sadFunctions {
 			file = "missions\sad";
 			class onSadStart{};
 			class onSadEnd{};
+		}
+		class secureFunctions {
+			file = "missions\secure";
+			class onSecureStart{};
+			class onSecureArrived{};
 		}
 		class vehicles {
 			file = "functions\vehicles";
@@ -86,4 +99,8 @@ class Params {
 #include "ui\missionDialog.hpp"
 #include "statemachines\garrison.hpp"
 #include "statemachines\patrol.hpp"
-#include "missions\sad\machine.hpp"
+
+class SPO_Missions {
+	#include "missions\sad\machine.hpp"
+	#include "missions\secure\machine.hpp"
+}

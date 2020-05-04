@@ -19,7 +19,7 @@ private _onPathFinished = {
 	params ['_agent', '_path'];
 
 	private _pos = (_path # (count _path - 1));
-	if(_agent getVariable ["location", []] isEqualTo spo_centerPos) then {
+	if(_agent getVariable ["location", []] isEqualTo spo_centerPos && !(_pos inArea spo_perimeter_mkrName)) then {
 		spo_reinforcement_locations pushBackUnique _pos;
 	};
 	[ format["%1", _path] , _pos, "ICON", [1,1], "TYPE:", "mil_pickup" ] call CBA_fnc_createMarker;
