@@ -86,6 +86,7 @@ class CfgFunctions
 			file = "missions\secure";
 			class onSecureStart{};
 			class onSecureArrived{};
+			class onSecureWin{};
 		}
 		class vehicles {
 			file = "functions\vehicles";
