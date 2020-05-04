@@ -11,7 +11,7 @@ while {_numberOfMen > 0} do {
 		};
 		_role = _usedRoles deleteAt 0;
 	};
-	private _solider = _grp createUnit ['O_Soldier_F',_spawnPos,[],1,'NONE'];
+	private _solider = _grp createUnit ['O_Soldier_F',[_spawnPos # 0, _spawnPos # 1, 0],[],5,'NONE'];
 	_solider setSkill (random [0.5,0.7,1]);
 	[_solider, _role] call spo_fnc_gear;
 	_numberOfMen = _numberOfMen - 1;

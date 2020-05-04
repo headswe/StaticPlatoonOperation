@@ -8,6 +8,7 @@ switch (_type) do {
 		private _eFactionControl = _dialog displayCtrl 2101;
 		private _enemyFactionVehiclesControl = _dialog displayCtrl 2003;
 		private _aiRatioControl = _dialog displayCtrl 1900;
+		private _missionControl = _dialog displayCtrl 2004;
 		private _map = _dialog displayCtrl 1801;
 		_map ctrlMapAnimAdd [0, 0.2, spo_centerPos];
 		_loadouts = ("true" configClasses (configFile >> "CfgLoadouts"));
@@ -29,6 +30,11 @@ switch (_type) do {
 			_index = _enemyFactionVehiclesControl lbAdd _displayName;
 			_enemyFactionVehiclesControl lbSetData [_index, _faction];
 		} forEach spo_factions;
+
+		{
+			_index = _missionControl lbAdd (getText (_x >> "displayName"));
+			_missionControl lbSetData [_index, configName _x];
+		} forEach ("true" configClasses (missionConfigFile >> "SPO_Missions"));
 
 		// sort
 		lbSort [_pFactionControl, "ASC"];
@@ -52,6 +58,7 @@ switch (_type) do {
 		private _eFactionControl = _dialog displayCtrl 2101;
 		private _aiRatioControl = _dialog displayCtrl 1900;
 		private _enemyFactionVehiclesControl = _dialog displayCtrl 2003;
+		private _missionControl = _dialog displayCtrl 2004;
 		spo_bluFaction = _pFactionControl lbData (lbCurSel _pFactionControl);
 		publicVariable 'spo_bluFaction';
 		spo_opforFaction = _eFactionControl lbData (lbCurSel _eFactionControl);
@@ -60,6 +67,8 @@ switch (_type) do {
 		publicVariable 'spo_aiRatio';
 		spo_vehicleFaction = _enemyFactionVehiclesControl lbData (lbCurSel _enemyFactionVehiclesControl);
 		publicVariable 'spo_vehicleFaction';
+		spo_missionClassName = _missionControl lbData (lbCurSel _missionControl);
+		publicVariable 'spo_missionClassName';
 		remoteExecCall ['spo_fnc_setup', 2, false];
 		closeDialog 1;
 	 };

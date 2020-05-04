@@ -1,5 +1,5 @@
 class SPO_SAD_MissionStateMachine {
-	name = "Search and destroy";
+	displayName = "Search and destroy";
 	list = "[spo_mission_object]";
 	class Startup {
 		onStateEntered = "spo_fnc_onSadStart";

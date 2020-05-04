@@ -1,5 +1,5 @@
 class SPO_Secure_MissionStateMachine {
-	name = "Secure";
+	displayName = "Secure";
 	list = "[spo_mission_object]";
 	class Startup {
 		onStateEntered = "spo_fnc_onSecureStart";

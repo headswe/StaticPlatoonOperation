@@ -103,6 +103,23 @@ class missionSetuipDialog: RscControlsGroup
 			w = 0.2 * safezoneW;
 			h = 0.02 * safezoneH;
 		};
+		class missionLabel: RscText
+		{
+			idc = 10044;
+			text = "Mission"; //--- ToDo: Localize;
+			x = 0.005 * safezoneW;
+			y = 0.2 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.02 * safezoneH;
+		};
+		class missionCombo: RscCombo
+		{
+			idc = 2004;
+			x = 0.01 * safezoneW;
+			y = 0.210 * safezoneH;
+			w = 0.2 * safezoneW;
+			h = 0.02 * safezoneH;
+		};
 		class aoMAP: RscMapControl
 		{
 			idc = 1801;

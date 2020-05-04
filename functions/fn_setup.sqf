@@ -6,7 +6,7 @@ if(count spo_reinforcement_locations <= 0) then {
 spo_ai_manpower = round (5 + (_playerCount * spo_aiRatio));
 // we only allow 180 to be spawned as garrison + patrols
 spo_ai_initialManpower =  spo_ai_manpower min 180; // spawn max(ish) 180 ai
-spo_ai_manpower = (spo_ai_manpower - spo_ai_initialManpower) max 0;
+spo_ai_manpowerRemaining = (spo_ai_manpower - spo_ai_initialManpower) max 0;
 
 spo_vehiclePoints = 0;
 {
@@ -90,7 +90,7 @@ spo_mission_object = call CBA_fnc_createNamespace;
 spo_alert_triggerd = 0;
 spo_patrol_statemachine = [(missionconfigfile >> "SPO_PatrolStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
 spo_garrison_statemachine = [(missionconfigfile >> "SPO_GarrisonStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
-spo_mission_statemachine = [(missionconfigfile >> "SPO_Missions" >> "SPO_Secure_MissionStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
+spo_mission_statemachine = [(missionconfigfile >> "SPO_Missions" >> spo_missionClassName)] call CBA_statemachine_fnc_createFromConfig; 
 
 
 private _enemyFactionMsg = format ["Enemy Faction: %1", getText (configFile >> "CfgLoadouts" >> spo_opforFaction >> "displayName")];
