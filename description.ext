@@ -44,7 +44,7 @@ class CfgFunctions
 {
 	class spo /*dynamic squad mission*/
 	{
-		class myCategory
+		class general
 		{
 			file = "functions";
 			class gear {};
@@ -52,23 +52,25 @@ class CfgFunctions
 			class createGarrison {};
 			class missionSettingsDialog {};
 			class setup {};
-			class createFlare{};
 			class getReinforcementLocations {};
 			class getViableFactions {};
 			class createSquad {};
 			class createReinforcements {};
-			class setObjective{};
 			class createGuardPoint{};
-			class createPatrol{};
 			class patrol{};
 			class createVehicle{};
-			class inContact{};
+		};
+		class patrol {
+			file = "statemachines\patrol";
 			class onReinforceing{};
 			class requestReinforcement{};
-			class reveal{};
-			class nearGarrison{};
+			class createPatrol{};
+		}
+		class garrison {
+			file = "statemachines\garrison";
+			class shouldActivateGarrison{};
 			class onGarrisonActivated{};
-		};
+		}
 		class AI {
 			file = "functions\ai";
 			class hunt{};
@@ -76,13 +78,17 @@ class CfgFunctions
 		class helpers {
 			file = "functions\helpers";
 			class nearBuildings{};
+			class setObjective{};
+			class reveal{};
+			class inContact{};
+			class createFlare{};
 		}
-		class sadFunctions {
+		class sad {
 			file = "missions\sad";
 			class onSadStart{};
 			class onSadEnd{};
 		}
-		class secureFunctions {
+		class secure {
 			file = "missions\secure";
 			class onSecureStart{};
 			class onSecureArrived{};
@@ -91,6 +97,7 @@ class CfgFunctions
 		class vehicles {
 			file = "functions\vehicles";
 			class getCombatVehicle{};
+			class getTransportVehicle{};
 		}
 	};
 };
@@ -98,8 +105,8 @@ class CfgFunctions
 class Params {
 };
 #include "ui\missionDialog.hpp"
-#include "statemachines\garrison.hpp"
-#include "statemachines\patrol.hpp"
+#include "statemachines\garrison\garrison.hpp"
+#include "statemachines\patrol\patrol.hpp"
 
 class SPO_Missions {
 	#include "missions\sad\machine.hpp"

@@ -23,7 +23,7 @@ _checkThreat = {
 private _vehicles = ((spo_factionsVehicles getVariable [spo_vehicleFaction, []]) # 2) select {
     ((configName _x) isKindOf "LandVehicle") && 
     {!((configName _x) isKindOf "StaticWeapon") } && 
-    {(_x call _checkWeapons) > 0} &&
+    {(_x call _checkWeapons) > 0} && {!((_x >> "artilleryScanner") call BIS_fnc_getCfgDataBool)} && 
     {_x call _checkThreat} &&
     {!((_x >> "isUav") call BIS_fnc_getCfgDataBool)}
 };

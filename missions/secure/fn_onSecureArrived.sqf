@@ -4,7 +4,7 @@ private _task = _this getVariable ["spo_secure_task", nil];
 private _task = [blufor, "spo_secure_task_2", ["Defend the site","Gotta defend dude", ""], getpos _building, "AUTOASSIGNED", 0, true, "defend"] call BIS_fnc_taskCreate;
 _this setVariable ["spo_secure_task", _task];
 
-_manpower = spo_ai_manpower * 0.3;
+_manpower = spo_ai_manpower * 0.6;
 spo_attack_wave = [];
 while {_manpower > 0} do {
 	private _spawnPos = selectRandom spo_reinforcement_locations;
@@ -23,3 +23,33 @@ while {_manpower > 0} do {
 
 	spo_attack_wave pushBackUnique _grp;
 };
+
+{
+	private _grp = _x;
+    {
+        _x enableAI "PATH";
+        _x setUnitPos "AUTO";
+    } forEach units _grp;
+	_grp setCombatMode "RED";
+	_grp allowFleeing 0;
+	[_grp] call CBA_fnc_clearWaypoints;
+	private _wp = [_grp, _grp, 0, "MOVE", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 0] call CBA_fnc_addWaypoint;
+	_wp = [_grp, _grp, 0, "MOVE", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 100] call CBA_fnc_addWaypoint;
+	_grp setCurrentWaypoint _wp;
+	_wp = [_grp, (getpos _building), 0, "MOVE", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 200] call CBA_fnc_addWaypoint;
+	_wp = [_grp, (getpos _building), 0, "SAD", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 200] call CBA_fnc_addWaypoint;
+    
+} forEach spo_garrison_groups;
+{
+	private _grp = _x;
+	_grp setCombatMode "RED";
+	_grp allowFleeing 0;
+	[_grp] call CBA_fnc_clearWaypoints;
+	private _wp = [_grp, _grp, 0, "MOVE", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 0] call CBA_fnc_addWaypoint;
+	_wp = [_grp, _grp, 0, "MOVE", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 100] call CBA_fnc_addWaypoint;
+	_grp setCurrentWaypoint _wp;
+	_wp = [_grp, (getpos _building), 0, "MOVE", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 200] call CBA_fnc_addWaypoint;
+	_wp = [_grp, (getpos _building), 0, "SAD", "AWARE", "RED", "FULL", "WEDGE","", [0,0,0], 200] call CBA_fnc_addWaypoint;
+    
+} forEach spo_patrol_groups;
+

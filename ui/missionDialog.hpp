@@ -116,7 +116,7 @@ class missionSetuipDialog: RscControlsGroup
 		{
 			idc = 2004;
 			x = 0.01 * safezoneW;
-			y = 0.210 * safezoneH;
+			y = 0.3 * safezoneH;
 			w = 0.2 * safezoneW;
 			h = 0.02 * safezoneH;
 		};

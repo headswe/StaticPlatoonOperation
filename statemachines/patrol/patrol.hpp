@@ -54,7 +54,7 @@ class SPO_PatrolStateMachine {
 		class RequestReinforcement  {
 			targetState = "RequestReinforcement";
 			// can call reinforcement every 15 seconds
-			condition = "time - (_this getVariable ['spo_reinforcement_called', 0]) > 15";
+			condition = "time - (_this getVariable ['spo_reinforcement_called', 0]) > 20";
 		};
 	};
 

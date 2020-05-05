@@ -1,10 +1,10 @@
 params [["_spawnPos", spo_centerPos], ["_type", "transport", ["transport", "combat"]] , ["_flying", false], ["_static", false], ["_boat", false] ];
 
-private _pos = [_spawnPos, 0, spo_objective_radius, 2, 0, 20, 0, [], [_spawnPos,_spawnPos]] call BIS_fnc_findSafePos;
+private _pos = [_spawnPos, 0, spo_objective_radius, 4, 0, 20, 0, [], [_spawnPos,_spawnPos]] call BIS_fnc_findSafePos;
 private _vehicles = [];
 switch (_type) do {
     case "transport": {
-         //   _vehicles = _vehicles select {[_x , 'transportSoldier'] call BIS_fnc_getCfg > 3};
+          _vehicles = call spo_fnc_getTransportVehicle;
         };
         case "combat": {
             _vehicles = call spo_fnc_getCombatVehicle;

@@ -5,7 +5,7 @@ class SPO_GarrisonStateMachine {
 	class Garrisoned {
 		class Activate {
 			targetState = "Activated";
-			condition = "spo_fnc_nearGarrison";
+			condition = "spo_fnc_shouldActivateGarrison";
 		};
 	};
 
