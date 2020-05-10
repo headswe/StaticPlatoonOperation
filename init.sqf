@@ -20,3 +20,4 @@ if(serverCommandAvailable "#kick") then {
 if (!isServer) exitWith {};
 // Number of players
 
+spo_speakers = ["Male01ENG","Male02ENG","Male03ENG","Male04ENG","Male05ENG","Male06ENG","Male07ENG","Male08ENG","Male09ENG","Male10ENG","Male11ENG","Male12ENG"];

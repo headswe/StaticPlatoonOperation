@@ -19,6 +19,7 @@ if (isNull _garrisonGrp) then {
 	_garrisonGrp = createGroup [opfor, true];
 	for "_i" from 0 to _unitsToSpawn do {
 		private _solider = _garrisonGrp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];
+		[_solider, selectRandom spo_speakers] remoteExec ["setIdentity", 0, _solider];
 		private _role = selectRandom spo_allowedRoles;
 		_solider setPos _posses # _i;
 		[_solider, _role] call spo_fnc_gear;

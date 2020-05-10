@@ -1,5 +1,5 @@
 params ['_spawnPos', '_numberOfMen', ['_roles', spo_allowedRoles], ['_random', true]];
-private _grp = createGroup east;
+private _grp = createGroup [east, true];
 private _usedRoles = +_roles;
 while {_numberOfMen > 0} do {
 	private _role = 'r';
@@ -12,8 +12,10 @@ while {_numberOfMen > 0} do {
 		_role = _usedRoles deleteAt 0;
 	};
 	private _solider = _grp createUnit ['O_Soldier_F',[_spawnPos # 0, _spawnPos # 1, 0],[],5,'NONE'];
+	[_solider, selectRandom spo_speakers] remoteExec ["setIdentity", 0, _solider];
 	_solider setSkill (random [0.5,0.7,1]);
 	[_solider, _role] call spo_fnc_gear;
 	_numberOfMen = _numberOfMen - 1;
 };
 _grp;
+

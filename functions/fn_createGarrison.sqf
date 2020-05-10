@@ -22,7 +22,7 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 		private _buildingCenter = _building modelToWorld (boundingCenter _building);
 		private _buildingSize = (boundingBox _building) # 2;
 
-		_grp setVariable ["spo_garrisonData", [_buildingCenter, _buildingSize * 1.5, _buildingSize * 1.5, 0, false]];
+		_grp setVariable ["spo_garrisonData", [_buildingCenter, _buildingSize * 3, _buildingSize * 3, 0, false]];
 	};
 	private _numofPostions = (count _poses);
 	private _unitsToSpawn = (random [1,_numofPostions/4, _numofPostions]) min _numberOfUnits;
@@ -32,7 +32,7 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 
 		private _buildingPos = _poses # _posIndex;
 		private _solider = _grp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];
-
+		[_solider, selectRandom spo_speakers] remoteExec ["setIdentity", 0, _solider];
 		_solider setPos _buildingPos;
 		[_solider, _role] call spo_fnc_gear;
 		_solider disableAI 'PATH'; 

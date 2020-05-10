@@ -17,8 +17,9 @@ _mkr setMarkerSize [spo_objective_radius,spo_objective_radius];
 _mkr setMarkerColor "ColorRed";
 
 // Teleport permiter
-deleteMarker "assaultObjectiveTP";
-_mkr = createMarker ["assaultObjectiveTP",_centerPos];
+spo_ao_mkrName = "assaultObjectiveTP";
+deleteMarker spo_ao_mkrName;
+_mkr = createMarker [spo_ao_mkrName, _centerPos];
 _mkr setMarkerShape "ELLIPSE";
 _mkr setMarkerBrush "Border";
 _mkr setMarkerSize [spo_perimeter_radius,spo_perimeter_radius];

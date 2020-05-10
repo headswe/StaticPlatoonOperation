@@ -1,6 +1,6 @@
 params [["_spawnPos", spo_centerPos], ["_type", "transport", ["transport", "combat"]] , ["_flying", false], ["_static", false], ["_boat", false] ];
 
-private _pos = [_spawnPos, 0, spo_objective_radius, 4, 0, 20, 0, [], [_spawnPos,_spawnPos]] call BIS_fnc_findSafePos;
+private _pos = [_spawnPos, 0, spo_objective_radius, 10, 0, 0.1, 0, [], [_spawnPos,_spawnPos]] call BIS_fnc_findSafePos;
 private _vehicles = [];
 switch (_type) do {
     case "transport": {
@@ -18,7 +18,7 @@ if(count _vehicles > 0) then {
     _vehicleConfig = (selectRandom _vehicles);
 
     private _grp = createGroup east;
-    _veh = createVehicle [configName _vehicleConfig, _pos, [], 0,'FLY'];
+    _veh = createVehicle [configName _vehicleConfig, (_pos), [], 0,'FLY'];
     private _crewCount = {round getNumber (_x >> "dontCreateAI") < 1 && 
                     ((_x == _vehicleConfig && {round getNumber (_x >> "hasDriver") > 0}) ||
                     (_x != _vehicleConfig && {round getNumber (_x >> "hasGunner") > 0}))} count ([configName _vehicleConfig, configNull] call BIS_fnc_getTurrets);

@@ -14,7 +14,7 @@ _checkThreat = {
     private _threat = (_this >> 'threat') call BIS_fnc_getCfgDataArray;
     _threat params ["_men", "_vehicle", "_air"];
     if(_air >= 0.9) exitWith {
-        _men > 0.7
+        _men > 0.8
     };
     true
 };

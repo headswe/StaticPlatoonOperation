@@ -48,7 +48,6 @@ class CfgFunctions
 		{
 			file = "functions";
 			class gear {};
-			class createRoadBlock {};
 			class createGarrison {};
 			class missionSettingsDialog {};
 			class setup {};

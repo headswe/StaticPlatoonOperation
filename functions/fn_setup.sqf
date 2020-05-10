@@ -12,13 +12,13 @@ spo_vehiclePoints = 0;
 {
 	private _role = _x getVariable ["tmf_assignGear_role",'r'];
 	if(_role isEqualTo 'rat') then {
-		spo_vehiclePoints = spo_vehiclePoints + 1;
+		spo_vehiclePoints = spo_vehiclePoints + 1.5;
 	};
 	if(_role isEqualTo 'matg') then {
-		spo_vehiclePoints = spo_vehiclePoints + 2;
+		spo_vehiclePoints = spo_vehiclePoints + 3;
 	};
 	if(_role isEqualTo 'hatg') then {
-		spo_vehiclePoints = spo_vehiclePoints + 3;
+		spo_vehiclePoints = spo_vehiclePoints + 5;
 	};
 } foreach (playableUnits + switchableUnits);
 
@@ -53,23 +53,24 @@ _directions = [0, 90, 180, 270];
 
 // patrol time
 private _alt = 0;
-private _patrolDir = random [-180, 0, 360];
+private _patrolDir = random [0,160, 360];
 while {spo_ai_initialManpower > 0} do {
 	private _numberOfMen = (random [3,5,6]) min (spo_ai_initialManpower);
-	private _spawnPos = spo_centerPos getpos [random [spo_objective_radius, spo_perimeter_radius / 3, spo_perimeter_radius] , _patrolDir];
+	private _spawnPos = [spo_ao_mkrName] call CBA_fnc_randPosArea;
 	if(surfaceIsWater _spawnPos) then {
 		_spawnPos = ((selectBestPlaces [_spawnPos, 500, "(1 - sea)", 1, 1]) # 0) # 0;
 	};
-	[_numberOfMen, _spawnPos, _patrolDir] call spo_fnc_createPatrol;
+	[_numberOfMen, _spawnPos] call spo_fnc_createPatrol;
 	_patrolDir = _patrolDir + (random [0, 90, 180]);
 };
 // Vehicles
 if(spo_vehicleFaction != '') then {
-	private _numberOfVehicles = random [1, round (spo_vehiclePoints / 2), spo_vehiclePoints];
-	for "_i" from 1 to _numberOfVehicles do { 
+	private _numberOfVehicles = round random [1, spo_vehiclepoints / 1.33, spo_vehiclePoints];
+	for "_i" from 0 to _numberOfVehicles do { 
 		if(_i == 1) then {
 			private _createdVeh = [spo_centerPos, 'combat'] call spo_fnc_createVehicle;
 			[group (effectiveCommander _createdVeh),spo_centerPos, 1, 4, spo_objective_radius, true] call spo_fnc_patrol;
+			spo_patrol_groups pushBack (group (effectiveCommander _createdVeh));
 		} else {
 			private _firstPos = selectRandom spo_reinforcement_locations;
 			private _secondPos = selectRandom (spo_reinforcement_locations - [_firstPos]);
@@ -78,7 +79,11 @@ if(spo_vehicleFaction != '') then {
 			private _createdVeh = [_firstPos, 'combat'] call spo_fnc_createVehicle;
 			private _wp = [group (effectiveCommander _createdVeh), _firstPos, 0, "MOVE"] call CBA_fnc_addWaypoint;
 			_wp = [group (effectiveCommander _createdVeh), _secondPos, 0, "MOVE"] call CBA_fnc_addWaypoint;
+			_wp setWaypointCompletionRadius 150;
+			_wp setWaypointTimeout [3,6,8];
 			_wp = [group (effectiveCommander _createdVeh), _firstPos, 0, "CYCLE"] call CBA_fnc_addWaypoint;
+			_wp setWaypointCompletionRadius 150;
+			_wp setWaypointTimeout [3,6,8];
 			spo_patrol_groups pushBack (group (effectiveCommander _createdVeh));
 		}
 	};
