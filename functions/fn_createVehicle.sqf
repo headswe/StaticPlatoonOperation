@@ -17,7 +17,7 @@ private _veh = objNull;
 if(count _vehicles > 0) then {
     _vehicleConfig = (selectRandom _vehicles);
 
-    private _grp = createGroup east;
+    private _grp = createGroup [east, true];
     _veh = createVehicle [configName _vehicleConfig, (_pos), [], 0,'FLY'];
     private _crewCount = {round getNumber (_x >> "dontCreateAI") < 1 && 
                     ((_x == _vehicleConfig && {round getNumber (_x >> "hasDriver") > 0}) ||

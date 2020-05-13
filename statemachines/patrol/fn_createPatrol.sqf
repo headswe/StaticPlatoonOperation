@@ -1,7 +1,6 @@
 	this params ["_numberOfMen", "_spawnPos"];
 	private _grp = [_spawnPos, _numberOfMen] call spo_fnc_createSquad;
 	_grp setCombatMode "RED";
-	_grp allowFleeing 0;
 
 	
 	private _owerwatches = [] + spo_overwatch_locations;

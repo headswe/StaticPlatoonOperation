@@ -1,5 +1,6 @@
 params ['_spawnPos', '_numberOfMen', ['_roles', spo_allowedRoles], ['_random', true]];
 private _grp = createGroup [east, true];
+_grp allowFleeing 0;
 private _usedRoles = +_roles;
 while {_numberOfMen > 0} do {
 	private _role = 'r';

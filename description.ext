@@ -73,6 +73,7 @@ class CfgFunctions
 		class AI {
 			file = "functions\ai";
 			class hunt{};
+			class attackPoint{};
 		}
 		class helpers {
 			file = "functions\helpers";

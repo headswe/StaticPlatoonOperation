@@ -1,6 +1,6 @@
 /// 
 ([spo_centerPos, spo_objective_radius] call spo_fnc_nearBuildings) params ["_buildings"];
-_buildings = _buildings select {count (_x # 0) > 2};
+_buildings = _buildings select {count (_x # 0) > 3};
 private _building = objNull;
 if(count _buildings <= 0) then {
 	private _spot = spo_centerPos findEmptyPosition [0,  spo_objective_radius, "Land_Cargo_HQ_V1_F"];
