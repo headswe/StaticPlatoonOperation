@@ -19,19 +19,11 @@
 	_wp setWaypointTimeout [3,6,9];
 	_wp setWaypointCompletionRadius 100;
 
-	{
-		private _pos = [];
-		if(random 1 >= 0.5) then {
-			_pos = [_x, random 100] call CBA_fnc_randPos;
-
-		} else {
-			_pos = [spo_ao_mkrName] call CBA_fnc_randPosArea;
-		};
-		_wp = _grp addWaypoint [_pos , 0];
-		_wp setWaypointTimeout [3,6,9];
-		_wp setWaypointType "MOVE";
-		_wp setWaypointCompletionRadius 100;
-	} foreach _owerwatches;
+    private _pos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName), spo_perimeter_radius, "(0 - (waterDepth))", 50, 1]) # 0) # 0; 
+    _wp = _grp addWaypoint [_pos , 0];
+    _wp setWaypointTimeout [3,6,9];
+    _wp setWaypointType "MOVE";
+    _wp setWaypointCompletionRadius 100;
 
 	_wp = _grp addWaypoint [_spawnPos, 0];
 	_wp setWaypointType "CYCLE";

@@ -43,33 +43,24 @@ _directions = [0, 90, 180, 270];
 [_directions, true] call CBA_fnc_shuffle;
 
 {
-	_spawnPos = spo_centerPos getPos [spo_objective_radius*2, _x];
-	_spawnPos = ((selectBestPlaces [_spawnPos, 100, "(1 - forest) * (0.5 * trees) * (5 * hills)", 1, 1]) # 0) # 0;
-	if(surfaceIsWater _spawnPos) then {
-		_spawnPos = ((selectBestPlaces [_spawnPos, 750, "(1 - forest) * (0.5 * trees) * (5 * hills)", 1, 1]) # 0) # 0;
-	};
+	private _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName), spo_perimeter_radius, "(0 - waterDepth) * (5 + hills)", 50, 1]) # 0) # 0;
 	[_spawnPos] call spo_fnc_createGuardPoint;
 } foreach _directions;
 
 // patrol time
-private _alt = 0;
-private _patrolDir = random [0,160, 360];
 while {spo_ai_initialManpower > 0} do {
-	private _numberOfMen = (random [3,5,6]) min (spo_ai_initialManpower);
-	private _spawnPos = [spo_ao_mkrName] call CBA_fnc_randPosArea;
-	if(surfaceIsWater _spawnPos) then {
-		_spawnPos = ((selectBestPlaces [_spawnPos, 500, "(1 - sea)", 1, 1]) # 0) # 0;
-	};
-	[_numberOfMen, _spawnPos] call spo_fnc_createPatrol;
-	_patrolDir = _patrolDir + (random [0, 90, 180]);
+	private _numberOfMen = (random [4,5,7]) min (spo_ai_initialManpower);
+    _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName), spo_perimeter_radius, "(0 - (waterDepth))", 50, 1]) # 0) # 0; 
+    [_numberOfMen, _spawnPos] call spo_fnc_createPatrol;
 };
 // Vehicles
 if(spo_vehicleFaction != '') then {
-	private _numberOfVehicles = round random [1, spo_vehiclepoints / 1.33, spo_vehiclePoints];
+	private _numberOfVehicles = round random [1, spo_vehiclePoints / 1.33, spo_vehiclePoints];
+    spo_vehicleToSpawn = _numberOfVehicles;
 	for "_i" from 0 to _numberOfVehicles do { 
 		if(_i == 1) then {
 			private _createdVeh = [spo_centerPos, 'combat'] call spo_fnc_createVehicle;
-			[group (effectiveCommander _createdVeh),spo_centerPos, 1, 4, spo_objective_radius, true] call spo_fnc_patrol;
+			[group (effectiveCommander _createdVeh), spo_centerPos, 1, 4, spo_objective_radius, true] call spo_fnc_patrol;
 			spo_patrol_groups pushBack (group (effectiveCommander _createdVeh));
 		} else {
 			private _firstPos = selectRandom spo_reinforcement_locations;
