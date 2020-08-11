@@ -1,5 +1,5 @@
 class SPO_PatrolStateMachine {
-	list = "spo_patrol_groups select {({alive _x} count (units _x)) > 0}";
+	list = "spo_patrol_groups";
 	skipNull = 1;
 	class Initial {
         onState = "";
@@ -36,7 +36,7 @@ class SPO_PatrolStateMachine {
 			targetState = "Initial"; // add SearchAndDestory
 			// if finished SAD waypoint and have targets.
 			condition = "isNull (_this getVariable ['spo_reinforceing', grpNull]) && !(_this call spo_fnc_inContact)";
-			onStateLeaving ="[_this, getpos leader _this, 1, 4, random [100,200,250], true] call spo_fnc_patrol";
+			onStateLeaving ="[_this, getpos leader _this, 1, 4, random [100,200,250], true] call spo_fnc_patrol;systemChat 'exiting combat'";
 		};
 	};
 

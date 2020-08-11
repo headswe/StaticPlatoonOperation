@@ -8,9 +8,9 @@ class SPO_SAD_MissionStateMachine {
 			condition="(_this getVariable ['spo_enemyCount',0]) >= (count (allUnits select {side _x == EAST}))";
 			targetState = "Win";
 		}
-	}
+	};
 	class Win {
 		onStateEntered="spo_fnc_onSadEnd"
-	}
+	};
 
-}
+};

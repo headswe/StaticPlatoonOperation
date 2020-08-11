@@ -42,8 +42,9 @@ switch (_type) do {
 		lbSort [_enemyFactionVehiclesControl, "ASC"];
 		_pFactionControl lbSetCurSel (random floor count _loadouts);
 		_eFactionControl lbSetCurSel (random floor count _loadouts);
-
-		_i = 2;
+        _enemyFactionVehiclesControl lbSetCurSel (random floor count spo_factions);
+        _missionControl lbSetCurSel 0;
+		_i = 0;
 		{
 			_i = _i + 2; 
 			_index = _aiRatioControl lbAdd (str _i);

@@ -26,7 +26,7 @@ while {_manpower > 0} do {
 			_grp = group _veh;
 		} else {
 			_hasVehicles = false;
-		};
+		}; 
 	};
 	[_grp, getPos _building, _hasVehicles] call spo_fnc_attackPoint;
 };

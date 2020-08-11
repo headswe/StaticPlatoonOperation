@@ -23,6 +23,8 @@ if(count _vehicles > 0) then {
                     ((_x == _vehicleConfig && {round getNumber (_x >> "hasDriver") > 0}) ||
                     (_x != _vehicleConfig && {round getNumber (_x >> "hasGunner") > 0}))} count ([configName _vehicleConfig, configNull] call BIS_fnc_getTurrets);
     private _grp = [[0,0,0], _crewCount, ['vc', 'vd', 'vg']] call spo_fnc_createSquad;
-    {_x moveInAny _veh} forEach units _grp;
+    {
+        _x moveInAny _veh
+    } forEach units _grp;
 };
 _veh

@@ -8,6 +8,9 @@ spo_ai_manpower = round (5 + (_playerCount * spo_aiRatio));
 spo_ai_initialManpower =  spo_ai_manpower min 180; // spawn max(ish) 180 ai
 spo_ai_manpowerRemaining = (spo_ai_manpower - spo_ai_initialManpower) max 0;
 
+enemyDoll setVariable ["tmf_assignGear_faction", spo_opforFaction];
+enemyDoll call tmf_assignGear_fnc_assignGear;
+
 spo_vehiclePoints = 0;
 {
 	private _role = _x getVariable ["tmf_assignGear_role",'r'];
@@ -41,21 +44,30 @@ spo_patrol_groups = [];
 // Spawn guards	
 _directions = [0, 90, 180, 270];
 [_directions, true] call CBA_fnc_shuffle;
-
 {
-	private _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName), spo_perimeter_radius, "(0 - waterDepth) * (5 + hills)", 50, 1]) # 0) # 0;
+	private _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName) getPos [spo_perimeter_radius/2, _x], spo_perimeter_radius/8, "(0 - waterDepth) * (5 + hills)", 1, 1]) # 0) # 0;
 	[_spawnPos] call spo_fnc_createGuardPoint;
 } foreach _directions;
 
+private _patrolPoints = [];
 // patrol time
 while {spo_ai_initialManpower > 0} do {
-	private _numberOfMen = (random [4,5,7]) min (spo_ai_initialManpower);
-    _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName), spo_perimeter_radius, "(0 - (waterDepth))", 50, 1]) # 0) # 0; 
+	private _numberOfMen = (random [4,5,6]) min (spo_ai_initialManpower);
+    private _spawnPos = [];
+    private _validPoses = selectBestPlaces [getMarkerPos spo_perimeter_mkrName, spo_perimeter_radius, "(0 - (waterDepth))", 1, 20];
+    while {count _spawnPos <= 0} do {
+        private _index = _validPoses findIf {
+            private _pos = _x # 0;
+            (_patrolPoints findIf {(_pos distance _x) <= 125}) == -1
+        };
+        _spawnPos = (_validPoses # 0) # 0;
+    };
+    _patrolPoints pushBack _spawnPos;
     [_numberOfMen, _spawnPos] call spo_fnc_createPatrol;
 };
 // Vehicles
 if(spo_vehicleFaction != '') then {
-	private _numberOfVehicles = round random [1, spo_vehiclePoints / 1.33, spo_vehiclePoints];
+	private _numberOfVehicles = round random [0, spo_vehiclePoints / 1.33, spo_vehiclePoints];
     spo_vehicleToSpawn = _numberOfVehicles;
 	for "_i" from 0 to _numberOfVehicles do { 
 		if(_i == 1) then {
