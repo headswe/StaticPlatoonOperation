@@ -1,4 +1,4 @@
-$islands = "enoch","Tanoa","Malden","Takistan","tem_anizay","fallujah","fapovo", "lythium", "Altis", "tem_kujari";
+$islands = "enoch","Tanoa","Malden","Takistan","tem_anizay","fallujah","fapovo", "lythium", "Altis", "tem_kujari", "Stratis";
 $exclude = ".git","addons", "addons\*";
 $source = "D:\Documents\Arma 3 - Other Profiles\Head\mpmissions\static_platoon_ops.enoch"
 foreach ($island in $islands) {
