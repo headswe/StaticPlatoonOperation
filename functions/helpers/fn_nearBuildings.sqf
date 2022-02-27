@@ -1,5 +1,5 @@
 params ["_centerPos", "_radius"];
-_numOfBuildingPoses = 0;
+private _numOfBuildingPoses = 0;
 private _buildings = [];
 { 
     private _bPosses = _x buildingPos -1; 

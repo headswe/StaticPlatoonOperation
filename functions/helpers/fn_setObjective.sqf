@@ -13,7 +13,7 @@ deleteMarker spo_perimeter_mkrName;
 _mkr = createMarker [spo_perimeter_mkrName,_centerPos];
 _mkr setMarkerShape "ELLIPSE";
 _mkr setMarkerBrush "Border";
-_mkr setMarkerSize [spo_objective_radius,spo_objective_radius];
+_mkr setMarkerSize [spo_objective_radius, spo_objective_radius];
 _mkr setMarkerColor "ColorRed";
 
 // Teleport permiter

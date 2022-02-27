@@ -13,6 +13,7 @@ _checkWeapons = {
 _checkThreat = {
     private _threat = (_this >> 'threat') call BIS_fnc_getCfgDataArray;
     _threat params ["_men", "_vehicle", "_air"];
+    systemchat format["threat: %1", _threat];
     if(_air >= 0.9) exitWith {
         _men > 0.8
     };

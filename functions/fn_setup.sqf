@@ -94,7 +94,7 @@ if(spo_vehicleFaction != '') then {
 
 AI_SPAWNED = true;
 
-spo_mission_object = call CBA_fnc_createNamespace;
+spo_namespace = call CBA_fnc_createNamespace;
 spo_alert_triggerd = 0;
 spo_patrol_statemachine = [(missionconfigfile >> "SPO_PatrolStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
 spo_garrison_statemachine = [(missionconfigfile >> "SPO_GarrisonStateMachine")] call CBA_statemachine_fnc_createFromConfig; 

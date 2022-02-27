@@ -1,7 +1,7 @@
 private _building = _this getVariable ["spo_secure_building", nil];
 private _task = _this getVariable ["spo_secure_task", nil];
 [_task, "SUCCEEDED"] call BIS_fnc_taskSetState;
-private _task = [blufor, "spo_secure_task_2", ["Defend the site","Gotta defend dude", ""], getpos _building, "AUTOASSIGNED", 0, true, "defend"] call BIS_fnc_taskCreate;
+private _task = [blufor, "spo_secure_task_2", ["Defend the site","Defend it soldier!", ""], getpos _building, "AUTOASSIGNED", 0, true, "defend"] call BIS_fnc_taskCreate;
 _this setVariable ["spo_secure_task", _task];
 
 _manpower = spo_ai_manpower * 0.6;

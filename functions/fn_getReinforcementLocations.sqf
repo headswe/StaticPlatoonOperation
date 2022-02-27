@@ -26,7 +26,10 @@ private _onPathFinished = {
 			_pos = getPos _road;
 		};
 		spo_reinforcement_locations pushBackUnique _pos;
-		[ format["%1", _path] , _pos, "ICON", [1,1], "TYPE:", "mil_pickup" ] call CBA_fnc_createMarker;
+		_mkr = createMarkerLocal ["assaultObjective",_centerPos];
+		_mkr setMarkerSizeLocal [1,1];
+		_mkr setMarkerTypeLocal "mil_dot";
+		_mkr setMarkerColorLocal "ColorRed";
 	};
 	deleteVehicle (objectParent _agent);
 	deleteVehicle (_agent);

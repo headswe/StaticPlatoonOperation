@@ -5,7 +5,7 @@
 	} else {
 		_spawnPos = _overwatchPos;
 	};
-	"Campfire_burning_F" createVehicle _spawnPos;
+
 	private _grp = [_spawnPos, random [2,3,4]] call spo_fnc_createSquad;
 	_grp setBehaviour "SAFE";
 	_grp setVariable ["spo_grp_type", 'guard'];

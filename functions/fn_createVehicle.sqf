@@ -4,7 +4,7 @@ private _pos = [_spawnPos, 0, spo_objective_radius, 10, 0, 0.1, 0, [], [_spawnPo
 private _vehicles = [];
 switch (_type) do {
     case "transport": {
-          _vehicles = call spo_fnc_getTransportVehicle;
+            _vehicles = call spo_fnc_getTransportVehicle;
         };
         case "combat": {
             _vehicles = call spo_fnc_getCombatVehicle;

@@ -88,6 +88,10 @@ class CfgFunctions
 			class onSadStart{};
 			class onSadEnd{};
 		}
+		class cache {
+			file = "missions\cache";
+			class onCacheStart{};
+		}
 		class secure {
 			file = "missions\secure";
 			class onSecureStart{};
@@ -111,4 +115,5 @@ class Params {
 class SPO_Missions {
 	#include "missions\sad\machine.hpp"
 	#include "missions\secure\machine.hpp"
+	#include "missions\cache\machine.hpp"
 }
