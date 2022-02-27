@@ -15,13 +15,13 @@ spo_vehiclePoints = 0;
 {
 	private _role = _x getVariable ["tmf_assignGear_role",'r'];
 	if(_role isEqualTo 'rat') then {
-		spo_vehiclePoints = spo_vehiclePoints + 1.5;
+		spo_vehiclePoints = spo_vehiclePoints + 1;
 	};
 	if(_role isEqualTo 'matg') then {
-		spo_vehiclePoints = spo_vehiclePoints + 3;
+		spo_vehiclePoints = spo_vehiclePoints + 2;
 	};
 	if(_role isEqualTo 'hatg') then {
-		spo_vehiclePoints = spo_vehiclePoints + 5;
+		spo_vehiclePoints = spo_vehiclePoints + 3;
 	};
 } foreach (playableUnits + switchableUnits);
 
@@ -30,7 +30,6 @@ spo_vehiclePoints = 0;
 	[_x] remoteExec ["spo_fnc_gear", _x];
 	[] remoteExec ["TMF_acre2_fnc_clientInit", _x];
 } foreach (allUnits select {side _x == blufor});
-
 spo_overwatch_locations = [];
 
 // Spawn garrison

@@ -26,10 +26,6 @@ private _onPathFinished = {
 			_pos = getPos _road;
 		};
 		spo_reinforcement_locations pushBackUnique _pos;
-		_mkr = createMarkerLocal ["assaultObjective",_centerPos];
-		_mkr setMarkerSizeLocal [1,1];
-		_mkr setMarkerTypeLocal "mil_dot";
-		_mkr setMarkerColorLocal "ColorRed";
 	};
 	deleteVehicle (objectParent _agent);
 	deleteVehicle (_agent);
