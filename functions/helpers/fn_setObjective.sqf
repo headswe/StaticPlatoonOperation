@@ -32,4 +32,5 @@ spo_specobjective_module setPos [_centerPos#0, _centerPos#1,15];
 spo_reinforcement_locations = [];
 [spo_centerPos, 1000, [0,90,180,270]] spawn spo_fnc_getReinforcementLocations;
 
-spo_objective_area = [spo_perimeter_radius / 2, spo_perimeter_radius /2, 0, false];
+spo_objective_area = [spo_objective_radius, spo_objective_radius, 0, false];
+spo_perimeter_area = [spo_perimeter_radius * 0.8, spo_perimeter_radius * 0.8, 0, false];

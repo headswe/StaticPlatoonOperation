@@ -13,7 +13,7 @@ for "_i" from 0 to _numberOfCaches do {
         _cache = createVehicle ["Box_FIA_Wps_F", _pos, [], 0, "CAN_COLLIDE"];
         _poses = _poses - [_pos];
         if (count _poses >= 1) then {
-            private _unitsToSpawn = random [1, round (count _posses)/2, count _posses];
+            private _unitsToSpawn = (count _posses) - 1;
             _garrisonGrp = createGroup [opfor, true];
             for "_i" from 0 to _unitsToSpawn do {
                 private _solider = _garrisonGrp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];

@@ -6,10 +6,10 @@
 		_spawnPos = _overwatchPos;
 	};
 
-	private _grp = [_spawnPos, random [2,3,4]] call spo_fnc_createSquad;
+	private _grp = [_spawnPos, random [3,6,8]] call spo_fnc_createSquad;
 	_grp setBehaviour "SAFE";
 	_grp setVariable ["spo_grp_type", 'guard'];
-    [_grp, _spawnPos, 50, 4, spo_objective_area, false] call lambs_wp_fnc_taskPatrol;
+    [_grp, _spawnPos, 50] call lambs_wp_fnc_taskCamp;
 	spo_patrol_groups pushBack _grp;
 	spo_overwatch_locations pushBack _spawnPos;
 	private _mkrName = format["gp_%1", random 3000];

@@ -9,6 +9,7 @@ spo_ai_initialManpower =  spo_ai_manpower min 180; // spawn max(ish) 180 ai
 spo_ai_manpowerRemaining = (spo_ai_manpower - spo_ai_initialManpower) max 0;
 
 enemyDoll setVariable ["tmf_assignGear_faction", spo_opforFaction];
+enemyDoll setVariable ["tmf_assignGear_role","r"];
 enemyDoll call tmf_assignGear_fnc_assignGear;
 
 spo_vehiclePoints = 0;
@@ -33,8 +34,8 @@ spo_vehiclePoints = 0;
 spo_overwatch_locations = [];
 
 // Spawn garrison
-_garrisonUnits = round (spo_ai_initialManpower* random [0.3,0.35,0.4]);
-([spo_centerPos, _garrisonUnits, spo_objective_radius*(random [1,1.2,1.5])] call spo_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
+_garrisonUnits = round (spo_ai_initialManpower* random [0.4,0.45,0.5]);
+([spo_centerPos, _garrisonUnits, spo_objective_radius] call spo_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
 spo_garrison_groups = _garrisonGrps;
 spo_garrison_units = _spawnedUnits;
 spo_ai_initialManpower = spo_ai_initialManpower - count _spawnedUnits;
@@ -44,7 +45,7 @@ spo_patrol_groups = [];
 _directions = [0, 90, 180, 270];
 [_directions, true] call CBA_fnc_shuffle;
 {
-	private _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName) getPos [spo_perimeter_radius/2, _x], spo_perimeter_radius/8, "(0 - waterDepth) * (5 + hills)", 1, 1]) # 0) # 0;
+	private _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName) getPos [spo_objective_radius + (random 100), _x], 100, "(0 - waterDepth) * (5 + hills)", 1, 1]) # 0) # 0;
 	[_spawnPos] call spo_fnc_createGuardPoint;
 } foreach _directions;
 

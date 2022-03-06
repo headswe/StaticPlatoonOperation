@@ -10,7 +10,8 @@ if (!isMultiplayer) then { _playerCount = 10;};
 spo_aiRatio = 6;
 spo_ai_initialManpower =  round ((5 + (_playerCount * spo_aiRatio) ) min 120);
 spo_objective_radius = 200;
-spo_perimeter_radius = 600;
+spo_perimeter_radius = 400;
+spo_patrol_groups = [];
 if(serverCommandAvailable "#kick") then {
 	spo_click_action = addMissionEventHandler ["MapSingleClick", {
 		params ["_units", "_pos", "_alt", "_shift"];
