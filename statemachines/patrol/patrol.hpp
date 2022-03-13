@@ -26,7 +26,7 @@ class SPO_PatrolStateMachine {
 	};
 
 	class Reinforceing {
-		onStateEntered="[_this, _this getVariable ['spo_reinforceing', this]] call spo_fnc_reveal";
+		// onStateEntered="[_this, _this getVariable ['spo_reinforceing', this]] call spo_fnc_reveal";
 		class SearchCompletedNoTargets {
 			targetState = "Initial";
 			// if finished searching and no contacts, go back to normal

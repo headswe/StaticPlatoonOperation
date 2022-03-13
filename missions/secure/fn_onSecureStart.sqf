@@ -13,7 +13,7 @@ private _task = [blufor, "spo_secure_task", ["Secure Building","Secure the build
 _this setVariable ["spo_secure_task", _task];
 _this setVariable ["spo_secure_building", _building];
 private _posses = _building buildingPos -1;
-private _unitsToSpawn = count _posses-1;
+private _unitsToSpawn = (count _posses-1) min 10;
 _garrisonGrp = createGroup [opfor, true];
 for "_i" from 0 to _unitsToSpawn do {
     private _solider = _garrisonGrp createUnit ['O_Soldier_F',[0,0,0],[],0,'NONE'];

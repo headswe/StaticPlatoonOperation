@@ -25,7 +25,7 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 		_grp setVariable ["spo_garrisonData", [_buildingCenter, _buildingSize * 3, _buildingSize * 3, 0, false]];
 	};
 	private _numofPostions = (count _poses);
-	private _unitsToSpawn = (random [1,_numofPostions/4, _numofPostions]) min _numberOfUnits;
+	private _unitsToSpawn = (random [1,_numofPostions/4, _numofPostions] min 10) min _numberOfUnits;
 	for "_i" from 1 to _unitsToSpawn do {
 		private _posIndex = _poses call BIS_fnc_randomIndex;
 		private _role = selectRandom spo_allowedRoles;
