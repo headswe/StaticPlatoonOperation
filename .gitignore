@@ -1,2 +1,3 @@
 /addons/
-/build-config.json
+/addons/*
+build-config.json
