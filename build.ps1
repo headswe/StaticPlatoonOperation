@@ -3,7 +3,7 @@ $DEFAULT_CONFIG = [PSCustomObject]@{
     source=$pwd.Path;
     destination="$source\addons";
     islands="Stratis", "Altis", "Enoch", "Tanoa", "Malden";
-    exclude="\.git$", "\\\.git\\", "\\addons$", "\\addons\\", "\\build.ps1$", "\\build-config.json$", "\\build-config.json.example$";
+    exclude="\.gitignore$", "\.git$", "\\\.git\\", "\\addons$", "\\addons\\", "\\build.ps1$", "\\build-config.json$", "\\build-config.json.example$";
 }
 
 $config = $DEFAULT_CONFIG;
