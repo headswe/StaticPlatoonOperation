@@ -30,4 +30,10 @@ git -C "$stage" -c user.name=lint -c user.email=lint@localhost add -A
 git -C "$stage" -c user.name=lint -c user.email=lint@localhost commit -qm lint
 
 cd "$stage"
-hemtt check "$@"
+status=0
+hemtt check "$@" || status=$?
+# HEMTT keeps its full report in .hemttout; show it so CI logs explain a failure.
+if [ "$status" -ne 0 ] && [ -d .hemttout ]; then
+    find .hemttout -name '*.log' -exec cat {} +
+fi
+exit "$status"

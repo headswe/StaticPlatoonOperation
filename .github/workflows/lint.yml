@@ -18,4 +18,4 @@ jobs:
       - name: HEMTT check
         run: |
           hemtt --version
-          tools/lint.sh
+          tools/lint.sh -v
