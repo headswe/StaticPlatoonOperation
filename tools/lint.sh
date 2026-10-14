@@ -47,8 +47,8 @@ printf 'z\\spo\\addons\\main' > "$addon/\$PBOPREFIX\$"
 cd "$stage"
 status=0
 hemtt check "$@" || status=$?
-# One line per finding, easier to scan than the full report above.
-if [ "$status" -ne 0 ] && [ -f .hemttout/ci_annotations.txt ]; then
+# One line per finding (including warnings that don't fail the check), easier to scan than the report above.
+if [ -f .hemttout/ci_annotations.txt ]; then
     echo "--- findings ---"
     cat .hemttout/ci_annotations.txt
 fi
