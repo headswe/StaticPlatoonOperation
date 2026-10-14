@@ -14,6 +14,12 @@ mkdir -p "$stage/.hemtt" "$addon"
 cat > "$stage/.hemtt/project.toml" <<'TOML'
 name = "Static Platoon Ops"
 prefix = "spo"
+
+[version]
+major = 1
+minor = 0
+patch = 0
+build = 0
 TOML
 
 # Copy every script and config, keeping the folder layout so #include paths resolve.
@@ -23,11 +29,6 @@ TOML
     cp "$root/$file" "$addon/$file"
 done
 cp "$root/description.ext" "$addon/config.cpp"
-
-# HEMTT derives the version from git.
-git -C "$stage" init -q
-git -C "$stage" -c user.name=lint -c user.email=lint@localhost add -A
-git -C "$stage" -c user.name=lint -c user.email=lint@localhost commit -qm lint
 
 cd "$stage"
 status=0
