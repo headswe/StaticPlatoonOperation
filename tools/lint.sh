@@ -35,8 +35,9 @@ printf 'z\\spo\\addons\\main' > "$addon/\$PBOPREFIX\$"
 cd "$stage"
 status=0
 hemtt check "$@" || status=$?
-# HEMTT keeps its full report in .hemttout; show it so CI logs explain a failure.
-if [ "$status" -ne 0 ] && [ -d .hemttout ]; then
-    find .hemttout -name '*.log' -exec cat {} +
+# One line per finding, easier to scan than the full report above.
+if [ "$status" -ne 0 ] && [ -f .hemttout/ci_annotations.txt ]; then
+    echo "--- findings ---"
+    cat .hemttout/ci_annotations.txt
 fi
 exit "$status"

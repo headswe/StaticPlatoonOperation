@@ -17,7 +17,7 @@ class SPO_Secure_MissionStateMachine {
 		};
 	};
 	class Win {
-		onStateEntered="spo_fnc_onSecureWin"
+		onStateEntered="spo_fnc_onSecureWin";
 	};
 
 };

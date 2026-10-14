@@ -17,4 +17,4 @@ jobs:
           echo "$HOME/.hemtt/bin" >> "$GITHUB_PATH"
       - name: HEMTT check
         # `hemtt --version` exits non-zero, so don't run it under bash -e
-        run: tools/lint.sh -v
+        run: tools/lint.sh
