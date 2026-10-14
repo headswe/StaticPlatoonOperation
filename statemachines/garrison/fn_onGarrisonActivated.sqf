@@ -10,5 +10,5 @@ private _wp = [_this, _this, 0, "SAD", "AWARE", "RED", "FULL", "WEDGE"] call CBA
 private _data = _this getVariable ["spo_garrisonData", []];
 {
 	_this reveal _x;
-} foreach (((playableUnits + switchableUnits) select {side _x == blufor}) inAreaArray _data);
+} forEach (((playableUnits + switchableUnits) select {side _x == blufor}) inAreaArray _data);
 

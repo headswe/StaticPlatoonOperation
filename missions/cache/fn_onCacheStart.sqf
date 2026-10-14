@@ -7,7 +7,7 @@ _buildings = _buildings select {count (_x # 0) > 0};
 for "_i" from 0 to _numberOfCaches do {
     private _cache = objNull;
     private _task = [blufor, format ["stc_%1", _i], [format ["Cache %1", _i],format ["Cache %1", _i], ""], objNull , "AUTOASSIGNED", 0, true, "destroy"] call BIS_fnc_taskCreate;
-    if(count _buildings > 0) then {
+    if(_buildings isNotEqualTo []) then {
         // one cache per building, so caches and their guards never share positions
         (_buildings deleteAt (floor random count _buildings)) params ["_poses", "_building"];
         private _pos = selectRandom _poses;

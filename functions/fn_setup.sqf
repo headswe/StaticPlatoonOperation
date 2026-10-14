@@ -32,13 +32,13 @@ spo_vehiclePoints = 0;
 	if(_role isEqualTo 'hatg') then {
 		spo_vehiclePoints = spo_vehiclePoints + 3;
 	};
-} foreach (playableUnits + switchableUnits);
+} forEach (playableUnits + switchableUnits);
 
 // why do i do this?
 {
 	[_x] remoteExec ["spo_fnc_gear", _x];
 	if (isPlayer _x) then { [] remoteExec ["TMF_acre2_fnc_clientInit", _x]; };
-} foreach (allUnits select {side _x == blufor});
+} forEach (allUnits select {side _x == blufor});
 spo_overwatch_locations = [];
 
 // Spawn garrison
@@ -60,7 +60,7 @@ private _directions = [0, 90, 180, 270];
 	private _places = selectBestPlaces [(getMarkerPos spo_perimeter_mkrName) getPos [spo_objective_radius + (random 100), _x], 100, "(0 - waterDepth) * (5 + hills)", 1, 1];
 	if (_places isEqualTo []) then { continue; };
 	[(_places # 0) # 0] call spo_fnc_createGuardPoint;
-} foreach _directions;
+} forEach _directions;
 
 private _patrolPoints = [];
 // patrol time
@@ -110,9 +110,9 @@ if(spo_vehicleFaction != '') then {
 
 spo_namespace = call CBA_fnc_createNamespace;
 spo_alert_triggerd = 0;
-spo_patrol_statemachine = [(missionconfigfile >> "SPO_PatrolStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
-spo_garrison_statemachine = [(missionconfigfile >> "SPO_GarrisonStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
-spo_mission_statemachine = [(missionconfigfile >> "SPO_Missions" >> spo_missionClassName)] call CBA_statemachine_fnc_createFromConfig; 
+spo_patrol_statemachine = [(missionConfigFile >> "SPO_PatrolStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
+spo_garrison_statemachine = [(missionConfigFile >> "SPO_GarrisonStateMachine")] call CBA_statemachine_fnc_createFromConfig; 
+spo_mission_statemachine = [(missionConfigFile >> "SPO_Missions" >> spo_missionClassName)] call CBA_statemachine_fnc_createFromConfig; 
 
 
 private _enemyFactionMsg = format ["Enemy Faction: %1", getText (configFile >> "CfgLoadouts" >> spo_opforFaction >> "displayName")];

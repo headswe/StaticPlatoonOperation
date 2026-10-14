@@ -1,7 +1,7 @@
 params [["_spawnPos", spo_centerPos], ["_type", "transport", ["transport", "combat"]] , ["_flying", false], ["_static", false], ["_boat", false] ];
 private _nearestRoad = _spawnPos nearRoads 50;
 private _pos = [0,0,0];
-if(count _nearestRoad > 0) then {
+if(_nearestRoad isNotEqualTo []) then {
     _pos = getPos (selectRandom _nearestRoad);
 } else {
     _pos = [_spawnPos, 0, spo_objective_radius, 10, 0, 0.1, 0, [], [_spawnPos,_spawnPos]] call BIS_fnc_findSafePos;

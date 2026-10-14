@@ -42,7 +42,7 @@ class CfgPatches {
     };
 };
 CPP
-printf 'z\\spo\\addons\\main' > "$addon/\$PBOPREFIX\$"
+printf 'spo\\addons\\main' > "$addon/\$PBOPREFIX\$"
 
 cd "$stage"
 status=0

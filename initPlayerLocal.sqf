@@ -9,7 +9,7 @@ private _header = "";
 {
 	_x params ["_category", "_name"];
 	
-	if !(_category isEqualTo _header) then {
+	if (_category isNotEqualTo _header) then {
 		_header = _category;
 		_text = format ["%1<br/><br/><font size='18'>%2</font>", _text, toUpper _category];
 	};

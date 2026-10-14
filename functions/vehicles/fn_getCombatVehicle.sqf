@@ -2,10 +2,10 @@ private _checkWeapons = {
     private _weapons = [configName _this] call BIS_fnc_weaponsEntityType;
     {
         !(
-            (_x isKindOf ["FakeWeapon", configfile >> "cfgWeapons"]) ||
-            (_x isKindOf  ["CarHorn", configfile >> "cfgWeapons"]) || 
-            (_x isKindOf  ["SmokeLauncher", configfile >> "cfgWeapons"]) || 
-            (_x isKindOf  ["Laserdesignator_mounted", configfile >> "cfgWeapons"])
+            (_x isKindOf ["FakeWeapon", configFile >> "cfgWeapons"]) ||
+            (_x isKindOf  ["CarHorn", configFile >> "cfgWeapons"]) || 
+            (_x isKindOf  ["SmokeLauncher", configFile >> "cfgWeapons"]) || 
+            (_x isKindOf  ["Laserdesignator_mounted", configFile >> "cfgWeapons"])
         )
     } count _weapons
 };

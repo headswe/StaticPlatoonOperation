@@ -3,7 +3,7 @@ private _numOfBuildingPoses = 0;
 private _buildings = [];
 { 
     private _bPosses = _x buildingPos -1; 
-    if(count _bPosses > 0) then { 
+    if(_bPosses isNotEqualTo []) then { 
         _buildings pushBack [_bPosses, _x]; 
         _numOfBuildingPoses = _numOfBuildingPoses + count _bPosses
     }; 

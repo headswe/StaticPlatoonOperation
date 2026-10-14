@@ -14,7 +14,7 @@ if(_type == 0) then {
 		if(_tryOnRoad) then {
 			private _road = [_point, 50,_roads] call BIS_fnc_nearestRoad;
 			if(!isNull _road) then {
-				_point = getpos _road;
+				_point = getPos _road;
 				_roads pushBack _road;
 			};
 		};
@@ -67,7 +67,7 @@ if(_type == 2) then {
 		if(_tryOnRoad) then {
 			private _road = [_point, 50,_roads] call BIS_fnc_nearestRoad;
 			if(!isNull _road) then {
-				_point = getpos _road;
+				_point = getPos _road;
 				_roads pushBack _road;
 			};
 		};

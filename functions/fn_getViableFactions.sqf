@@ -11,7 +11,7 @@ spo_factions = [];
 		if(_factionStr != '') then {
 			private _faction = spo_factionsVehicles getOrDefault [_factionStr, []];
 			if(count _faction <= 0) then {
-				_faction = [(configfile >> "CfgFactionClasses" >> _factionStr),getText (configfile >> "CfgFactionClasses" >> _factionStr >> "displayName"), [_x]];
+				_faction = [(configFile >> "CfgFactionClasses" >> _factionStr),getText (configFile >> "CfgFactionClasses" >> _factionStr >> "displayName"), [_x]];
 				spo_factions pushBack [_factionStr, _faction # 1];
 			} else {
 				(_faction#2) pushBackUnique _x;

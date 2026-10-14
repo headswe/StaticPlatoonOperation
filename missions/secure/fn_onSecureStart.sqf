@@ -10,7 +10,7 @@ if(count _buildings <= 0) then {
     _building = (selectRandom _buildings) # 1;
 };
 
-private _task = [blufor, "spo_secure_task", ["Secure Building","Secure the building", ""], getpos _building, "AUTOASSIGNED", 0, true, "secure"] call BIS_fnc_taskCreate;
+private _task = [blufor, "spo_secure_task", ["Secure Building","Secure the building", ""], getPos _building, "AUTOASSIGNED", 0, true, "secure"] call BIS_fnc_taskCreate;
 _this setVariable ["spo_secure_task", _task];
 _this setVariable ["spo_secure_building", _building];
 private _posses = _building buildingPos -1;

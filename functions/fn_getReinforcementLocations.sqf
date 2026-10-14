@@ -37,9 +37,9 @@ private _onPathFinished = {
 {
 	private _pos = _centerPos getPos [_distance, _x];
 	_pos = [_pos, 0, 250, 3, 0, 0.1, 0, [], [_pos,_pos]] call BIS_fnc_findSafePos;
-	private _agent = createAgent ["B_Soldier_F", getpos _startRoad, [], 0, "NONE"];
+	private _agent = createAgent ["B_Soldier_F", getPos _startRoad, [], 0, "NONE"];
 	_agent setVariable ["location", _centerPos];
-	private _car = "B_Quadbike_01_F" createVehicle getpos _startRoad;
+	private _car = "B_Quadbike_01_F" createVehicle getPos _startRoad;
 	_vehicles pushBack _car;
 	_agents pushBack _agent;
 	_agent moveInDriver _car;  

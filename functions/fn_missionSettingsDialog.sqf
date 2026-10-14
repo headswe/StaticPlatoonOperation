@@ -18,7 +18,7 @@ switch (_type) do {
 			{
 				private _index = _x lbAdd (getText (_loadout >> "displayName"));
 				_x lbSetData [_index, configName _loadout];
-			} foreach [_pFactionControl, _eFactionControl];
+			} forEach [_pFactionControl, _eFactionControl];
 		} forEach _loadouts;
 
 		private _index = _enemyFactionVehiclesControl lbAdd '';
