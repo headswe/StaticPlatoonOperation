@@ -20,6 +20,7 @@ major = 1
 minor = 0
 patch = 0
 build = 0
+git_hash = 0
 TOML
 
 # Copy every script and config, keeping the folder layout so #include paths resolve.
