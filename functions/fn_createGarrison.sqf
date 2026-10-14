@@ -13,7 +13,7 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 	private _grp = _building getVariable ['spo_garrison_group', grpNull];
 	// create group per building
 	if(isNull _grp) then {
-		[_building] call ZEI_fnc_createTemplate;
+		if (!isNil "ZEI_fnc_createTemplate") then { [_building] call ZEI_fnc_createTemplate; };
 		_grp = createGroup [east, true];
 		_building setVariable ['spo_garrison_group', _grp];
 		_grp setBehaviour "SAFE";
@@ -56,6 +56,6 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 	if(random 1 > 0.4) then {
 		_type = 'civ';
 	};
-	[_building, _type] call ZEI_fnc_createTemplate;
+	if (!isNil "ZEI_fnc_createTemplate") then { [_building, _type] call ZEI_fnc_createTemplate; };
 } forEach _buildings;
 [_spawnedUnits, _groups]

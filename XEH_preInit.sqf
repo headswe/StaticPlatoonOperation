@@ -1,7 +1,7 @@
 if (isServer) then {	
 	// Weather
-	_date = date;
-	_date set [3,selectRandom [5,6,9,12,13,16,17,18]]; // Random hour between 8 and 6pm
+	private _date = date;
+	_date set [3,selectRandom [5,6,9,12,13,16,17,18]]; // Random hour between 05:00 and 18:00
 
 	// ====================================================================================
 
@@ -10,7 +10,7 @@ if (isServer) then {
 	[_date,true] call BIS_fnc_setDate;
 	
 	//Random weather
-	[] call compile preprocessFile 'functions\weather.sqf';
+	[] call compile preprocessFileLineNumbers 'functions\weather.sqf';
 	 
 
 };

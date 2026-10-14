@@ -16,7 +16,7 @@ class CfgDebriefing
 	class END1
 	{
 		title = "Mission Completed";
-		subtitle = "ALL AI ELIMINATED";
+		subtitle = "OBJECTIVE COMPLETE";
 		description = "Good job!";
 	};
 	class Failed
@@ -82,6 +82,7 @@ class CfgFunctions
 			class reveal{};
 			class inContact{};
 			class createFlare{};
+			class log{};
 		};
 		class sad {
 			file = "missions\sad";
@@ -97,6 +98,14 @@ class CfgFunctions
 			class onSecureStart{};
 			class onSecureArrived{};
 			class onSecureWin{};
+		};
+		class admin {
+			file = "functions\admin";
+			class isAdminCaller{};
+			class onAdminChanged{};
+			class objectiveComplete{};
+			class promptAdminEnd{};
+			class endMission{};
 		};
 		class vehicles {
 			file = "functions\vehicles";

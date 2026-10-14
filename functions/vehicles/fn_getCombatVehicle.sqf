@@ -1,4 +1,4 @@
-_checkWeapons = {
+private _checkWeapons = {
     private _weapons = [configName _this] call BIS_fnc_weaponsEntityType;
     {
         !(
@@ -10,7 +10,7 @@ _checkWeapons = {
     } count _weapons
 };
 
-_checkThreat = {
+private _checkThreat = {
     private _threat = (_this >> 'threat') call BIS_fnc_getCfgDataArray;
     _threat params ["_men", "_vehicle", "_air"];
     if(_air >= 0.9) exitWith {
@@ -20,7 +20,7 @@ _checkThreat = {
 };
 
 
-private _vehicles = ((spo_factionsVehicles getVariable [spo_vehicleFaction, [nil, nil, []]]) # 2) select {
+private _vehicles = ((spo_factionsVehicles getOrDefault [spo_vehicleFaction, [nil, nil, []]]) # 2) select {
     ((configName _x) isKindOf "LandVehicle") && 
     {!((configName _x) isKindOf "StaticWeapon") } && 
     {(_x call _checkWeapons) > 0} && {!((_x >> "artilleryScanner") call BIS_fnc_getCfgDataBool)} && 

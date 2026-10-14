@@ -36,6 +36,9 @@ for "_i" from 0 to _numberOfCaches do {
     _cache addEventHandler ["killed", {
         private _task = (_this select 0) getVariable ["task", nil];
         [_task, "SUCCEEDED"] call BIS_fnc_taskSetState;
+        if (({alive _x} count (spo_namespace getVariable ["caches", []])) == 0) then {
+            ["All caches destroyed."] call spo_fnc_objectiveComplete;
+        };
     }];
 };
 _this setVariable ["caches", _caches];

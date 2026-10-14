@@ -10,9 +10,9 @@ if (_faction != "") then {
 if (!isNil "_role") then {
 	_unit setVariable ["tmf_assignGear_role",_role];
 };
-private _faction = _unit getVariable ["tmf_assignGear_faction", toLower(faction _unit)];
-private _role = _unit getVariable ["tmf_assignGear_role","r"];
-_cfg = configFile >> "cfgLoadouts" >> _faction >> _role;
+_faction = _unit getVariable ["tmf_assignGear_faction", toLower(faction _unit)];
+_role = _unit getVariable ["tmf_assignGear_role","r"];
+private _cfg = configFile >> "cfgLoadouts" >> _faction >> _role;
 // if the faction dosent have role, change it.
 if(!isClass _cfg) then {
 	_unit setVariable ["tmf_assignGear_role",'r'];

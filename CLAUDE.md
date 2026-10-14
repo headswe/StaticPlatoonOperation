@@ -8,7 +8,9 @@ Guidance for working in this repository.
 
 The repository *is* the mission folder: it is meant to live at `mpmissions/static_platoon_ops.<terrain>/` in an Arma 3 profile. The source of truth is authored on Livonia (`enoch`) and copied to other terrains by `build.ps1`.
 
-There is no build step, compiler or test suite. Code is only exercised by loading the mission in Arma 3 (Eden editor → Play in Multiplayer, or a dedicated server). Script errors show up on screen with `-showScriptErrors` and in the `.rpt` log.
+There is no build step or test suite. `tools/lint.sh` runs HEMTT's config and SQF checks (CI runs it on every PR via `.github/workflows/lint.yml`), but behaviour is only exercised by loading the mission in Arma 3 (Eden editor → Play in Multiplayer, or a dedicated server). Script errors show up on screen with `-showScriptErrors` and in the `.rpt` log.
+
+Requires Arma 3 2.02 or newer (`units side`, hashmaps, `isNotEqualTo`, `continue`).
 
 ## Required mods (runtime dependencies)
 
@@ -29,46 +31,55 @@ The scripts call into these directly; none of them are vendored here.
 
 ```
 description.ext          Mission config: CfgFunctions registry, includes UI + state machines + mission types
-init.sqf                 Globals/defaults on every machine; admin MapSingleClick → spo_fnc_setObjective
+init.sqf                 Globals/defaults on every machine
 initServer.sqf           Builds the vehicle-faction list (spo_fnc_getViableFactions)
-initPlayerLocal.sqf      Diary record listing every CfgLoadouts faction
+initPlayerLocal.sqf      Loadout diary record; polls admin state → spo_fnc_onAdminChanged
 XEH_preInit.sqf          Server: random time of day + weather (functions/weather.sqf)
 ui_macros.hpp            Base Rsc* control classes (copied from the game's defines)
 ui/missionDialog.hpp     The "missionSetuipDialog" setup dialog
 functions/               General server-side spawning functions (spo_fnc_*)
+functions/admin/         Admin rights (isAdminCaller, onAdminChanged) and the end-of-mission prompt
 functions/ai/            Group behaviours: attackPoint, hunt (end-game TMF hunt loop)
-functions/helpers/       Small utilities: setObjective, nearBuildings, inContact, reveal, createFlare
+functions/helpers/       Small utilities: setObjective, nearBuildings, inContact, reveal, createFlare, log
 functions/vehicles/      Vehicle class filters for the selected vehicle faction
 statemachines/patrol/    SPO_PatrolStateMachine (contact → request/answer reinforcements)
 statemachines/garrison/  SPO_GarrisonStateMachine (wake garrisons when players get close)
 missions/<type>/         Mission types (state machines under class SPO_Missions): sad, secure, cache, hvt (unfinished)
 briefing/                Briefing text (TMF briefing)
-build.ps1                Copies the enoch folder to one folder per terrain under mpmissions/addons
+build.ps1                Copies the mission to one folder per terrain under mpmissions/addons
+tools/lint.sh            Stages the mission as an addon and runs `hemtt check`
 assets/                  Images
 ```
 
 ## Runtime flow
 
-1. **Init**: `init.sqf` sets defaults (`spo_opforFaction`, radii, `spo_allowedRoles`, …). If the local machine is an admin, a `MapSingleClick` handler remote-executes `spo_fnc_setObjective` on the server for every map click.
+1. **Init**: `init.sqf` sets defaults (`spo_opforFaction`, radii, `spo_allowedRoles`, …). `initPlayerLocal.sqf` polls `serverCommandAvailable "#kick"` every 2 s; when a player becomes admin (including a later `#login`), `spo_fnc_onAdminChanged` adds a `MapSingleClick` handler that remote-executes `spo_fnc_setObjective` on the server, until setup has run (`AI_SPAWNED`).
 2. **Pick objective**: `spo_fnc_setObjective` (server) draws three markers (`assaultObjective`, the red `assaultObjectivePerimeter` = `spo_objective_radius`, the blue teleport ring `assaultObjectiveTP` = `spo_perimeter_radius`), publishes `spo_centerPos`, and spawns `spo_fnc_getReinforcementLocations`, which drives throwaway quad-bike agents along roads from four headings to find road entry points outside the blue ring (`spo_reinforcement_locations`).
 3. **Setup dialog**: the admin's "Setup mission" action opens `missionSetuipDialog`. `spo_fnc_missionSettingsDialog` fills the combos (`onLoad`) and on "Go" (`done`) publishes the chosen factions/ratio/mission and remote-executes `spo_fnc_setup` on the server.
 4. **Setup (server)**: `spo_fnc_setup` computes manpower (`5 + players * spo_aiRatio`, capped at 180 initially), re-gears players to the chosen faction, then spawns: garrison (~45%) via `spo_fnc_createGarrison`, four guard points, patrols via `spo_fnc_createPatrol` until manpower is used up, and vehicles scaled by the players' AT roles (`spo_vehiclePoints`). Finally it creates the three CBA state machines: patrol, garrison and the selected mission.
 5. **Mission state machine**: each class in `SPO_Missions` is a CBA state machine over `[spo_namespace]`; `_this` inside its functions is that namespace, used to store task ids and objects.
+6. **Objective complete**: missions never end on their own (by design). When a mission's objective is done it calls `spo_fnc_objectiveComplete`, which hints all admins and gives them an "End mission" action (`spo_fnc_endMission` → `END1`).
 
 ## Conventions
 
 - **Functions** are registered in `description.ext` under `CfgFunctions >> spo`. A file `functions/foo/fn_bar.sqf` registered as `class bar {}` in a category with `file = "functions\foo"` becomes `spo_fnc_bar`. Adding a file without registering it means it is never compiled. Use backslashes in `file =` paths.
 - **Globals** are prefixed `spo_` (except the legacy `AI_SPAWNED`). Locals start with `_` and should be declared `private`.
+- **Admin-only server calls**: functions that clients remote-execute on the server and that change the mission (`setObjective`, `setup`, `endMission`) must start with `if (!(call spo_fnc_isAdminCaller)) exitWith {};`. There is no `CfgRemoteExec` whitelist (TMF/ACE need open remote exec).
+- **Debug output**: use `["message"] call spo_fnc_log`, not `systemChat`. It prints only when `spo_debug = true` (set from the debug console).
 - **Locality**: almost everything runs on the server (`isServer`, or `remoteExecCall [..., 2]`). Spawning, state machines and tasks are server-only; clients only run the dialog, the admin click handler and the diary. Publish values clients need with `publicVariable`.
 - **State machines** are declared in `.hpp` config (`list`, `skipNull`, states with `onState`/`onStateEntered`/`onStateLeaving`, transitions with `condition`/`targetState`/`onTransition`). `_this` in every callback is the current list item (a group for patrol/garrison, `spo_namespace` for missions). Conditions are code strings or function names.
-- **New mission types**: add `missions/<type>/machine.hpp` with a `displayName`, include it inside `class SPO_Missions` in `description.ext`, register its functions in a new `CfgFunctions` category. It then appears in the dialog's mission combo automatically.
+- **New mission types**: add `missions/<type>/machine.hpp` with a `displayName`, include it inside `class SPO_Missions` in `description.ext`, register its functions in a new `CfgFunctions` category. It then appears in the dialog's mission combo automatically. Call `spo_fnc_objectiveComplete` with a short message when the objective is done.
 - **AI**: units are spawned as `O_Soldier_F` on side `east` and then re-geared with TMF (`spo_fnc_gear`, roles from `spo_allowedRoles`, falling back to `r` if the faction lacks the role). Vehicle crews use roles `vc`, `vd`, `vg`.
 - Config syntax: every class body ends with `};` and every property with `;`. The game's parser tolerates some omissions, but a missing `;` after an unquoted expression property swallows the next line.
 - Indentation is mixed tabs/spaces across files; keep whatever the file you are editing uses.
 
 ## Building / deploying to other terrains
 
-`build.ps1` (PowerShell, Windows) copies the `static_platoon_ops.enoch` mission folder to `mpmissions/addons/static_platoon_ops.<terrain>` for each terrain in `$islands`. The source path is hardcoded to the original author's profile; edit `$source` before running it elsewhere. Object positions in `mission.sqm` are terrain-specific, so the copies rely on the objective being placed at runtime.
+`build.ps1` (PowerShell, Windows) copies the mission folder it lives in to `<mpmissions>/addons/static_platoon_ops.<terrain>` for each terrain, skipping dev files (`.git`, `.github`, `tools`, `CLAUDE.md`, …). Override with `-Source`, `-Destination`, `-Islands`. Object positions in `mission.sqm` are terrain-specific, so the copies rely on the objective being placed at runtime.
+
+## Linting
+
+`tools/lint.sh` needs `hemtt` on `PATH` (https://hemtt.dev). HEMTT only handles addons, so the script copies every `.sqf`/`.hpp` into a temporary `addons/spo/` and renames `description.ext` to `config.cpp`. Mission-only config entries can therefore produce warnings that do not apply in game.
 
 ## Testing a change
 

@@ -3,10 +3,11 @@ if(spo_vehicleFaction == '') exitWith {
  objNull
 };
 private _createdVeh = objNull;
-_createdVeh = [spo_centerPos, 'combat', true] call spo_fnc_createVehicle;
+_createdVeh = [_spawnPos, 'combat', true] call spo_fnc_createVehicle;
 if(isNull _createdVeh) then {
-	_createdVeh = [spo_centerPos, 'transport', true] call spo_fnc_createVehicle;
+	_createdVeh = [_spawnPos, 'transport', true] call spo_fnc_createVehicle;
 };
+if (isNull _createdVeh) exitWith { objNull };
 private _grp = group effectiveCommander _createdVeh;
 // waypoint
 private _wp = _grp addWaypoint [getpos leader _grp, 0];

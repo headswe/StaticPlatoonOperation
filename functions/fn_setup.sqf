@@ -1,3 +1,11 @@
+// only admins may run setup, and only once
+if (!(call spo_fnc_isAdminCaller) || {AI_SPAWNED}) exitWith {};
+if (isNil "spo_perimeter_mkrName") exitWith {
+	"Click the map to pick an objective before pressing Go." remoteExec ["hint", [remoteExecutedOwner, 0] select (remoteExecutedOwner == 0)];
+};
+AI_SPAWNED = true;
+publicVariable "AI_SPAWNED";
+
 private _playerCount = (count (playableUnits + switchableUnits)) max 1;
 if(count spo_reinforcement_locations <= 0) then {
 	spo_reinforcement_locations pushBack ([spo_perimeter_mkrName, true] call CBA_fnc_randPosArea);
@@ -34,15 +42,19 @@ spo_vehiclePoints = 0;
 spo_overwatch_locations = [];
 
 // Spawn garrison
-_garrisonUnits = round (spo_ai_initialManpower* random [0.4,0.45,0.5]);
+private _garrisonUnits = round (spo_ai_initialManpower* random [0.4,0.45,0.5]);
 ([spo_centerPos, _garrisonUnits, spo_objective_radius] call spo_fnc_createGarrison) params ['_spawnedUnits', '_garrisonGrps'];
 spo_garrison_groups = _garrisonGrps;
 spo_garrison_units = _spawnedUnits;
+// Garrisons stand still until players get close, so let the engine stop simulating them until then.
+enableDynamicSimulationSystem true;
+"Group" setDynamicSimulationDistance 1000;
+{ _x enableDynamicSimulation true; } forEach spo_garrison_groups;
 spo_ai_initialManpower = spo_ai_initialManpower - count _spawnedUnits;
 spo_patrol_groups = [];
 
 // Spawn guards	
-_directions = [0, 90, 180, 270];
+private _directions = [0, 90, 180, 270];
 [_directions, true] call CBA_fnc_shuffle;
 {
 	private _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName) getPos [spo_objective_radius + (random 100), _x], 100, "(0 - waterDepth) * (5 + hills)", 1, 1]) # 0) # 0;
@@ -94,8 +106,6 @@ if(spo_vehicleFaction != '') then {
 		}
 	};
 };
-
-AI_SPAWNED = true;
 
 spo_namespace = call CBA_fnc_createNamespace;
 spo_alert_triggerd = 0;

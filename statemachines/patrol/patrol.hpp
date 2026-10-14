@@ -18,10 +18,11 @@ class SPO_PatrolStateMachine {
 
 	class MovingToReinforcementLocation {
 		onStateEntered = "spo_fnc_onReinforceing";
-		onStateLeaving = "systemChat 'Group arrived at location'";
+		onStateLeaving = "['Group arrived at location'] call spo_fnc_log";
 		class Arrived {
 			targetState = "Reinforceing";
-			condition = "_this getVariable ['spo_reinforcement_location',getpos (leader _this)] distance (leader _this) <= 10";
+			// close enough, or the last waypoint already finished (it clears spo_reinforceing)
+			condition = "(_this getVariable ['spo_reinforcement_location',getpos (leader _this)] distance (leader _this) <= 50) || {isNull (_this getVariable ['spo_reinforceing', grpNull])}";
 		};
 	};
 
@@ -45,7 +46,7 @@ class SPO_PatrolStateMachine {
 	};
 
 	class Combat {
-        onStateEntered = "systemChat 'Entered Combat'";
+        onStateEntered = "['Entered combat'] call spo_fnc_log";
 		class NoContacs {
 			targetState = "Initial";
 			condition = "!(_this call spo_fnc_inContact)";

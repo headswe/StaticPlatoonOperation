@@ -5,7 +5,7 @@ class SPO_Secure_MissionStateMachine {
 		onStateEntered = "spo_fnc_onSecureStart";
 
 		class playersNear {
-			condition="{side _x == blufor} count ((getPos (_this getVariable ['spo_secure_building', objNull])) nearEntities 50) >= 1 && {side _x == opfor} count ((getPos (_this getVariable ['spo_secure_building', objNull])) nearEntities 30) <= 0";
+			condition="private _pos = getPos (_this getVariable ['spo_secure_building', objNull]); (units blufor inAreaArray [_pos, 50, 50, 0, false]) isNotEqualTo [] && {((units opfor select {alive _x}) inAreaArray [_pos, 30, 30, 0, false]) isEqualTo []}";
 			targetState = "PlayersArrived";
 		};
 	};

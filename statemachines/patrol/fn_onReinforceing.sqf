@@ -1,4 +1,4 @@
-systemChat "Group responding to ReinforcementRequest";
+["Group responding to reinforcement request"] call spo_fnc_log;
 private _grp = _this;
 private _groupToReinforce = _grp getVariable ["spo_reinforceing", grpNull];
 private _enemy = (leader _groupToReinforce) findNearestEnemy (leader _groupToReinforce);

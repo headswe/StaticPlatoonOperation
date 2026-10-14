@@ -11,17 +11,17 @@ switch (_type) do {
 		private _missionControl = _dialog displayCtrl 2004;
 		private _map = _dialog displayCtrl 1801;
 		_map ctrlMapAnimAdd [0, 0.2, spo_centerPos];
-		_loadouts = ("true" configClasses (configFile >> "CfgLoadouts"));
+		private _loadouts = ("true" configClasses (configFile >> "CfgLoadouts"));
 		ctrlMapAnimCommit _map;
 		{
-			_loadout = _x;
+			private _loadout = _x;
 			{
-				_index = _x lbAdd (getText (_loadout >> "displayName"));
+				private _index = _x lbAdd (getText (_loadout >> "displayName"));
 				_x lbSetData [_index, configName _loadout];
 			} foreach [_pFactionControl, _eFactionControl];
 		} forEach _loadouts;
 
-		_index = _enemyFactionVehiclesControl lbAdd '';
+		private _index = _enemyFactionVehiclesControl lbAdd '';
 		_enemyFactionVehiclesControl lbSetData [_index, ''];
 		_enemyFactionVehiclesControl lbSetCurSel _index;
 		// add factions
@@ -29,7 +29,7 @@ switch (_type) do {
 			_x params ['_faction', '_displayName'];
 			_index = _enemyFactionVehiclesControl lbAdd _displayName;
 			_enemyFactionVehiclesControl lbSetData [_index, _faction];
-		} forEach spo_factions;
+		} forEach (missionNamespace getVariable ["spo_factions", []]); // filled by the server shortly after start
 
 		{
 			_index = _missionControl lbAdd (getText (_x >> "displayName"));
@@ -44,17 +44,18 @@ switch (_type) do {
 		_eFactionControl lbSetCurSel (floor random lbSize _eFactionControl);
         _enemyFactionVehiclesControl lbSetCurSel (floor random lbSize _enemyFactionVehiclesControl);
         _missionControl lbSetCurSel 0;
-		_i = 0;
-		{
-			_i = _i + 2; 
+		for "_i" from 2 to 58 step 2 do {
 			_index = _aiRatioControl lbAdd (str _i);
-			_aiRatioControl lbSetData [_index,str _i];
-		} forEach [1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+			_aiRatioControl lbSetData [_index, str _i];
+		};
 		_aiRatioControl lbSetCurSel 0;
 	 };
 	 case "done": {
-		removeMissionEventHandler ["MapSingleClick", spo_click_action];
-		_dialog = uiNamespace getVariable ["spo_dialog_setup", displayNull];
+		if (!isNil "spo_click_action") then {
+			removeMissionEventHandler ["MapSingleClick", spo_click_action];
+			spo_click_action = nil;
+		};
+		private _dialog = uiNamespace getVariable ["spo_dialog_setup", displayNull];
 		private _pFactionControl = _dialog displayCtrl 2100;
 		private _eFactionControl = _dialog displayCtrl 2101;
 		private _aiRatioControl = _dialog displayCtrl 1900;

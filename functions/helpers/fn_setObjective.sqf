@@ -1,4 +1,6 @@
 params ['_centerPos'];
+// only admins may move the objective, and only before the AI has been spawned
+if (!(call spo_fnc_isAdminCaller) || {AI_SPAWNED}) exitWith {};
 _centerPos set [2,0];
 // Assault Marker
 deleteMarker "assaultObjective";

@@ -12,12 +12,6 @@ spo_ai_initialManpower =  round ((5 + (_playerCount * spo_aiRatio) ) min 120);
 spo_objective_radius = 200;
 spo_perimeter_radius = 400;
 spo_patrol_groups = [];
-if(serverCommandAvailable "#kick") then {
-	spo_click_action = addMissionEventHandler ["MapSingleClick", {
-		params ["_units", "_pos", "_alt", "_shift"];
-		[[_pos#0, _pos#1, 0]] remoteExecCall ['spo_fnc_setObjective',2]; 
-	}];
-};
 if (!isServer) exitWith {};
 
 
