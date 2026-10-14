@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Lints the mission's configs and SQF with HEMTT.
 # HEMTT only understands addon projects, so this stages the mission as a throwaway
-# addon (description.ext becomes config.cpp) and runs `hemtt check` on it.
+# addon (description.ext becomes addons/main/config.cpp) and runs `hemtt check` on it.
 # Usage: tools/lint.sh   (needs `hemtt` on PATH: https://hemtt.dev)
 set -euo pipefail
 
@@ -9,7 +9,7 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 stage="$(mktemp -d)"
 trap 'rm -rf "$stage"' EXIT
 
-addon="$stage/addons/spo"
+addon="$stage/addons/main"
 mkdir -p "$stage/.hemtt" "$addon"
 cat > "$stage/.hemtt/project.toml" <<'TOML'
 name = "Static Platoon Ops"
@@ -30,6 +30,7 @@ TOML
     cp "$root/$file" "$addon/$file"
 done
 cp "$root/description.ext" "$addon/config.cpp"
+printf 'z\\spo\\addons\\main' > "$addon/\$PBOPREFIX\$"
 
 cd "$stage"
 status=0

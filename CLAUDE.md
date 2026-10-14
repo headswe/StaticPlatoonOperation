@@ -79,7 +79,7 @@ assets/                  Images
 
 ## Linting
 
-`tools/lint.sh` needs `hemtt` on `PATH` (https://hemtt.dev). HEMTT only handles addons, so the script copies every `.sqf`/`.hpp` into a temporary `addons/spo/` and renames `description.ext` to `config.cpp`. Mission-only config entries can therefore produce warnings that do not apply in game.
+`tools/lint.sh` needs `hemtt` on `PATH` (https://hemtt.dev). HEMTT only handles addons, so the script copies every `.sqf`/`.hpp` into a temporary `addons/main/` and renames `description.ext` to `config.cpp`. Mission-only config entries can therefore produce warnings that do not apply in game.
 
 ## Testing a change
 
