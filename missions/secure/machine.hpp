@@ -12,7 +12,8 @@ class SPO_Secure_MissionStateMachine {
 	class PlayersArrived {
 		onStateEntered="spo_fnc_onSecureArrived";
 		class waveDefeated {
-			condition="({units _x > 0} count spo_attack_wave) <= 0";
+			condition="({count units _x > 0} count spo_attack_wave) <= 0";
+			targetState = "Win";
 		};
 	};
 	class Win {

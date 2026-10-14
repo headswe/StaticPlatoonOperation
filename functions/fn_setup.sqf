@@ -55,13 +55,13 @@ while {spo_ai_initialManpower > 0} do {
 	private _numberOfMen = (random [4,5,6]) min (spo_ai_initialManpower);
     private _spawnPos = [];
     private _validPoses = selectBestPlaces [getMarkerPos spo_perimeter_mkrName, spo_perimeter_radius, "(0 - (waterDepth))", 1, 20];
-    while {count _spawnPos <= 0} do {
-        private _index = _validPoses findIf {
-            private _pos = _x # 0;
-            (_patrolPoints findIf {(_pos distance _x) <= 125}) == -1
-        };
-        _spawnPos = (_validPoses # 0) # 0;
+    private _index = _validPoses findIf {
+        private _pos = _x # 0;
+        (_patrolPoints findIf {(_pos distance _x) <= 125}) == -1
     };
+    // every candidate is already taken, reuse a random one rather than stacking on the first
+    if (_index == -1) then { _index = floor random count _validPoses; };
+    _spawnPos = (_validPoses # _index) # 0;
     _patrolPoints pushBack _spawnPos;
     [_numberOfMen, _spawnPos] call spo_fnc_createPatrol;
 };
@@ -69,17 +69,20 @@ while {spo_ai_initialManpower > 0} do {
 if(spo_vehicleFaction != '') then {
 	private _numberOfVehicles = round random [0, spo_vehiclePoints / 1.33, spo_vehiclePoints];
     spo_vehicleToSpawn = _numberOfVehicles;
-	for "_i" from 0 to _numberOfVehicles do { 
+	for "_i" from 1 to _numberOfVehicles do { 
 		if(_i == 1) then {
 			private _createdVeh = [spo_centerPos, 'combat'] call spo_fnc_createVehicle;
+			if (isNull _createdVeh) then { continue; };
 			[group (effectiveCommander _createdVeh), spo_centerPos, 1, 4, spo_objective_radius, true] call spo_fnc_patrol;
 			spo_patrol_groups pushBack (group (effectiveCommander _createdVeh));
 		} else {
 			private _firstPos = selectRandom spo_reinforcement_locations;
 			private _secondPos = selectRandom (spo_reinforcement_locations - [_firstPos]);
-			_firstPos set [2,0];
-			_secondPos set [2,0];
+			if (isNil "_secondPos") then { _secondPos = spo_centerPos; };
+			_firstPos = [_firstPos # 0, _firstPos # 1, 0];
+			_secondPos = [_secondPos # 0, _secondPos # 1, 0];
 			private _createdVeh = [_firstPos, 'combat'] call spo_fnc_createVehicle;
+			if (isNull _createdVeh) then { continue; };
 			private _wp = [group (effectiveCommander _createdVeh), _firstPos, 0, "MOVE"] call CBA_fnc_addWaypoint;
 			_wp = [group (effectiveCommander _createdVeh), _secondPos, 0, "MOVE"] call CBA_fnc_addWaypoint;
 			_wp setWaypointCompletionRadius 150;

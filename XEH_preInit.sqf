@@ -7,7 +7,7 @@ if (isServer) then {
 
 	// SET DATE FOR ALL CLIENTS
 	// Using a BIS function we share the new date across the network
-	[_date,true,_transition] call BIS_fnc_setDate;
+	[_date,true] call BIS_fnc_setDate;
 	
 	//Random weather
 	[] call compile preprocessFile 'functions\weather.sqf';

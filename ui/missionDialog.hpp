@@ -115,8 +115,8 @@ class missionSetuipDialog: RscControlsGroup
 		class missionCombo: RscCombo
 		{
 			idc = 2004;
-			x = 0.304062 * safezoneW + safezoneX
-			y = 0.456 * safezoneH + safezoneY;
+			x = 0.01 * safezoneW;
+			y = 0.222 * safezoneH;
 			w = 0.2 * safezoneW;
 			h = 0.02 * safezoneH;
 		};

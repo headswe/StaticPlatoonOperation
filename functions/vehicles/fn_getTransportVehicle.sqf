@@ -10,7 +10,7 @@ _checkWeapons = {
     } count _weapons
 };
 
-private _vehicles = ((spo_factionsVehicles getVariable [spo_vehicleFaction, []]) # 2) select {
+private _vehicles = ((spo_factionsVehicles getVariable [spo_vehicleFaction, [nil, nil, []]]) # 2) select {
     ((configName _x) isKindOf "LandVehicle") && 
     {!((configName _x) isKindOf "StaticWeapon") } && {!((_x >> "artilleryScanner") call BIS_fnc_getCfgDataBool)} && 
         {(_x call _checkWeapons) > 0} &&

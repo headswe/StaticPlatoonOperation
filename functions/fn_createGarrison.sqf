@@ -11,9 +11,9 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 	private _index = _buildings call BIS_fnc_randomIndex;
 	(_buildings # _index) params ["_poses", "_building"];
 	private _grp = _building getVariable ['spo_garrison_group', grpNull];
-	[_building] call ZEI_fnc_createTemplate;
 	// create group per building
 	if(isNull _grp) then {
+		[_building] call ZEI_fnc_createTemplate;
 		_grp = createGroup [east, true];
 		_building setVariable ['spo_garrison_group', _grp];
 		_grp setBehaviour "SAFE";
@@ -50,6 +50,8 @@ while{_numberOfUnits > 0 && _numOfBuildingPoses > 0} do {
 };
 {
 	_x params ["_poses", "_building"];
+	// garrisoned buildings were already furnished above
+	if (!isNull (_building getVariable ['spo_garrison_group', grpNull])) then { continue; };
 	private _type = 'mil';
 	if(random 1 > 0.4) then {
 		_type = 'civ';

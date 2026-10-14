@@ -1,4 +1,4 @@
-	this params ["_numberOfMen", "_spawnPos"];
+	params ["_numberOfMen", "_spawnPos"];
 	private _grp = [_spawnPos, _numberOfMen] call spo_fnc_createSquad;
 	_grp setCombatMode "RED";
 

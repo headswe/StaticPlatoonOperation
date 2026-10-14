@@ -64,17 +64,17 @@ class CfgFunctions
 			class onReinforceing{};
 			class requestReinforcement{};
 			class createPatrol{};
-		}
+		};
 		class garrison {
 			file = "statemachines\garrison";
 			class shouldActivateGarrison{};
 			class onGarrisonActivated{};
-		}
+		};
 		class AI {
 			file = "functions\ai";
 			class hunt{};
 			class attackPoint{};
-		}
+		};
 		class helpers {
 			file = "functions\helpers";
 			class nearBuildings{};
@@ -82,27 +82,27 @@ class CfgFunctions
 			class reveal{};
 			class inContact{};
 			class createFlare{};
-		}
+		};
 		class sad {
 			file = "missions\sad";
 			class onSadStart{};
 			class onSadEnd{};
-		}
+		};
 		class cache {
 			file = "missions\cache";
 			class onCacheStart{};
-		}
+		};
 		class secure {
 			file = "missions\secure";
 			class onSecureStart{};
 			class onSecureArrived{};
 			class onSecureWin{};
-		}
+		};
 		class vehicles {
 			file = "functions\vehicles";
 			class getCombatVehicle{};
 			class getTransportVehicle{};
-		}
+		};
 	};
 };
 
@@ -116,4 +116,4 @@ class SPO_Missions {
 	#include "missions\sad\machine.hpp"
 	#include "missions\secure\machine.hpp"
 	#include "missions\cache\machine.hpp"
-}
+};

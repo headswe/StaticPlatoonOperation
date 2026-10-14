@@ -31,12 +31,12 @@ class SPO_PatrolStateMachine {
 			targetState = "Initial";
 			// if finished searching and no contacts, go back to normal
 			condition = "isNull (_this getVariable ['spo_reinforceing', grpNull]) && !(_this call spo_fnc_inContact)";
+			onTransition = "[_this, getpos leader _this, 1, 4, random [100,200,250], true] call spo_fnc_patrol";
 		};
 		class SearchCompleted {
-			targetState = "Initial"; // add SearchAndDestory
+			targetState = "Combat"; // add SearchAndDestory
 			// if finished SAD waypoint and have targets.
-			condition = "isNull (_this getVariable ['spo_reinforceing', grpNull]) && !(_this call spo_fnc_inContact)";
-			onStateLeaving ="[_this, getpos leader _this, 1, 4, random [100,200,250], true] call spo_fnc_patrol;systemChat 'exiting combat'";
+			condition = "isNull (_this getVariable ['spo_reinforceing', grpNull]) && (_this call spo_fnc_inContact)";
 		};
 	};
 
@@ -49,7 +49,7 @@ class SPO_PatrolStateMachine {
 		class NoContacs {
 			targetState = "Initial";
 			condition = "!(_this call spo_fnc_inContact)";
-			onStateLeaving ="[_this, getpos leader _this, 1, 4, random [100,200,250], true] call spo_fnc_patrol";
+			onTransition = "[_this, getpos leader _this, 1, 4, random [100,200,250], true] call spo_fnc_patrol";
 		};
 		class RequestReinforcement  {
 			targetState = "RequestReinforcement";

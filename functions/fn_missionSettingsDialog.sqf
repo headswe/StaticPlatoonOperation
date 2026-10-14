@@ -40,9 +40,9 @@ switch (_type) do {
 		lbSort [_pFactionControl, "ASC"];
 		lbSort [_eFactionControl, "ASC"];
 		lbSort [_enemyFactionVehiclesControl, "ASC"];
-		_pFactionControl lbSetCurSel (random floor count _loadouts);
-		_eFactionControl lbSetCurSel (random floor count _loadouts);
-        _enemyFactionVehiclesControl lbSetCurSel (random floor count spo_factions);
+		_pFactionControl lbSetCurSel (floor random lbSize _pFactionControl);
+		_eFactionControl lbSetCurSel (floor random lbSize _eFactionControl);
+        _enemyFactionVehiclesControl lbSetCurSel (floor random lbSize _enemyFactionVehiclesControl);
         _missionControl lbSetCurSel 0;
 		_i = 0;
 		{

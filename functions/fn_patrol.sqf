@@ -2,6 +2,7 @@ params ["_grp", "_pos", ["_type",0, [0,1]],"_numberOfWaypoints", "_radius", "_tr
 if(count _pos == 2) then {
 	_pos set [2, 0];
 };
+[_grp] call CBA_fnc_clearWaypoints;
 // CIRCLE
 if(_type == 0) then {
 	private _roads = [];
