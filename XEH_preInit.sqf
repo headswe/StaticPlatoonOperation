@@ -15,5 +15,5 @@ if (isServer) then {
 
 };
 
-AI_SPAWNED = false;
+spo_aiSpawned = false;
 

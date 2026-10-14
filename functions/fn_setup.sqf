@@ -1,10 +1,10 @@
 // only admins may run setup, and only once
-if (!(call spo_fnc_isAdminCaller) || {AI_SPAWNED}) exitWith {};
+if (!(call spo_fnc_isAdminCaller) || {spo_aiSpawned}) exitWith {};
 if (isNil "spo_perimeter_mkrName") exitWith {
 	"Click the map to pick an objective before pressing Go." remoteExec ["hint", [remoteExecutedOwner, 0] select (remoteExecutedOwner == 0)];
 };
-AI_SPAWNED = true;
-publicVariable "AI_SPAWNED";
+spo_aiSpawned = true;
+publicVariable "spo_aiSpawned";
 
 private _playerCount = (count (playableUnits + switchableUnits)) max 1;
 if(count spo_reinforcement_locations <= 0) then {
@@ -37,7 +37,7 @@ spo_vehiclePoints = 0;
 // why do i do this?
 {
 	[_x] remoteExec ["spo_fnc_gear", _x];
-	[] remoteExec ["TMF_acre2_fnc_clientInit", _x];
+	if (isPlayer _x) then { [] remoteExec ["TMF_acre2_fnc_clientInit", _x]; };
 } foreach (allUnits select {side _x == blufor});
 spo_overwatch_locations = [];
 
@@ -57,8 +57,9 @@ spo_patrol_groups = [];
 private _directions = [0, 90, 180, 270];
 [_directions, true] call CBA_fnc_shuffle;
 {
-	private _spawnPos = ((selectBestPlaces [(getMarkerPos spo_perimeter_mkrName) getPos [spo_objective_radius + (random 100), _x], 100, "(0 - waterDepth) * (5 + hills)", 1, 1]) # 0) # 0;
-	[_spawnPos] call spo_fnc_createGuardPoint;
+	private _places = selectBestPlaces [(getMarkerPos spo_perimeter_mkrName) getPos [spo_objective_radius + (random 100), _x], 100, "(0 - waterDepth) * (5 + hills)", 1, 1];
+	if (_places isEqualTo []) then { continue; };
+	[(_places # 0) # 0] call spo_fnc_createGuardPoint;
 } foreach _directions;
 
 private _patrolPoints = [];

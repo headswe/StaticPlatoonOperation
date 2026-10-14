@@ -1,3 +1,5 @@
+// awake for good: dynamic simulation would freeze them again if players back off
+_this enableDynamicSimulation false;
 {
 	_x enableAI "PATH";
 	_x setUnitPos "AUTO";

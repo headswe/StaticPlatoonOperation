@@ -3,7 +3,7 @@ params ["_isAdmin"];
 
 if (_isAdmin) then {
 	// Map clicks pick the objective until the mission has been set up.
-	if (isNil "spo_click_action" && {!(missionNamespace getVariable ["AI_SPAWNED", false])}) then {
+	if (isNil "spo_click_action" && {!(missionNamespace getVariable ["spo_aiSpawned", false])}) then {
 		spo_click_action = addMissionEventHandler ["MapSingleClick", {
 			params ["_units", "_pos", "_alt", "_shift"];
 			[[_pos#0, _pos#1, 0]] remoteExecCall ['spo_fnc_setObjective', 2];

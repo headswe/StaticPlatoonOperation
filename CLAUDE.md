@@ -53,7 +53,7 @@ assets/                  Images
 
 ## Runtime flow
 
-1. **Init**: `init.sqf` sets defaults (`spo_opforFaction`, radii, `spo_allowedRoles`, …). `initPlayerLocal.sqf` polls `serverCommandAvailable "#kick"` every 2 s; when a player becomes admin (including a later `#login`), `spo_fnc_onAdminChanged` adds a `MapSingleClick` handler that remote-executes `spo_fnc_setObjective` on the server, until setup has run (`AI_SPAWNED`).
+1. **Init**: `init.sqf` sets defaults (`spo_opforFaction`, radii, `spo_allowedRoles`, …). `initPlayerLocal.sqf` polls `serverCommandAvailable "#kick"` every 2 s; when a player becomes admin (including a later `#login`), `spo_fnc_onAdminChanged` adds a `MapSingleClick` handler that remote-executes `spo_fnc_setObjective` on the server, until setup has run (`spo_aiSpawned`).
 2. **Pick objective**: `spo_fnc_setObjective` (server) draws three markers (`assaultObjective`, the red `assaultObjectivePerimeter` = `spo_objective_radius`, the blue teleport ring `assaultObjectiveTP` = `spo_perimeter_radius`), publishes `spo_centerPos`, and spawns `spo_fnc_getReinforcementLocations`, which drives throwaway quad-bike agents along roads from four headings to find road entry points outside the blue ring (`spo_reinforcement_locations`).
 3. **Setup dialog**: the admin's "Setup mission" action opens `missionSetuipDialog`. `spo_fnc_missionSettingsDialog` fills the combos (`onLoad`) and on "Go" (`done`) publishes the chosen factions/ratio/mission and remote-executes `spo_fnc_setup` on the server.
 4. **Setup (server)**: `spo_fnc_setup` computes manpower (`5 + players * spo_aiRatio`, capped at 180 initially), re-gears players to the chosen faction, then spawns: garrison (~45%) via `spo_fnc_createGarrison`, four guard points, patrols via `spo_fnc_createPatrol` until manpower is used up, and vehicles scaled by the players' AT roles (`spo_vehiclePoints`). Finally it creates the three CBA state machines: patrol, garrison and the selected mission.
@@ -63,7 +63,7 @@ assets/                  Images
 ## Conventions
 
 - **Functions** are registered in `description.ext` under `CfgFunctions >> spo`. A file `functions/foo/fn_bar.sqf` registered as `class bar {}` in a category with `file = "functions\foo"` becomes `spo_fnc_bar`. Adding a file without registering it means it is never compiled. Use backslashes in `file =` paths.
-- **Globals** are prefixed `spo_` (except the legacy `AI_SPAWNED`). Locals start with `_` and should be declared `private`.
+- **Globals** are prefixed `spo_`. Locals start with `_` and should be declared `private`.
 - **Admin-only server calls**: functions that clients remote-execute on the server and that change the mission (`setObjective`, `setup`, `endMission`) must start with `if (!(call spo_fnc_isAdminCaller)) exitWith {};`. There is no `CfgRemoteExec` whitelist (TMF/ACE need open remote exec).
 - **Debug output**: use `["message"] call spo_fnc_log`, not `systemChat`. It prints only when `spo_debug = true` (set from the debug console).
 - **Locality**: almost everything runs on the server (`isServer`, or `remoteExecCall [..., 2]`). Spawning, state machines and tasks are server-only; clients only run the dialog, the admin click handler and the diary. Publish values clients need with `publicVariable`.
