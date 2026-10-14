@@ -30,6 +30,18 @@ TOML
     cp "$root/$file" "$addon/$file"
 done
 cp "$root/description.ext" "$addon/config.cpp"
+# Tell HEMTT which game version to check commands against (the mission needs 2.02+).
+cat >> "$addon/config.cpp" <<'CPP'
+
+class CfgPatches {
+    class spo_main {
+        units[] = {};
+        weapons[] = {};
+        requiredVersion = 2.18;
+        requiredAddons[] = {};
+    };
+};
+CPP
 printf 'z\\spo\\addons\\main' > "$addon/\$PBOPREFIX\$"
 
 cd "$stage"

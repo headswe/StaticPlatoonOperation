@@ -33,7 +33,7 @@ for "_i" from 0 to _numberOfCaches do {
     };
     _cache setVariable ["task", _task];
     _caches pushBack _cache;
-    _cache addEventHandler ["killed", {
+    _cache addEventHandler ["Killed", {
         private _task = (_this select 0) getVariable ["task", nil];
         [_task, "SUCCEEDED"] call BIS_fnc_taskSetState;
         if (({alive _x} count (spo_namespace getVariable ["caches", []])) == 0) then {

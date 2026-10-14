@@ -30,13 +30,14 @@ if(_type == 0) then {
 	};
 };
 if(_type == 1) then {
-	_onRoad = _tryOnRoad;
+	private _onRoad = _tryOnRoad;
 	private _quickFunc = {
+		private _point = _this;
 		if(_onRoad) then {
-			private _road = [_this, 50] call BIS_fnc_nearestRoad;
-			if(!isNull _road) then {_this = getpos _road};
+			private _road = [_point, 50] call BIS_fnc_nearestRoad;
+			if(!isNull _road) then {_point = getPos _road};
 		};
-		_this
+		_point
 	};
 	private _topleft = (_pos vectorAdd [-(_radius/2),-(_radius/2),0])  call _quickFunc;
 
