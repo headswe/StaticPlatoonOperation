@@ -3,6 +3,9 @@ enableDebugConsole = 1; // Allows the logged in admin to use the debug console f
 
 // Use a randomized loading image from TMF. Set your own loading image with e.g. overviewPicture = "image.jpg";
 overviewPicture = "";
+onLoadName = "Static Platoon Ops";
+onLoadMission = "Pick an objective, pick the factions and go.";
+briefingName = "Static Platoon Ops";
 
 class CfgDebriefingSections {
     class acex_killTracker {
@@ -58,6 +61,7 @@ class CfgFunctions
 			class createGuardPoint{};
 			class patrol{};
 			class createVehicle{};
+			class setWeather{};
 		};
 		class patrol {
 			file = "statemachines\patrol";
@@ -111,6 +115,7 @@ class CfgFunctions
 			file = "functions\vehicles";
 			class getCombatVehicle{};
 			class getTransportVehicle{};
+			class vehicleCategory{};
 		};
 	};
 };

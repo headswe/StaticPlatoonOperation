@@ -10,7 +10,7 @@ if (isServer) then {
 	[_date,true] call BIS_fnc_setDate;
 	
 	//Random weather
-	[] call compile preprocessFileLineNumbers 'functions\weather.sqf';
+	[-1] call compile preprocessFileLineNumbers 'functions\fn_setWeather.sqf';
 	 
 
 };

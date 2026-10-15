@@ -1,6 +1,9 @@
 spo_opforFaction = "OPF_F";
 spo_bluFaction = "BLU_F";
 spo_vehicleFaction = "";
+spo_missionClassName = "";
+// vehicle categories (spo_fnc_vehicleCategory) the enemy may spawn; set in the setup dialog
+spo_vehicleTypes = ["car", "apc", "tank"];
 spo_centerPos = [0,0,0];
 spo_reinforcement_locations = [];
 spo_seed = random [1000, 5000, 10000];

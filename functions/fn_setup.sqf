@@ -3,6 +3,37 @@ if (!(call spo_fnc_isAdminCaller) || {spo_aiSpawned}) exitWith {};
 if (isNil "spo_perimeter_mkrName") exitWith {
 	"Click the map to pick an objective before pressing Go." remoteExec ["hint", [remoteExecutedOwner, 0] select (remoteExecutedOwner == 0)];
 };
+// settings from the setup dialog: [player faction, enemy faction, AI ratio, vehicle faction, mission, hour (-1 keep), weather preset (-1 keep), vehicle types]
+params [["_settings", [], [[]]]];
+_settings params [
+	["_bluFaction", spo_bluFaction, [""]],
+	["_opforFaction", spo_opforFaction, [""]],
+	["_aiRatio", spo_aiRatio, [0]],
+	["_vehicleFaction", spo_vehicleFaction, [""]],
+	["_mission", spo_missionClassName, [""]],
+	["_hour", -1, [0]],
+	["_weather", -1, [0]],
+	["_vehicleTypes", spo_vehicleTypes, [[]]]
+];
+if (isClass (configFile >> "CfgLoadouts" >> _bluFaction)) then { spo_bluFaction = _bluFaction; };
+if (isClass (configFile >> "CfgLoadouts" >> _opforFaction)) then { spo_opforFaction = _opforFaction; };
+spo_aiRatio = 2 max _aiRatio min 58;
+spo_vehicleFaction = _vehicleFaction;
+spo_vehicleTypes = _vehicleTypes select {_x in ["car", "apc", "tank", "heli"]};
+if (!isClass (missionConfigFile >> "SPO_Missions" >> _mission)) then {
+	_mission = configName (("true" configClasses (missionConfigFile >> "SPO_Missions")) # 0);
+};
+spo_missionClassName = _mission;
+{ publicVariable _x; } forEach ["spo_bluFaction", "spo_opforFaction", "spo_aiRatio", "spo_vehicleFaction", "spo_vehicleTypes", "spo_missionClassName"];
+
+if (_hour >= 0) then {
+	private _date = date;
+	_date set [3, _hour min 23];
+	_date set [4, 0];
+	[_date, true] call BIS_fnc_setDate;
+};
+if (_weather >= 0) then { [_weather min 8] call spo_fnc_setWeather; };
+
 spo_aiSpawned = true;
 publicVariable "spo_aiSpawned";
 

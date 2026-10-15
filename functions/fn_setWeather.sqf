@@ -1,19 +1,22 @@
 
-_weather = (floor (random [0, 1, 9])) min 8;
-_setFog = true;
-_setWind = true;
+// Applies one of the weather presets below (server). -1 rolls a random one, weighted towards clear skies.
+// 0 Clear, 1 Cloudy, 2 Mostly cloudy, 3 Overcast, 4 Foggy, 5 Showers, 6 Light rain, 7 Heavy rain, 8 Storm
+params [["_weather", -1, [0]]];
+if (_weather < 0) then { _weather = (floor (random [0, 1, 9])) min 8; };
+private _setFog = true;
+private _setWind = true;
 
-_MissionOvercast = 0;
-_MissionRain = 0;
-_MissionRainbow = 0;
-_MissionLightnings = 0;
-_MissionWindStr = 0.01;
-_MissionWindGusts = 0.01;
-_MissionWaves = 0;
-_MissionHumidity = 0;
-_MissionFogStrength = 0;
-_MissionFogDecay = 0;
-_MissionFogBase = 0;
+private _MissionOvercast = 0;
+private _MissionRain = 0;
+private _MissionRainbow = 0;
+private _MissionLightnings = 0;
+private _MissionWindStr = 0.01;
+private _MissionWindGusts = 0.01;
+private _MissionWaves = 0;
+private _MissionHumidity = 0;
+private _MissionFogStrength = 0;
+private _MissionFogDecay = 0;
+private _MissionFogBase = 0;
 
 // ====================================================================================
 

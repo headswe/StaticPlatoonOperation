@@ -21,7 +21,8 @@ private _checkThreat = {
 
 
 private _vehicles = ((spo_factionsVehicles getOrDefault [spo_vehicleFaction, [nil, nil, []]]) # 2) select {
-    ((configName _x) isKindOf "LandVehicle") && 
+    (((configName _x) isKindOf "LandVehicle") || {(configName _x) isKindOf "Helicopter"}) &&
+    {([_x] call spo_fnc_vehicleCategory) in spo_vehicleTypes} && 
     {!((configName _x) isKindOf "StaticWeapon") } && 
     {(_x call _checkWeapons) > 0} && {!((_x >> "artilleryScanner") call BIS_fnc_getCfgDataBool)} && 
     {_x call _checkThreat} &&
