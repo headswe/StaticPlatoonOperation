@@ -76,6 +76,19 @@ private _objectiveSet = { getMarkerColor "assaultObjective" isNotEqualTo "" };
 switch (_type) do {
 	case "onLoad": {
 		_args params ["_dialog"];
+		// opened as a plain display (createDisplay), mouse clicks fall through to the game and fire the weapon:
+		// reopen it as a modal dialog (once, so this can never loop)
+		if (!dialog && {!(uiNamespace getVariable ["spo_setup_reopened", false])}) exitWith {
+			uiNamespace setVariable ["spo_setup_reopened", true];
+			[_dialog] spawn {
+				params ["_plain"];
+				disableSerialization;
+				_plain closeDisplay 2;
+				uiSleep 0.05;
+				createDialog "missionSetuipDialog";
+			};
+		};
+		uiNamespace setVariable ["spo_setup_reopened", false];
 		_display = _dialog;
 		uiNamespace setVariable ["spo_dialog_setup", _dialog];
 

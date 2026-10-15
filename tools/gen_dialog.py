@@ -31,6 +31,16 @@ def call(case): return f"\"['{case}', _this] call spo_fnc_missionSettingsDialog\
 # background
 bg = []
 out.append("\tclass ControlsBackground\n\t{")
+# full-screen dimmer behind the panel, so the dialog has a backing across the whole screen
+out.append("""\t\tclass spoDim: spo_RscBack
+\t\t{
+\t\t\tidc = -1;
+\t\t\tx = "safezoneX";
+\t\t\ty = "safezoneY";
+\t\t\tw = "safezoneW";
+\t\t\th = "safezoneH";
+\t\t\tcolorBackground[] = {0,0,0,0.55};
+\t\t};""")
 ctrl("spoBody", "spo_RscBack", -1, L, HEADER_B, R - L, FOOTER_T - HEADER_B, colorBackground__="SPO_COL_BODY")
 ctrl("spoHeader", "spo_RscBack", -1, L, T, R - L, HEADER_B - T, colorBackground__="SPO_COL_DARK")
 ctrl("spoHeaderStripe", "spo_RscBack", -1, L, T, 0.004, HEADER_B - T, colorBackground__="SPO_COL_ACCENT")

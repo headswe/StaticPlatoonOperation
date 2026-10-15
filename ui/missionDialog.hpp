@@ -122,6 +122,15 @@ class missionSetuipDialog
 	onUnload = "['onUnload', _this] call spo_fnc_missionSettingsDialog";
 	class ControlsBackground
 	{
+		class spoDim: spo_RscBack
+		{
+			idc = -1;
+			x = "safezoneX";
+			y = "safezoneY";
+			w = "safezoneW";
+			h = "safezoneH";
+			colorBackground[] = {0,0,0,0.55};
+		};
 		class spoBody: spo_RscBack
 		{
 			idc = -1;
