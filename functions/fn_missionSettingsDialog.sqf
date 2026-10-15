@@ -148,7 +148,13 @@ switch (_type) do {
 		// Preview dolls: local units high above the map corner, each filmed by its own render-to-texture camera
 		private _previews = [];
 		{
-			_x params ["_side", "_unitClass", "_pos", "_rtt"];
+			_x params ["_side", "_unitClass", "_pos", "_rtt", "_pictureIdc"];
+			// render at the picture's real on-screen aspect ratio, which depends on the player's resolution and UI size
+			private _picture = _dialog displayCtrl _pictureIdc;
+			(ctrlPosition _picture) params ["", "", "_w", "_h"];
+			(getResolution) params ["_resX", "_resY"];
+			private _aspect = ((_w / safezoneW) * _resX) / (((_h / safezoneH) * _resY) max 1);
+			_picture ctrlSetText format ["#(argb,512,1024,1)r2t(%1,%2)", _rtt, _aspect];
 			private _anchor = "Land_HelipadEmpty_F" createVehicleLocal [0, 0, 0];
 			_anchor setPosASL _pos;
 			private _doll = _unitClass createVehicleLocal [0, 0, 0];
@@ -168,8 +174,8 @@ switch (_type) do {
 			_light setLightDayLight true;
 			_previews pushBack [_side, _anchor, _doll, _cam, _light, _rtt];
 		} forEach [
-			["blu", "B_Soldier_F", [60, 60, 1500], "spo_rtt_blu"],
-			["op", "O_Soldier_F", [120, 60, 1500], "spo_rtt_op"]
+			["blu", "B_Soldier_F", [60, 60, 1500], "spo_rtt_blu", 1200],
+			["op", "O_Soldier_F", [120, 60, 1500], "spo_rtt_op", 1201]
 		];
 		uiNamespace setVariable ["spo_setup_previews", _previews];
 		["blu"] call _updatePreview;
