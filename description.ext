@@ -119,6 +119,18 @@ class CfgFunctions
 			class commsSabotage{};
 			class onCommsDestroyed{};
 		};
+		class convoy {
+			file = "missions\convoy";
+			class onConvoyStart{};
+			class convoyDepartDue{};
+			class onConvoyDepart{};
+			class convoyWatchdog{};
+			class convoyUnderAttack{};
+			class onConvoyAmbushed{};
+			class convoyStopped{};
+			class convoyEscaped{};
+			class onConvoyEnd{};
+		};
 		class admin {
 			file = "functions\admin";
 			class isAdminCaller{};
@@ -148,4 +160,5 @@ class SPO_Missions {
 	#include "missions\cache\machine.hpp"
 	#include "missions\hvt\machine.hpp"
 	#include "missions\comms\machine.hpp"
+	#include "missions\convoy\machine.hpp"
 };
