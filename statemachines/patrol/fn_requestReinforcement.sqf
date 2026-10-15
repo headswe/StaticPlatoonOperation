@@ -1,3 +1,5 @@
+// no radio, no reinforcements (comms tower mission)
+if (spo_commsDown) exitWith {};
 private _patrolsGrps = spo_patrol_groups select {!isNull _x && {alive leader _x} && {isNull (_x getVariable ["spo_reinforceing", grpNull])} && {_x != _this}} apply {[(leader _this) distance (leader _x), _x]};
 _patrolsGrps sort true;
 if(_patrolsGrps isNotEqualTo []) then {

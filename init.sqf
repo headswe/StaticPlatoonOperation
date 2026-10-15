@@ -15,6 +15,8 @@ spo_ai_initialManpower =  round ((5 + (_playerCount * spo_aiRatio) ) min 120);
 spo_objective_radius = 200;
 spo_perimeter_radius = 400;
 spo_patrol_groups = [];
+// set by the comms tower mission once the tower is down: patrols stop calling each other for help
+spo_commsDown = false;
 if (!isServer) exitWith {};
 
 

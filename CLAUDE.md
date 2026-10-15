@@ -44,7 +44,7 @@ functions/helpers/       Small utilities: setObjective, nearBuildings, inContact
 functions/vehicles/      Vehicle class filters for the selected vehicle faction
 statemachines/patrol/    SPO_PatrolStateMachine (contact → request/answer reinforcements)
 statemachines/garrison/  SPO_GarrisonStateMachine (wake garrisons when players get close)
-missions/<type>/         Mission types (state machines under class SPO_Missions): sad, secure, cache, hvt
+missions/<type>/         Mission types (state machines under class SPO_Missions): sad, secure, cache, hvt, comms
 briefing/                Briefing text (TMF briefing)
 build.ps1                Copies the mission to one folder per terrain under mpmissions/addons
 tools/lint.sh            Stages the mission as an addon and runs `hemtt check`

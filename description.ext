@@ -111,6 +111,14 @@ class CfgFunctions
 			class onHvtCaptured{};
 			class onHvtEnd{};
 		};
+		class comms {
+			file = "missions\comms";
+			class onCommsStart{};
+			class commsWaveDue{};
+			class commsWave{};
+			class commsSabotage{};
+			class onCommsDestroyed{};
+		};
 		class admin {
 			file = "functions\admin";
 			class isAdminCaller{};
@@ -139,4 +147,5 @@ class SPO_Missions {
 	#include "missions\secure\machine.hpp"
 	#include "missions\cache\machine.hpp"
 	#include "missions\hvt\machine.hpp"
+	#include "missions\comms\machine.hpp"
 };
