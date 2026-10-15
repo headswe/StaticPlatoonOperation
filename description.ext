@@ -103,6 +103,14 @@ class CfgFunctions
 			class onSecureArrived{};
 			class onSecureWin{};
 		};
+		class hvt {
+			file = "missions\hvt";
+			class onHvtStart{};
+			class hvtAlerted{};
+			class onHvtFlee{};
+			class onHvtCaptured{};
+			class onHvtEnd{};
+		};
 		class admin {
 			file = "functions\admin";
 			class isAdminCaller{};
@@ -130,4 +138,5 @@ class SPO_Missions {
 	#include "missions\sad\machine.hpp"
 	#include "missions\secure\machine.hpp"
 	#include "missions\cache\machine.hpp"
+	#include "missions\hvt\machine.hpp"
 };
