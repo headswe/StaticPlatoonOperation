@@ -37,7 +37,8 @@ if (_weather >= 0) then { [_weather min 8] call spo_fnc_setWeather; };
 spo_aiSpawned = true;
 publicVariable "spo_aiSpawned";
 
-private _playerCount = (count (playableUnits + switchableUnits)) max 1;
+// connected players only: empty or AI-filled lobby slots would inflate the enemy force
+private _playerCount = (count (allPlayers - entities "HeadlessClient_F")) max 1;
 if(count spo_reinforcement_locations <= 0) then {
 	spo_reinforcement_locations pushBack ([spo_perimeter_mkrName, true] call CBA_fnc_randPosArea);
 };
@@ -63,7 +64,7 @@ spo_vehiclePoints = 0;
 	if(_role isEqualTo 'hatg') then {
 		spo_vehiclePoints = spo_vehiclePoints + 3;
 	};
-} forEach (playableUnits + switchableUnits);
+} forEach (allPlayers - entities "HeadlessClient_F");
 
 // why do i do this?
 {

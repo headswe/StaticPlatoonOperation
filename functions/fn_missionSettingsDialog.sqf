@@ -219,8 +219,12 @@ switch (_type) do {
 		_args params ["_slider", "_value"];
 		private _ratio = 2 * round (_value / 2);
 		_slider sliderSetPosition _ratio;
-		private _players = (count (playableUnits + switchableUnits)) max 1;
-		(_display displayCtrl IDC_RATIO_VALUE) ctrlSetText format ["%1  (~%2 AI)", _ratio, round (5 + _players * _ratio)];
+		// same count as spo_fnc_setup: connected players only, not empty or AI-filled slots
+		private _players = (count (allPlayers - entities "HeadlessClient_F")) max 1;
+		private _total = round (5 + _players * _ratio);
+		private _valueCtrl = _display displayCtrl IDC_RATIO_VALUE;
+		_valueCtrl ctrlSetText format ["%1  (~%2 AI)", _ratio, _total];
+		_valueCtrl ctrlSetTooltip format ["%1 player%2 x %3 + 5 = %4 enemies in total, at most 180 of them at the start", _players, ["", "s"] select (_players != 1), _ratio, _total];
 	};
 	case "mapClick": {
 		_args params ["_map", "_button", "_mouseX", "_mouseY"];
