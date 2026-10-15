@@ -1,0 +1,18 @@
+name: Package
+
+# Packs the mission into one .pbo per terrain and attaches them to the run as a downloadable artifact.
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  pbo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pack PBOs
+        run: python3 tools/pack_pbo.py --out out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: static_platoon_ops-pbos
+          path: out/*.pbo
