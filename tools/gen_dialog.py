@@ -82,9 +82,9 @@ y = HEADER_B + 0.008
 ctrl("previewLabel", "spo_RscLabel", -1, C2, y, CW2, LBL, text='"LOADOUT PREVIEW"')
 ctrl("previewRole", "spo_RscCombo", 2007, C2, y + LBL + 0.002, CW2, ROW, onLBSelChanged=call("role"))
 ctrl("previewBlu", "spo_RscPicture", 1200, C2, PV_Y, PV_W, PV_H,
-     text='"#(argb,512,1024,1)r2t(spo_rtt_blu,0.5)"')
+     text='""')
 ctrl("previewOp", "spo_RscPicture", 1201, C2 + PV_W + 0.005, PV_Y, PV_W, PV_H,
-     text='"#(argb,512,1024,1)r2t(spo_rtt_op,0.5)"')
+     text='""')
 cy = PV_Y + PV_H + 0.004
 ctrl("previewBluSide", "spo_RscLabel", -1, C2, cy, PV_W, LBL, style=2, text='"FRIENDLY"', colorText__="SPO_COL_BLU")
 ctrl("previewOpSide", "spo_RscLabel", -1, C2 + PV_W + 0.005, cy, PV_W, LBL, style=2, text='"ENEMY"', colorText__="SPO_COL_OP")

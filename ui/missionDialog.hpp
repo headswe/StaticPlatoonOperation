@@ -352,7 +352,7 @@ class missionSetuipDialog
 			y = "0.2560 * safezoneH + safezoneY";
 			w = "0.1025 * safezoneW";
 			h = "0.3400 * safezoneH";
-			text = "#(argb,512,1024,1)r2t(spo_rtt_blu,0.5)";
+			text = "";
 		};
 		class previewOp: spo_RscPicture
 		{
@@ -361,7 +361,7 @@ class missionSetuipDialog
 			y = "0.2560 * safezoneH + safezoneY";
 			w = "0.1025 * safezoneW";
 			h = "0.3400 * safezoneH";
-			text = "#(argb,512,1024,1)r2t(spo_rtt_op,0.5)";
+			text = "";
 		};
 		class previewBluSide: spo_RscLabel
 		{

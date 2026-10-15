@@ -76,19 +76,6 @@ private _objectiveSet = { getMarkerColor "assaultObjective" isNotEqualTo "" };
 switch (_type) do {
 	case "onLoad": {
 		_args params ["_dialog"];
-		// opened as a plain display (createDisplay), mouse clicks fall through to the game and fire the weapon:
-		// reopen it as a modal dialog (once, so this can never loop)
-		if (!dialog && {!(uiNamespace getVariable ["spo_setup_reopened", false])}) exitWith {
-			uiNamespace setVariable ["spo_setup_reopened", true];
-			[_dialog] spawn {
-				params ["_plain"];
-				disableSerialization;
-				_plain closeDisplay 2;
-				uiSleep 0.05;
-				createDialog "missionSetuipDialog";
-			};
-		};
-		uiNamespace setVariable ["spo_setup_reopened", false];
 		_display = _dialog;
 		uiNamespace setVariable ["spo_dialog_setup", _dialog];
 
@@ -162,12 +149,6 @@ switch (_type) do {
 		private _previews = [];
 		{
 			_x params ["_side", "_unitClass", "_pos", "_rtt", "_pictureIdc"];
-			// render at the picture's real on-screen aspect ratio, which depends on the player's resolution and UI size
-			private _picture = _dialog displayCtrl _pictureIdc;
-			(ctrlPosition _picture) params ["", "", "_w", "_h"];
-			(getResolution) params ["_resX", "_resY"];
-			private _aspect = ((_w / safezoneW) * _resX) / (((_h / safezoneH) * _resY) max 1);
-			_picture ctrlSetText format ["#(argb,512,1024,1)r2t(%1,%2)", _rtt, _aspect];
 			private _anchor = "Land_HelipadEmpty_F" createVehicleLocal [0, 0, 0];
 			_anchor setPosASL _pos;
 			private _doll = _unitClass createVehicleLocal [0, 0, 0];
@@ -179,6 +160,12 @@ switch (_type) do {
 			_cam camCommit 0;
 			_cam cameraEffect ["Internal", "Back", _rtt];
 			_rtt setPiPEffect [0];
+			// point the picture at the render target once the camera feeds it, at the picture's real on-screen aspect ratio
+			private _picture = _dialog displayCtrl _pictureIdc;
+			(ctrlPosition _picture) params ["", "", "_w", "_h"];
+			(getResolution) params ["_resX", "_resY"];
+			private _aspect = ((_w / safezoneW) * _resX) / (((_h / safezoneH) * _resY) max 1);
+			_picture ctrlSetText format ["#(argb,512,1024,1)r2t(%1,%2)", _rtt, (_aspect max 0.2 min 2) toFixed 2];
 			private _light = "#lightpoint" createVehicleLocal [0, 0, 0];
 			_light setPosASL (_pos vectorAdd [1, 2.5, 2]);
 			_light setLightColor [1, 1, 1];
