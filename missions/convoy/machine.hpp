@@ -1,4 +1,4 @@
-// Convoy ambush: an enemy supply convoy waits at one road entry and drives through the objective to the far one.
+// Convoy ambush: an enemy supply convoy starts a couple of km out, drives through the objective and out the far side.
 // Players pick an ambush spot. Stopping every supply truck wins; a supply truck reaching the exit loses.
 // Convoy handling follows the public convoy scripts: one group in COLUMN, limitSpeed and setConvoySeparation on
 // every vehicle (only the leader respects the group speed), and a watchdog that re-forms stuck vehicles.

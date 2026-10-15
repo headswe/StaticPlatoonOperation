@@ -1,5 +1,7 @@
 // Convoy mission start (_this = spo_namespace): pick the route, line the convoy up on the road and brief the players.
-// Route: between the two road entries farthest apart, through the road nearest the objective centre.
+// Route: from well outside the AO, through the road nearest the objective centre, and out the other side. The two
+// road entries farthest apart give the directions; start and end are pushed out a couple of km along them so
+// players have time to teleport to the blue ring and set up an ambush.
 private _entries = spo_reinforcement_locations apply {[_x # 0, _x # 1, 0]};
 private _start = [];
 private _end = [];
@@ -18,6 +20,26 @@ if (_start isEqualTo []) then {
 		if (_roads isNotEqualTo []) then { _x set [0, (getPos (_roads # 0)) # 0]; _x set [1, (getPos (_roads # 0)) # 1]; };
 	} forEach [_start, _end];
 };
+// push a point out along its bearing from the objective to the farthest on-map road, keeping it if none is found
+private _pushOut = {
+	params ["_pos"];
+	private _dir = spo_centerPos getDir _pos;
+	private _result = _pos;
+	{
+		private _probe = spo_centerPos getPos [_x, _dir];
+		if ((_probe # 0) > 200 && {(_probe # 1) > 200} && {(_probe # 0) < worldSize - 200} && {(_probe # 1) < worldSize - 200}) then {
+			private _roads = (_probe nearRoads 400) apply {[_x distance2D _probe, _x]};
+			if (_roads isNotEqualTo []) exitWith {
+				_roads sort true;
+				_result = getPos ((_roads # 0) # 1);
+			};
+		};
+		if (_result isNotEqualTo _pos) exitWith {};
+	} forEach [2400, 2000, 1600, 1200];
+	[_result # 0, _result # 1, 0]
+};
+_start = [_start] call _pushOut;
+_end = [_end] call _pushOut;
 private _centerRoads = spo_centerPos nearRoads spo_objective_radius;
 private _via = if (_centerRoads isEqualTo []) then { +spo_centerPos } else {
 	_centerRoads = _centerRoads apply {[_x distance2D spo_centerPos, _x]};
@@ -96,7 +118,9 @@ _grp setSpeedMode "LIMITED";
 // troops may bail out when attacked, crews stay with their vehicles
 { _x setUnloadInCombat [true, false]; } forEach _vehicles;
 
-private _departAt = time + 240 + random 180;
+// leaves after a short delay; the ETA assumes roads are ~30% longer than the straight line and the column averages ~8 m/s
+private _departAt = time + 90;
+private _eta = (_departAt - time) + ((_start distance2D _via) * 1.3) / 8;
 private _dirs = ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"];
 private _dirName = { _dirs # ((round ((spo_centerPos getDir _this) / 45)) mod 8) };
 private _mkr = createMarker ["spo_convoy_start", _start];
@@ -108,10 +132,10 @@ _mkr setMarkerTypeLocal "mil_end";
 _mkr setMarkerTextLocal "Convoy exit";
 _mkr setMarkerColor "ColorEAST";
 
-private _minutes = round ((_departAt - time) / 60);
-private _desc = format ["An enemy supply convoy (%1 vehicles, %2 supply truck%3 carrying troops) is staging on the %4 road. It leaves in about %5 minutes and drives through the objective to the %6 exit. Stop every supply truck before it gets there. The escorts will push through an ambush and the troops will dismount to fight.", count _vehicles, count _supply, ["", "s"] select (count _supply > 1), _start call _dirName, _minutes, _end call _dirName];
+private _minutes = round (_eta / 60);
+private _desc = format ["An enemy supply convoy (%1 vehicles, %2 supply truck%3 carrying troops) is coming in from the %4. It should pass through the objective in about %5 minutes and leave towards the %6. Teleport out, pick an ambush spot on its route and stop every supply truck before it reaches the exit. The escorts will push through an ambush and the troops will dismount to fight.", count _vehicles, count _supply, ["", "s"] select (count _supply > 1), _start call _dirName, _minutes, _end call _dirName];
 private _task = [blufor, "spo_convoy_task", [_desc, "Ambush the supply convoy", ""], _via, "AUTOASSIGNED", 0, true, "car"] call BIS_fnc_taskCreate;
-format ["Intel: enemy supply convoy leaves the %1 road in about %2 minutes, heading %3.", _start call _dirName, _minutes, _end call _dirName] remoteExec ["hint", 0];
+format ["Intel: enemy supply convoy coming from the %1, expected at the objective in about %2 minutes, heading %3.", _start call _dirName, _minutes, _end call _dirName] remoteExec ["hint", 0];
 
 _this setVariable ["spo_convoy_group", _grp];
 _this setVariable ["spo_convoy_vehicles", _vehicles];

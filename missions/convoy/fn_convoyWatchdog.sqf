@@ -7,6 +7,11 @@ private _grp = _this getVariable ["spo_convoy_group", grpNull];
 if (isNull _grp || {!alive leader _grp}) exitWith {};
 private _speed = _this getVariable ["spo_convoy_speed", 45];
 private _leadVeh = vehicle leader _grp;
+// heads-up when the column is about two minutes from the objective
+if (!(_this getVariable ["spo_convoy_warned", false]) && {(_leadVeh distance2D ((_this getVariable ["spo_convoy_route", [[0,0,0]]]) # 0)) < 1000}) then {
+	_this setVariable ["spo_convoy_warned", true];
+	"Convoy about two minutes out from the objective." remoteExec ["hint", 0];
+};
 {
 	_x limitSpeed _speed;
 	_x setConvoySeparation ([40, 60] select (_speed > 50));
