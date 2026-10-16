@@ -1519,8 +1519,8 @@ class RscMapControl {
 	sizeExLevel = 0.03;
 	sizeExNames = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8) * 2";
 	sizeExUnits = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-	stickX[] = {0.2,["Gamma",1,1.5]};
-	stickY[] = {0.2,["Gamma",1,1.5]};
+	stickX[] = {0.2,{"Gamma",1,1.5}};
+	stickY[] = {0.2,{"Gamma",1,1.5}};
 	style = 48;
 	text = "#(argb,8,8,3)color(1,1,1,1)";
 	textureComboBoxColor = "#(argb,8,8,3)color(1,1,1,1)";

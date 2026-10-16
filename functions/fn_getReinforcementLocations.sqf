@@ -3,6 +3,7 @@ params ["_centerPos", "_distance", "_headings"];
 private _startRoad = objNull;
 private _radius = spo_objective_radius/2;
 private _vehicles = [];
+private _agents = [];
 // Todo add stop
 while {isNull _startRoad && _radius <= spo_objective_radius} do {
 	_radius = _radius + 50;
@@ -26,6 +27,7 @@ private _onPathFinished = {
 			_pos = getPos _road;
 		};
 		spo_reinforcement_locations pushBackUnique _pos;
+		publicVariable "spo_reinforcement_locations";
 	};
 	deleteVehicle (objectParent _agent);
 	deleteVehicle (_agent);
@@ -35,15 +37,17 @@ private _onPathFinished = {
 {
 	private _pos = _centerPos getPos [_distance, _x];
 	_pos = [_pos, 0, 250, 3, 0, 0.1, 0, [], [_pos,_pos]] call BIS_fnc_findSafePos;
-	private _agent = createAgent ["B_Soldier_F", getpos _startRoad, [], 0, "NONE"];
+	private _agent = createAgent ["B_Soldier_F", getPos _startRoad, [], 0, "NONE"];
 	_agent setVariable ["location", _centerPos];
-	private _car = "B_Quadbike_01_F" createVehicle getpos _startRoad;
+	private _car = "B_Quadbike_01_F" createVehicle getPos _startRoad;
 	_vehicles pushBack _car;
+	_agents pushBack _agent;
 	_agent moveInDriver _car;  
 	_agent addEventHandler ["PathCalculated", _onPathFinished];
 	_agent setDestination [_pos, "LEADER PLANNED", true];
 } forEach _headings;
-{
-	deleteVehicle _x;
-} forEach _vehicles;
-publicVariable "spo_reinforcement_locations";
+// PathCalculated fires asynchronously and cleans up after itself; remove anything it never reached.
+[{
+	params ["_objects"];
+	{ deleteVehicle _x; } forEach _objects;
+}, [_vehicles + _agents + ([_startRoad] select {typeOf _x == "Sign_Arrow_F"})], 30] call CBA_fnc_waitAndExecute;

@@ -1,6 +1,9 @@
 spo_opforFaction = "OPF_F";
 spo_bluFaction = "BLU_F";
 spo_vehicleFaction = "";
+spo_missionClassName = "";
+// vehicle categories (spo_fnc_vehicleCategory) the enemy may spawn; set in the setup dialog
+spo_vehicleTypes = ["car", "apc", "tank"];
 spo_centerPos = [0,0,0];
 spo_reinforcement_locations = [];
 spo_seed = random [1000, 5000, 10000];
@@ -12,12 +15,8 @@ spo_ai_initialManpower =  round ((5 + (_playerCount * spo_aiRatio) ) min 120);
 spo_objective_radius = 200;
 spo_perimeter_radius = 400;
 spo_patrol_groups = [];
-if(serverCommandAvailable "#kick") then {
-	spo_click_action = addMissionEventHandler ["MapSingleClick", {
-		params ["_units", "_pos", "_alt", "_shift"];
-		[[_pos#0, _pos#1, 0]] remoteExecCall ['spo_fnc_setObjective',2]; 
-	}];
-};
+// set by the comms tower mission once the tower is down: patrols stop calling each other for help
+spo_commsDown = false;
 if (!isServer) exitWith {};
 
 

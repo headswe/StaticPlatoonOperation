@@ -5,7 +5,13 @@ private _usedRoles = +_roles;
 while {_numberOfMen > 0} do {
 	private _role = 'r';
 	if(_random) then {
-		_role =  _roles selectRandomWeighted [0.33, 0.2,0.1, 0.15, 0.25, 0.25, 0.05, 0.1, 0.01, 0.01, 0.1];
+		// weights line up with the default spo_allowedRoles; custom role lists are picked uniformly
+		private _weights = [0.33, 0.2,0.1, 0.15, 0.25, 0.25, 0.05, 0.1, 0.01, 0.01, 0.1];
+		if (count _roles == count _weights) then {
+			_role = _roles selectRandomWeighted _weights;
+		} else {
+			_role = selectRandom _roles;
+		};
 	} else {
 		if(count _usedRoles <= 0) then {
 			_usedRoles = +_roles;

@@ -10,6 +10,6 @@ class SPO_GarrisonStateMachine {
 	};
 
 	class Activated {
-		onStateEntered = "spo_fnc_onGarrisonActivated"
+		onStateEntered = "spo_fnc_onGarrisonActivated";
 	};
 };

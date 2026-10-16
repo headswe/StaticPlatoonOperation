@@ -1,0 +1,37 @@
+name: Release
+
+# Packs one .pbo per terrain and publishes them on a GitHub release.
+# Push a tag like v1.2.0 (or run it from the Actions tab with a tag name) and the release is created, or
+# updated if it already exists, with every terrain's .pbo plus a zip of all of them.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to create or update (e.g. v1.2.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pack PBOs
+        run: |
+          python3 tools/pack_pbo.py --out out
+          (cd out && zip -q "static_platoon_ops-${TAG}-all-terrains.zip" *.pbo)
+      - name: Publish release
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" out/*.pbo out/*.zip --clobber
+          else
+            gh release create "$TAG" out/*.pbo out/*.zip --target "$GITHUB_SHA" --title "Static Platoon Ops $TAG" --generate-notes
+          fi

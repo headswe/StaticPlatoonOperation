@@ -1,19 +1,19 @@
 if (isServer) then {	
 	// Weather
-	_date = date;
-	_date set [3,selectRandom [5,6,9,12,13,16,17,18]]; // Random hour between 8 and 6pm
+	private _date = date;
+	_date set [3,selectRandom [5,6,9,12,13,16,17,18]]; // Random hour between 05:00 and 18:00
 
 	// ====================================================================================
 
 	// SET DATE FOR ALL CLIENTS
 	// Using a BIS function we share the new date across the network
-	[_date,true,_transition] call BIS_fnc_setDate;
+	[_date,true] call BIS_fnc_setDate;
 	
 	//Random weather
-	[] call compile preprocessFile 'functions\weather.sqf';
+	[-1] call compile preprocessFileLineNumbers 'functions\fn_setWeather.sqf';
 	 
 
 };
 
-AI_SPAWNED = false;
+spo_aiSpawned = false;
 

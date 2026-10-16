@@ -9,7 +9,7 @@ private _header = "";
 {
 	_x params ["_category", "_name"];
 	
-	if !(_category isEqualTo _header) then {
+	if (_category isNotEqualTo _header) then {
 		_header = _category;
 		_text = format ["%1<br/><br/><font size='18'>%2</font>", _text, toUpper _category];
 	};
@@ -18,3 +18,12 @@ private _header = "";
 } forEach _loadouts;
 
 player createDiaryRecord ["diary", ["Available Loadouts", _text]];
+
+// Admin rights can be gained (#login) or lost at any time, so poll instead of checking once at init.
+spo_isAdmin = false;
+[{
+	private _isAdmin = serverCommandAvailable "#kick";
+	if (_isAdmin isEqualTo spo_isAdmin) exitWith {};
+	spo_isAdmin = _isAdmin;
+	[_isAdmin] call spo_fnc_onAdminChanged;
+}, 2] call CBA_fnc_addPerFrameHandler;

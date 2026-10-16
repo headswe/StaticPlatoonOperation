@@ -3,6 +3,9 @@ enableDebugConsole = 1; // Allows the logged in admin to use the debug console f
 
 // Use a randomized loading image from TMF. Set your own loading image with e.g. overviewPicture = "image.jpg";
 overviewPicture = "";
+onLoadName = "Static Platoon Ops";
+onLoadMission = "Pick an objective, pick the factions and go.";
+briefingName = "Static Platoon Ops";
 
 class CfgDebriefingSections {
     class acex_killTracker {
@@ -16,7 +19,7 @@ class CfgDebriefing
 	class END1
 	{
 		title = "Mission Completed";
-		subtitle = "ALL AI ELIMINATED";
+		subtitle = "OBJECTIVE COMPLETE";
 		description = "Good job!";
 	};
 	class Failed
@@ -58,23 +61,24 @@ class CfgFunctions
 			class createGuardPoint{};
 			class patrol{};
 			class createVehicle{};
+			class setWeather{};
 		};
 		class patrol {
 			file = "statemachines\patrol";
 			class onReinforceing{};
 			class requestReinforcement{};
 			class createPatrol{};
-		}
+		};
 		class garrison {
 			file = "statemachines\garrison";
 			class shouldActivateGarrison{};
 			class onGarrisonActivated{};
-		}
+		};
 		class AI {
 			file = "functions\ai";
 			class hunt{};
 			class attackPoint{};
-		}
+		};
 		class helpers {
 			file = "functions\helpers";
 			class nearBuildings{};
@@ -82,27 +86,65 @@ class CfgFunctions
 			class reveal{};
 			class inContact{};
 			class createFlare{};
-		}
+			class log{};
+		};
 		class sad {
 			file = "missions\sad";
 			class onSadStart{};
 			class onSadEnd{};
-		}
+		};
 		class cache {
 			file = "missions\cache";
 			class onCacheStart{};
-		}
+		};
 		class secure {
 			file = "missions\secure";
 			class onSecureStart{};
 			class onSecureArrived{};
 			class onSecureWin{};
-		}
+		};
+		class hvt {
+			file = "missions\hvt";
+			class onHvtStart{};
+			class hvtAlerted{};
+			class onHvtFlee{};
+			class onHvtCaptured{};
+			class onHvtEnd{};
+		};
+		class comms {
+			file = "missions\comms";
+			class onCommsStart{};
+			class commsWaveDue{};
+			class commsWave{};
+			class commsSabotage{};
+			class onCommsDestroyed{};
+		};
+		class convoy {
+			file = "missions\convoy";
+			class onConvoyStart{};
+			class convoyDepartDue{};
+			class onConvoyDepart{};
+			class convoyWatchdog{};
+			class convoyUnderAttack{};
+			class onConvoyAmbushed{};
+			class convoyStopped{};
+			class convoyEscaped{};
+			class onConvoyEnd{};
+		};
+		class admin {
+			file = "functions\admin";
+			class isAdminCaller{};
+			class onAdminChanged{};
+			class objectiveComplete{};
+			class promptAdminEnd{};
+			class endMission{};
+		};
 		class vehicles {
 			file = "functions\vehicles";
 			class getCombatVehicle{};
 			class getTransportVehicle{};
-		}
+			class vehicleCategory{};
+		};
 	};
 };
 
@@ -116,4 +158,7 @@ class SPO_Missions {
 	#include "missions\sad\machine.hpp"
 	#include "missions\secure\machine.hpp"
 	#include "missions\cache\machine.hpp"
-}
+	#include "missions\hvt\machine.hpp"
+	#include "missions\comms\machine.hpp"
+	#include "missions\convoy\machine.hpp"
+};

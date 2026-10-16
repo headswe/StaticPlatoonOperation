@@ -1,7 +1,9 @@
-systemChat "Group responding to ReinforcementRequest";
+["Group responding to reinforcement request"] call spo_fnc_log;
 private _grp = _this;
 private _groupToReinforce = _grp getVariable ["spo_reinforceing", grpNull];
-_grp setVariable ["spo_reinforcement_location", getPosATL ((leader _groupToReinforce) findNearestEnemy (leader _groupToReinforce) )];
+private _enemy = (leader _groupToReinforce) findNearestEnemy (leader _groupToReinforce);
+private _location = if (isNull _enemy) then { getPosATL (leader _groupToReinforce) } else { getPosATL _enemy };
+_grp setVariable ["spo_reinforcement_location", _location];
 
 [_grp] call CBA_fnc_clearWaypoints;
 private _wp = [_grp, _grp, 0, "MOVE", "SAFE", "RED", "FULL", "WEDGE","", [3,3,3], 0] call CBA_fnc_addWaypoint;

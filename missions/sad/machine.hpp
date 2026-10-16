@@ -5,12 +5,12 @@ class SPO_SAD_MissionStateMachine {
 		onStateEntered = "spo_fnc_onSadStart";
 
 		class Victory {
-			condition="(_this getVariable ['spo_enemyCount',0]) >= (count (allUnits select {side _x == EAST}))";
+			condition="(_this getVariable ['spo_enemyCount',0]) >= (count units east)";
 			targetState = "Win";
-		}
+		};
 	};
 	class Win {
-		onStateEntered="spo_fnc_onSadEnd"
+		onStateEntered="spo_fnc_onSadEnd";
 	};
 
 };
