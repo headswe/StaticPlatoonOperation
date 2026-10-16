@@ -48,7 +48,7 @@ missions/<type>/         Mission types (state machines under class SPO_Missions)
 briefing/                Briefing text (TMF briefing)
 build.ps1                Copies the mission to one folder per terrain under mpmissions/addons
 tools/lint.sh            Stages the mission as an addon and runs `hemtt check`
-tools/pack_pbo.py        Packs one .pbo per terrain into out/ (CI: .github/workflows/package.yml artifact)
+tools/pack_pbo.py        Packs one .pbo per terrain into out/ (CI: package.yml artifact; release.yml on v* tags)
 tools/gen_dialog.py      Regenerates ui/missionDialog.hpp from tools/missionDialog.template.hpp
 assets/                  Images
 ```
@@ -79,7 +79,7 @@ assets/                  Images
 
 `build.ps1` (PowerShell, Windows) copies the mission folder it lives in to `<mpmissions>/addons/static_platoon_ops.<terrain>` for each terrain, skipping dev files (`.git`, `.github`, `tools`, `CLAUDE.md`, …). Override with `-Source`, `-Destination`, `-Islands`. Object positions in `mission.sqm` are terrain-specific, so the copies rely on the objective being placed at runtime.
 
-`python3 tools/pack_pbo.py` (any OS, no dependencies) packs the same files into uncompressed `out/static_platoon_ops.<terrain>.pbo` files for servers; `--islands` and `--out` override the defaults. Every push also runs it in CI and attaches the PBOs to the workflow run as the `static_platoon_ops-pbos` artifact.
+`python3 tools/pack_pbo.py` (any OS, no dependencies) packs the same files into uncompressed `out/static_platoon_ops.<terrain>.pbo` files for servers; `--islands` and `--out` override the defaults. Every push also runs it in CI and attaches the PBOs to the workflow run as the `static_platoon_ops-pbos` artifact. Pushing a `v*` tag (or running the Release workflow by hand with a tag name) runs `.github/workflows/release.yml`, which publishes every terrain's PBO and a zip of all of them on a GitHub release.
 
 ## Linting
 
